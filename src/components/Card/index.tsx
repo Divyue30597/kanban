@@ -14,15 +14,24 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function Card(props: CardProps) {
-  const { heading, description, subTasks, tags, links, className, ...rest } =
-    props;
+  const {
+    heading,
+    description,
+    subTasks,
+    tags,
+    links,
+    images,
+    className,
+    ...rest
+  } = props;
   return (
     <div {...rest} className={styles.card + (className ? ` ${className}` : "")}>
       <h1 className={styles.heading}>{heading}</h1>
       <p className={styles.description}>{description}</p>
-      {subTasks?.length && renderSubTasks({ subTasks })}
-      {links?.length && renderLinks({ links })}
-      {tags?.length && renderTags({ tags })}
+      {renderSubTasks({ subTasks })}
+      {renderLinks({ links })}
+      {renderImages({ images })}
+      {renderTags({ tags })}
     </div>
   );
 }
@@ -68,6 +77,18 @@ function renderLinks(props: { links?: string[] }) {
       {links?.length &&
         links.map((link, index) => {
           return <CustomLink key={index} to={link} />;
+        })}
+    </div>
+  );
+}
+
+function renderImages(props: { images?: string[] }) {
+  const { images } = props;
+  return (
+    <div className={styles.images}>
+      {images?.length &&
+        images.map((image, index) => {
+          return <img key={index} src={image} alt="" />;
         })}
     </div>
   );

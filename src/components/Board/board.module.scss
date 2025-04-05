@@ -1,0 +1,39 @@
+.board {
+  max-width: 96.4rem;
+  margin: auto;
+  padding: 1.2rem 0;
+}
+
+.boardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.boardHeaderContent {
+  & > h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: var(--primary-text);
+    margin-bottom: 0.6rem;
+  }
+
+  & > p {
+    font-size: 1.4rem;
+    color: #5a5a65;
+    font-weight: 500;
+  }
+}
+
+.boardContent {
+  background-color: #f8f8f8;
+  padding: 2rem;
+  border-radius: 0.8rem;
+}
+
+.boardHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}

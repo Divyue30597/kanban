@@ -16,11 +16,11 @@
   font-size: 1.4rem;
   color: var(--secondary-text);
   font-weight: 500;
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
 }
 
 .subTasks {
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
   & > h2 {
     font-size: 1.2rem;
     color: #22222299;
@@ -29,7 +29,7 @@
   }
 
   .subTask {
-    margin-bottom:1.2rem;
+    margin-bottom: 1.2rem;
 
     &:last-child {
       margin-bottom: 1.2rem;
@@ -47,5 +47,18 @@
 }
 
 .links {
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
+}
+
+.images {
+  & > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    border-radius: 0.8rem;
+    box-shadow: var(--box-shadow);
+  }
+
+  margin-bottom: 1.4rem;   
 }

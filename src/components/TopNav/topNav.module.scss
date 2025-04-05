@@ -1,0 +1,20 @@
+.topNav {
+  border-bottom: 0.1rem solid var(--border-color);
+  margin-bottom: 4rem;
+}
+
+.topNavContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  max-width: 96.4rem;
+  margin: 0 auto;
+  padding: 1.2rem 0;
+
+  & > p {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-text);
+  }
+}

@@ -1,0 +1,10 @@
+.leftNav {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+
+  border-right: 0.1rem solid var(--border-color);
+}
