@@ -1,0 +1,22 @@
+.link {
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    width: 1.4rem;
+    margin-right: 0.8rem;
+    color: #acacac;
+  }
+
+  & > a {
+    color: var(--primary);
+    font-size: 1.4rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: var(--primary-hover);
+    }
+  }
+}
