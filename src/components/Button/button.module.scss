@@ -15,4 +15,14 @@
     background-color: var(--primary-hover);
     color: var(--text);
   }
+
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  display: inline-block;
+  margin-left: 0.6rem;
+  height: 2rem;
+  width: 2rem;
 }

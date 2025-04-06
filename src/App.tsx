@@ -28,7 +28,6 @@ function App() {
               tags={["UI", "Design", "Figma", "Backend"]}
               images={[
                 "https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg",
-                "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
               ]}
             />
             <Card
@@ -43,7 +42,6 @@ function App() {
               tags={["UI", "Design", "Figma", "Backend"]}
               images={[
                 "https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg",
-                "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
               ]}
             />
           </Column>
@@ -60,7 +58,6 @@ function App() {
               tags={["UI", "Design", "Figma", "Backend"]}
               images={[
                 "https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg",
-                "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
               ]}
             />
           </Column>
@@ -74,10 +71,9 @@ function App() {
                 )
               )}
               links={["https://www.figma.com/", "https://www.sketch.com"]}
-              tags={["UI", "Design", "Figma", "Backend"]}
+              tags={["C", "Design", "Figma", "Backend"]}
               images={[
                 "https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg",
-                "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
               ]}
             />
           </Column>

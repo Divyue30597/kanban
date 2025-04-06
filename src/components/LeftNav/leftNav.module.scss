@@ -1,10 +1,70 @@
 .leftNav {
-  display: flex;
-  flex-direction: column;
   width: fit-content;
   height: 100dvh;
   position: sticky;
   top: 0;
+  position: relative;
 
   border-right: 0.1rem solid var(--border-color);
+}
+
+.expanded {
+  transition: width 0.3s ease-in-out;
+}
+
+.collapse {
+  transition: width 0.3s ease-in-out;
+}
+
+.leftNavList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  list-style: none;
+}
+
+.logo {
+  font-size: 2rem;
+
+  font-weight: 900;
+}
+
+.leftNavListGroup {
+  display: flex;
+  flex-direction: column;
+
+  &:last-child {
+    margin-bottom: 2rem;
+  }
+}
+
+.toggle_button {
+  position: absolute;
+  top: 4.4rem;
+  right: -1.3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  // padding: 1rem;
+  background-color: #ffffff;
+  // border: none;
+  color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+
+  & > svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.chevronLeft {
+  rotate: 180deg;
+  transition: rotate 0.3s ease-in-out;
+}
+
+.chevronRight {
+  rotate: 0deg;
+  transition: rotate 0.3s ease-in-out;
 }

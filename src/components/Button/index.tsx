@@ -1,12 +1,18 @@
-import { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import styles from "./button.module.scss";
 
-export default function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
-  const { children, className, ...rest } = props;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+}
+
+export default function Button(props: ButtonProps) {
+  const { children, icon, className, ...rest } = props;
 
   return (
     <button {...rest} type="button" className={styles.button + " " + className}>
       {children}
+      {icon && <span className={styles.icon}>{icon}</span>}
     </button>
   );
 }
