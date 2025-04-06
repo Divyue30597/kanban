@@ -37,23 +37,29 @@
     width: 0.8rem;
     border-radius: 4rem;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 4rem;
   }
-  
+
   &::-webkit-scrollbar-track {
     background-color: #f0f0f0;
   }
-  
+
   &::-webkit-scrollbar-corner {
     background-color: #f0f0f0;
-  } 
+  }
 }
 
 .boardHeaderActions {
   display: flex;
   align-items: center;
   gap: 1.2rem;
+}
+
+.dropTarget {
+  background-color: rgb(140, 216, 150);
+  border-radius: 0.8rem;
+  transition: all 0.3s ease;
 }

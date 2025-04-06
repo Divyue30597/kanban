@@ -1,20 +1,77 @@
-import { HTMLAttributes } from "react";
+import React from "react";
+import { HTMLAttributes, useState } from "react";
 import styles from "./column.module.scss";
 
 interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
   colName: string;
+  colId: string; // Add ID to identify the column
   children: React.ReactNode;
+  onCardDrop?: (
+    cardId: string,
+    sourceColumnId: string,
+    targetColumnId: string
+  ) => void;
 }
 
 function Column(props: ColumnProps) {
-  const { colName, children, className, ...rest } = props;
+  const { colName, colId, children, className, onCardDrop, ...rest } = props;
+  const [isDragOver, setIsDragOver] = useState(false);
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (!isDragOver) {
+      setIsDragOver(true);
+    }
+  };
+
+  const handleDragLeave = () => {
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragOver(false);
+
+    const cardId = e.dataTransfer.getData("cardId");
+    const sourceColumnId = e.dataTransfer.getData("sourceColumnId") || "";
+
+    if (cardId && sourceColumnId !== colId) {
+      if (onCardDrop) {
+        onCardDrop(cardId, sourceColumnId, colId);
+      }
+    }
+  };
+
   return (
     <div
-      className={styles.column + (className ? ` ${className}` : "")}
+      className={`${styles.column} ${isDragOver ? styles.dragOver : ""} ${
+        className || ""
+      }`}
+      // data-column-id={colId}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
       {...rest}
     >
       <h2>{colName}</h2>
-      <div className={styles.cards}>{children}</div>
+      <div className={styles.cards}>
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child) && typeof child.type !== "string") {
+            // Only clone if it's a component (not a DOM element)
+            return React.cloneElement(child as React.ReactElement<any>, {
+              onDragStart: (e: React.DragEvent<HTMLDivElement>) => {
+                e.dataTransfer.setData("sourceColumnId", colId);
+                // Call original onDragStart if exists
+                if (child.props.onDragStart) {
+                  child.props.onDragStart(e);
+                }
+              },
+            });
+          }
+          return child;
+        })}
+      </div>
     </div>
   );
 }

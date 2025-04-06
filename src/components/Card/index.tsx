@@ -2,19 +2,24 @@ import React from "react";
 import styles from "./card.module.scss";
 import CustomLink from "../Link";
 import { getTagColors } from "../../utils/utils";
+import CheckboxWithText from "../CheckboxWithText";
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardType extends React.HTMLAttributes<HTMLDivElement> {
   heading: string;
   description: string;
   className?: string;
   images?: string[];
   tags: string[];
-  subTasks?: React.ReactNode[];
+  subTasks?: string[];
   links?: string[];
+  id: string;
+  columnId?: string;
+  onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
 }
 
-export default function Card(props: CardProps) {
+export default function Card(props: CardType) {
   const {
+    id,
     heading,
     description,
     subTasks,
@@ -22,10 +27,39 @@ export default function Card(props: CardProps) {
     links,
     images,
     className,
+    columnId,
+    onDragStart,
     ...rest
   } = props;
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    // Set card data in the drag event
+    e.dataTransfer.setData("cardId", id);
+    e.dataTransfer.setData(
+      "cardData",
+      JSON.stringify({
+        id,
+        heading,
+        description,
+      })
+    );
+
+    e.dataTransfer.effectAllowed = "move";
+
+    if (onDragStart) {
+      onDragStart(e);
+    }
+  };
+
   return (
-    <div {...rest} className={styles.card + (className ? ` ${className}` : "")}>
+    <div
+      {...rest}
+      className={styles.card + (className ? ` ${className}` : "")}
+      draggable={true}
+      onDragStart={handleDragStart}
+      data-card-id={id}
+      data-column-id={columnId}
+    >
       <h1 className={styles.heading}>{heading}</h1>
       <p className={styles.description}>{description}</p>
       {renderSubTasks({ subTasks })}
@@ -36,7 +70,7 @@ export default function Card(props: CardProps) {
   );
 }
 
-function renderSubTasks(props: { subTasks?: React.ReactNode[] }) {
+function renderSubTasks(props: { subTasks?: string[] }) {
   const { subTasks } = props;
   return (
     <div className={styles.subTasks}>
@@ -45,7 +79,7 @@ function renderSubTasks(props: { subTasks?: React.ReactNode[] }) {
         subTasks.map((subTask, index) => {
           return (
             <div className={styles.subTask} key={index}>
-              {subTask}
+              <CheckboxWithText label={subTask} />
             </div>
           );
         })}

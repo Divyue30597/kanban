@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from ".";
 import Button from "../Button";
+import Form from "../Form";
 
 function RenderModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,16 +12,9 @@ function RenderModal() {
     <>
       <Button onClick={openModal}>Add Task</Button>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Modal.Header>Example Modal Title</Modal.Header>
+        <Modal.Header>Add Task</Modal.Header>
         <Modal.Body>
-          <p>
-            This is the modal content. You can put any components or content
-            here.
-          </p>
-          <form>
-            <label htmlFor="name">Name:</label>
-            <input id="name" type="text" />
-          </form>
+          <Form />
         </Modal.Body>
         <Modal.Footer>
           <button onClick={closeModal}>Cancel</button>
