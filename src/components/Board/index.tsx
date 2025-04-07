@@ -1,4 +1,4 @@
-import { HTMLProps, useRef, useState } from "react";
+import { HTMLProps, useRef, useState, useEffect } from "react";
 import styles from "./board.module.scss";
 import columnStyles from "../Column/column.module.scss";
 import Container from "../Container";
@@ -68,6 +68,23 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 
   const boardRef = useRef<HTMLDivElement | null>(null);
   const boardContentRef = useRef<HTMLDivElement>(null);
+  const isTouchDevice = useRef(false);
+
+  // Detect touch support
+  useEffect(() => {
+    isTouchDevice.current =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      (navigator as any).msMaxTouchPoints > 0;
+
+    if (isTouchDevice.current) {
+      document.body.classList.add("touch-device");
+    }
+
+    return () => {
+      document.body.classList.remove("touch-device");
+    };
+  }, []);
 
   // Handle card drop between columns
   const handleCardDrop = (
@@ -110,12 +127,30 @@ function Board(props: HTMLProps<HTMLDivElement>) {
     });
   };
 
-  const { handleCardMouseDown } = useDragAndDrop({
-    onCardMove: handleCardDrop,
-    dropTargetClassName: columnStyles.validDropTarget,
-    invalidDropTargetClassName: columnStyles.invalidDropTarget,
-    boundaryRef: boardContentRef,
-  });
+  const { handleCardMouseDown, handleCardTouchStart, isDragging } =
+    useDragAndDrop({
+      onCardMove: handleCardDrop,
+      dropTargetClassName: columnStyles.validDropTarget,
+      invalidDropTargetClassName: columnStyles.invalidDropTarget,
+      boundaryRef: boardContentRef,
+    });
+
+  // Prevent default touch behaviors when dragging
+  useEffect(() => {
+    const preventDefaultTouchMove = (e: TouchEvent) => {
+      if (isDragging) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("touchmove", preventDefaultTouchMove, {
+      passive: false,
+    });
+
+    return () => {
+      document.removeEventListener("touchmove", preventDefaultTouchMove);
+    };
+  }, [isDragging]);
 
   return (
     <div
@@ -155,6 +190,8 @@ function Board(props: HTMLProps<HTMLDivElement>) {
                   subTasks={card?.subTasks}
                   data-card-id={card.id}
                   onMouseDown={(e) => handleCardMouseDown(e, card)}
+                  onTouchStart={(e) => handleCardTouchStart(e, card)}
+                  style={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
                 />
               ))}
             </Column>
