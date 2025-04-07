@@ -48,7 +48,6 @@ function Column(props: ColumnProps) {
       className={`${styles.column} ${isDragOver ? styles.dragOver : ""} ${
         className || ""
       }`}
-      // data-column-id={colId}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -58,11 +57,9 @@ function Column(props: ColumnProps) {
       <div className={styles.cards}>
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child) && typeof child.type !== "string") {
-            // Only clone if it's a component (not a DOM element)
             return React.cloneElement(child as React.ReactElement<any>, {
               onDragStart: (e: React.DragEvent<HTMLDivElement>) => {
                 e.dataTransfer.setData("sourceColumnId", colId);
-                // Call original onDragStart if exists
                 if (child.props.onDragStart) {
                   child.props.onDragStart(e);
                 }

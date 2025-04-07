@@ -108,7 +108,6 @@ export function useDragAndDrop({
         cardElement.style.opacity = "0.6"; // Semi-transparent
         cardElement.style.backgroundColor = "#f5f5f5"; // Light gray background
         cardElement.style.border = "0.2rem dashed #ccc"; // Dashed border
-        cardElement.style.transform = "scale(0.98)"; // Slightly smaller
       }
 
       // Only proceed with drag behavior if we're actually dragging

@@ -1,20 +1,16 @@
 .leftNav {
-  width: fit-content;
+  width: 18rem;
   height: 100dvh;
   position: sticky;
   top: 0;
-  position: relative;
-
+  transition: width 0.3s ease-in-out; // ← move transition here
   border-right: 0.1rem solid var(--border-color);
+
+  &.collapse {
+    width: 6rem;
+  }
 }
 
-.expanded {
-  transition: width 0.3s ease-in-out;
-}
-
-.collapse {
-  transition: width 0.3s ease-in-out;
-}
 
 .leftNavList {
   display: flex;
@@ -26,9 +22,23 @@
 }
 
 .logo {
-  font-size: 2rem;
-
+  font-size: 1.8rem;
   font-weight: 900;
+  line-height: 0.8;
+  border: 0.2rem solid var(--primary-text);
+  text-align: center;
+  padding: 0.4rem;
+  margin-block: 0.96rem;
+
+  & > span {
+    display: block;
+  }
+}
+
+hr {
+  border: none;
+  border-top: 0.1rem solid var(--border-color);
+  margin-bottom: 0.6rem;
 }
 
 .leftNavListGroup {
@@ -42,8 +52,8 @@
 
 .toggle_button {
   position: absolute;
-  top: 4.4rem;
-  right: -1.3rem;
+  top: calc(100dvh / 2);
+  right: -1.2rem;
   width: 2.4rem;
   height: 2.4rem;
   // padding: 1rem;
