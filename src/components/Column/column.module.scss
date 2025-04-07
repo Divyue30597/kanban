@@ -35,3 +35,13 @@
   transition: all 0.2s ease;
   border-radius: 0.8rem;
 }
+
+/* Add this to your Card component CSS */
+[data-card-id] {
+  cursor: grab;
+}
+
+/* When actively clicking/holding (but before drag starts) */
+[data-card-id]:active {
+  cursor: grabbing;
+}

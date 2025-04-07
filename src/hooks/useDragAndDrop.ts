@@ -225,8 +225,10 @@ export function useDragAndDrop({
         clone.style.pointerEvents = "none";
         clone.style.opacity = "1";
         clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
-        clone.style.transition = "box-shadow 0.2s ease";
+        clone.style.transition = "box-shadow 0.2s ease, border 0.2s ease";
         clone.setAttribute("aria-hidden", "true");
+        clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
+        document.body.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
 
         clone.style.left = `${rect.left}px`;
         clone.style.top = `${rect.top}px`;
@@ -266,8 +268,8 @@ export function useDragAndDrop({
       const cardRect = dragElementRef.current.getBoundingClientRect();
       const cardCenterY = cardRect.top + cardRect.height / 2;
       const cardCenterX = cardRect.left + cardRect.width / 2;
-      const margin = DRAG_CONFIG.VISUAL.SCROLL.MARGIN;
-      const speed = DRAG_CONFIG.VISUAL.SCROLL.SPEED;
+      const margin = DRAG_CONFIG.SCROLL.MARGIN;
+      const speed = DRAG_CONFIG.SCROLL.SPEED;
 
       // Vertical scrolling
       if (boundaryRef.current.scrollHeight > boundaryRef.current.clientHeight) {
@@ -290,7 +292,7 @@ export function useDragAndDrop({
           boundaryRef.current.scrollLeft -= speed;
         }
       }
-    }, DRAG_CONFIG.VISUAL.SCROLL.INTERVAL);
+    }, DRAG_CONFIG.SCROLL.INTERVAL);
   }, [boundaryRef]);
 
   /**
@@ -370,8 +372,15 @@ export function useDragAndDrop({
       scrollIntervalRef.current = null;
     }
 
+    // Reset the body cursor back to default
+    document.body.style.cursor = "";
+
     if (dragElementRef.current) {
       try {
+        // Reset border and shadow before removing
+        dragElementRef.current.style.border = "";
+        dragElementRef.current.style.boxShadow = "";
+
         document.body.removeChild(dragElementRef.current);
       } catch (e) {
         console.error("Error removing drag element:", e);
@@ -544,6 +553,28 @@ export function useDragAndDrop({
 
           currentTargetColumnRef.current = targetColumnId;
           updateColumnHighlights(targetColumnId, isSourceColumn);
+
+          if (targetColumnId && !isSourceColumn) {
+            const isValid = isValidDropTarget(
+              draggingCard.columnId,
+              targetColumnId
+            );
+
+            if (isValid) {
+              dragElementRef.current.style.border =
+                "2px solid rgba(50, 205, 50, 0.8)";
+              dragElementRef.current.style.boxShadow =
+                "0 0 10px rgba(50, 205, 50, 0.4)";
+            } else {
+              dragElementRef.current.style.border =
+                "2px solid rgba(255, 99, 71, 0.8)";
+              dragElementRef.current.style.boxShadow =
+                "0 0 10px rgba(255, 99, 71, 0.4)";
+            }
+          } else {
+            dragElementRef.current.style.border = DRAG_CONFIG.VISUAL.BORDER;
+            dragElementRef.current.style.boxShadow = "";
+          }
         }
       } catch (err) {
         console.error("Error in pointer move handler:", err);
@@ -560,6 +591,7 @@ export function useDragAndDrop({
       createDragClone,
       setupAutoScrolling,
       createAccessibilityAnnouncement,
+      isValidDropTarget,
     ]
   );
 
