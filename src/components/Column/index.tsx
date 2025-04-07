@@ -45,16 +45,14 @@ function Column(props: ColumnProps) {
 
   return (
     <div
-      className={`${styles.column} ${isDragOver ? styles.dragOver : ""} ${
-        className || ""
-      }`}
+      className={`${styles.column} ${className || ""}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       {...rest}
     >
       <h2>{colName}</h2>
-      <div className={styles.cards}>
+      <div className={styles.cards + " column-content"}>
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child) && typeof child.type !== "string") {
             return React.cloneElement(child as React.ReactElement<any>, {

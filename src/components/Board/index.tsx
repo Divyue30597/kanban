@@ -1,5 +1,6 @@
-import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
+import { HTMLProps, useRef, useState } from "react";
 import styles from "./board.module.scss";
+import columnStyles from "../Column/column.module.scss";
 import Container from "../Container";
 import Button from "../Button";
 import RenderModal from "../Modal/modal";
@@ -66,6 +67,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
   ]);
 
   const boardRef = useRef<HTMLDivElement | null>(null);
+  const boardContentRef = useRef<HTMLDivElement>(null);
 
   // Handle card drop between columns
   const handleCardDrop = (
@@ -110,7 +112,9 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 
   const { handleCardMouseDown } = useDragAndDrop({
     onCardMove: handleCardDrop,
-    dropTargetClassName: styles.dropTarget,
+    dropTargetClassName: columnStyles.validDropTarget,
+    invalidDropTargetClassName: columnStyles.invalidDropTarget,
+    boundaryRef: boardContentRef,
   });
 
   return (
@@ -128,7 +132,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
           <Button>Add Column</Button>
         </div>
       </div>
-      <div className={styles.boardContent}>
+      <div ref={boardContentRef} className={styles.boardContent}>
         <Container {...rest} className={styles.columns}>
           {columns.map((column) => (
             <Column

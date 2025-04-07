@@ -1,6 +1,22 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { CardType } from "../components/Card";
 
+const DRAG_CONFIG = {
+  THRESHOLD: 5,
+  VISUAL: {
+    ROTATION: "rotate(3deg)",
+    OPACITY: "0.6",
+    BACKGROUND: "#f5f5f5",
+    BORDER: "0.2rem dashed #ccc",
+    Z_INDEX: "1000",
+    BOUNDARY_FEEDBACK: "0 0 0 2px #ff6b6b, 0 0 8px rgba(255, 107, 107, 0.6)",
+  },
+  SCROLL: {
+    MARGIN: 50,
+    SPEED: 10,
+  },
+};
+
 interface DragCard {
   id: string;
   columnId: string;
@@ -17,68 +33,187 @@ interface UseDragAndDropProps {
     targetColumnId: string
   ) => void;
   dropTargetClassName: string;
+  invalidDropTargetClassName: string; // Add this
+  boundaryRef?: React.RefObject<HTMLElement>;
 }
 
+/**
+ * A custom hook that implements drag and drop functionality for cards between columns.
+ * Features:
+ * - Card dragging with visual feedback
+ * - Boundary constraints with visual indicators
+ * - Auto-scrolling near boundaries
+ * - Column highlighting when dragging over drop targets
+ * - Card movement between columns
+ */
 export function useDragAndDrop({
   onCardMove,
   dropTargetClassName,
+  invalidDropTargetClassName, // Add this
+  boundaryRef,
 }: UseDragAndDropProps) {
-  // State for dragging
   const [draggingCard, setDraggingCard] = useState<DragCard | null>(null);
-
   const dragElementRef = useRef<HTMLDivElement | null>(null);
-
-  // Add a new ref to track if drag has actually started
   const dragStartedRef = useRef(false);
   const mouseDownPositionRef = useRef({ x: 0, y: 0 });
+  const currentTargetColumnRef = useRef<string | null>(null);
 
-  // Start dragging a card
-  const handleCardMouseDown = (e: React.MouseEvent, card: CardType) => {
-    // Only activate on left click
-    if (e.button !== 0) return;
+  /**
+   * Checks if the target column is a valid drop target based on directional constraints.
+   * Cards can only move to columns to the right of their current position.
+   */
+  const isValidDropTarget = useCallback(
+    (sourceColumnId: string, targetColumnId: string): boolean => {
+      if (!sourceColumnId || !targetColumnId) return false;
 
-    const cardElement = e.currentTarget as HTMLDivElement;
-    const rect = cardElement.getBoundingClientRect();
+      // Get all columns to determine their order
+      const columnsElements = document.querySelectorAll("[data-column-id]");
+      const columnIds: string[] = [];
 
-    // Save the position where mouse was pressed down
-    mouseDownPositionRef.current = { x: e.clientX, y: e.clientY };
-    // Reset the drag started flag
-    dragStartedRef.current = false;
+      columnsElements.forEach((col) => {
+        const colId = col.getAttribute("data-column-id");
+        if (colId) columnIds.push(colId);
+      });
 
-    // Don't create clone or apply styles yet - do this in mousemove
+      // Find indices of source and target columns
+      const sourceIndex = columnIds.indexOf(sourceColumnId);
+      const targetIndex = columnIds.indexOf(targetColumnId);
 
-    // Save initial position and offset
-    setDraggingCard({
-      id: card.id,
-      columnId: card.columnId!,
-      initialX: e.clientX,
-      initialY: e.clientY,
-      offsetX: e.clientX - rect.left,
-      offsetY: e.clientY - rect.top,
-    });
+      // Valid if target is to the right of source (higher index)
+      return targetIndex > sourceIndex;
+    },
+    []
+  );
 
-    // Prevent text selection
-    e.preventDefault();
-  };
+  /**
+   * Updates column highlighting based on the current target column.
+   * Adds different highlighting for valid and invalid drop targets.
+   */
+  const updateColumnHighlights = useCallback(
+    (targetColumnId: string | null, isSourceColumn = false) => {
+      // First, remove all highlights
+      const columnsElements = document.querySelectorAll("[data-column-id]");
+      columnsElements.forEach((col) => {
+        col.classList.remove(dropTargetClassName);
+        col.classList.remove(invalidDropTargetClassName);
+        col.querySelectorAll("div").forEach((div) => {
+          div.classList.remove(dropTargetClassName);
+          div.classList.remove(invalidDropTargetClassName);
+        });
+      });
 
-  // Handle mouse movement
+      // If we have a target and it's not the source column
+      if (targetColumnId && !isSourceColumn && draggingCard) {
+        const targetColumn = document.querySelector(
+          `[data-column-id="${targetColumnId}"]`
+        );
+
+        if (targetColumn) {
+          // Determine if this is a valid drop target
+          const isValid = isValidDropTarget(
+            draggingCard.columnId,
+            targetColumnId
+          );
+          const classToAdd = isValid
+            ? dropTargetClassName
+            : invalidDropTargetClassName;
+
+          // Add appropriate class based on validity
+          const columnContent = targetColumn.querySelector(".column-content");
+          if (columnContent) {
+            columnContent.classList.add(classToAdd);
+          } else {
+            targetColumn.classList.add(classToAdd);
+          }
+        }
+      }
+    },
+    [
+      dropTargetClassName,
+      invalidDropTargetClassName,
+      isValidDropTarget,
+      draggingCard,
+    ]
+  );
+
+  /**
+   * Initiates card dragging on mouse down event.
+   * Captures initial position, saves card information, and prepares for dragging.
+   */
+  const handleCardMouseDown = useCallback(
+    (e: React.MouseEvent, card: CardType) => {
+      if (e.button !== 0) return;
+
+      const cardElement = e.currentTarget as HTMLDivElement;
+      const rect = cardElement.getBoundingClientRect();
+
+      mouseDownPositionRef.current = { x: e.clientX, y: e.clientY };
+      dragStartedRef.current = false;
+      currentTargetColumnRef.current = card.columnId || null;
+
+      updateColumnHighlights(null);
+
+      setDraggingCard({
+        id: card.id,
+        columnId: card.columnId!,
+        initialX: e.clientX,
+        initialY: e.clientY,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+      });
+
+      e.preventDefault();
+    },
+    [updateColumnHighlights]
+  );
+
+  /**
+   * Determines which column the dragged card is hovering over.
+   * Uses the center point of the card element to determine column intersection.
+   */
+  const findTargetColumn = useCallback(
+    (elementRect: DOMRect): string | null => {
+      const centerX = elementRect.left + elementRect.width / 2;
+      const centerY = elementRect.top + elementRect.height / 2;
+
+      const columnsElements = document.querySelectorAll("[data-column-id]");
+      let targetColumnId = null;
+
+      columnsElements.forEach((col) => {
+        const colRect = col.getBoundingClientRect();
+        if (
+          centerX >= colRect.left &&
+          centerX <= colRect.right &&
+          centerY >= colRect.top &&
+          centerY <= colRect.bottom
+        ) {
+          targetColumnId = col.getAttribute("data-column-id");
+        }
+      });
+
+      return targetColumnId;
+    },
+    []
+  );
+
+  /**
+   * Handles mouse movement during dragging.
+   * Creates visual clone when dragging starts, applies boundary constraints,
+   * manages auto-scrolling, and updates column highlighting.
+   */
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!draggingCard) return;
 
-      // Calculate distance moved from initial mouse down
       const dx = Math.abs(e.clientX - mouseDownPositionRef.current.x);
       const dy = Math.abs(e.clientY - mouseDownPositionRef.current.y);
 
-      // Only consider it a drag if moved more than 5 pixels
-      const dragThreshold = 5;
-      const isDragging = dx > dragThreshold || dy > dragThreshold;
+      const isDragging =
+        dx > DRAG_CONFIG.THRESHOLD || dy > DRAG_CONFIG.THRESHOLD;
 
-      // If this is the first time we've crossed the threshold
       if (isDragging && !dragStartedRef.current) {
         dragStartedRef.current = true;
 
-        // Find the original card element
         const cardElement = document.querySelector(
           `[data-card-id="${draggingCard.id}"]`
         ) as HTMLElement;
@@ -86,122 +221,161 @@ export function useDragAndDrop({
 
         const rect = cardElement.getBoundingClientRect();
 
-        // Now create the clone for dragging
         const clone = cardElement.cloneNode(true) as HTMLDivElement;
         clone.style.position = "absolute";
         clone.style.width = `${rect.width}px`;
         clone.style.height = `${rect.height}px`;
-        clone.style.zIndex = "1000";
+        clone.style.zIndex = DRAG_CONFIG.VISUAL.Z_INDEX;
         clone.style.pointerEvents = "none";
         clone.style.opacity = "1";
-        clone.style.transform = "rotate(3deg)";
+        clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
         clone.style.transition = "none";
 
-        // Set initial position
         clone.style.left = `${rect.left}px`;
         clone.style.top = `${rect.top}px`;
 
         document.body.appendChild(clone);
         dragElementRef.current = clone;
 
-        // Apply styles to the original card to show it's being dragged
-        cardElement.style.opacity = "0.6"; // Semi-transparent
-        cardElement.style.backgroundColor = "#f5f5f5"; // Light gray background
-        cardElement.style.border = "0.2rem dashed #ccc"; // Dashed border
+        cardElement.style.opacity = DRAG_CONFIG.VISUAL.OPACITY;
+        cardElement.style.backgroundColor = DRAG_CONFIG.VISUAL.BACKGROUND;
+        cardElement.style.border = DRAG_CONFIG.VISUAL.BORDER;
       }
 
-      // Only proceed with drag behavior if we're actually dragging
       if (dragStartedRef.current && dragElementRef.current) {
-        // Move the clone with the mouse
-        dragElementRef.current.style.left = `${
-          e.clientX - draggingCard.offsetX
-        }px`;
-        dragElementRef.current.style.top = `${
-          e.clientY - draggingCard.offsetY
-        }px`;
+        let newLeft = e.clientX - draggingCard.offsetX;
+        let newTop = e.clientY - draggingCard.offsetY;
 
-        // Highlight potential drop targets
-        const columnsElements = document.querySelectorAll("[data-column-id]");
-        columnsElements.forEach((col) => {
-          const rect = col.getBoundingClientRect();
-          if (
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right &&
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom
-          ) {
-            col.classList.add(dropTargetClassName);
-          } else {
-            col.classList.remove(dropTargetClassName);
+        if (boundaryRef?.current) {
+          const boundary = boundaryRef.current.getBoundingClientRect();
+          const cardRect = dragElementRef.current.getBoundingClientRect();
+          dragElementRef.current.style.boxShadow = "";
+
+          let hitBoundary = false;
+
+          if (newLeft < boundary.left) {
+            newLeft = boundary.left;
+            hitBoundary = true;
           }
-        });
+
+          if (newLeft + cardRect.width > boundary.right) {
+            newLeft = boundary.right - cardRect.width;
+            hitBoundary = true;
+          }
+
+          if (newTop < boundary.top) {
+            newTop = boundary.top;
+            hitBoundary = true;
+          }
+
+          if (newTop + cardRect.height > boundary.bottom) {
+            newTop = boundary.bottom - cardRect.height;
+            hitBoundary = true;
+          }
+
+          if (hitBoundary) {
+            dragElementRef.current.style.boxShadow =
+              DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK;
+          }
+
+          if (
+            boundaryRef?.current &&
+            boundaryRef.current.scrollHeight > boundaryRef.current.clientHeight
+          ) {
+            if (e.clientY > boundary.bottom - DRAG_CONFIG.SCROLL.MARGIN) {
+              boundaryRef.current.scrollTop += DRAG_CONFIG.SCROLL.SPEED;
+            }
+
+            if (e.clientY < boundary.top + DRAG_CONFIG.SCROLL.MARGIN) {
+              boundaryRef.current.scrollTop -= DRAG_CONFIG.SCROLL.SPEED;
+            }
+          }
+
+          if (
+            boundaryRef?.current &&
+            boundaryRef.current.scrollWidth > boundaryRef.current.clientWidth
+          ) {
+            if (e.clientX > boundary.right - DRAG_CONFIG.SCROLL.MARGIN) {
+              boundaryRef.current.scrollLeft += DRAG_CONFIG.SCROLL.SPEED;
+            }
+
+            if (e.clientX < boundary.left + DRAG_CONFIG.SCROLL.MARGIN) {
+              boundaryRef.current.scrollLeft -= DRAG_CONFIG.SCROLL.SPEED;
+            }
+          }
+        }
+
+        dragElementRef.current.style.left = `${newLeft}px`;
+        dragElementRef.current.style.top = `${newTop}px`;
+
+        const dragRect = dragElementRef.current.getBoundingClientRect();
+        const targetColumnId = findTargetColumn(dragRect);
+        const isSourceColumn = targetColumnId === draggingCard.columnId;
+
+        currentTargetColumnRef.current = targetColumnId;
+        updateColumnHighlights(targetColumnId, isSourceColumn);
       }
     },
-    [draggingCard]
+    [draggingCard, updateColumnHighlights, findTargetColumn, boundaryRef]
   );
 
-  // Handle mouse up - dropping the card
+  /**
+   * Handles mouse up event when dragging ends.
+   * Removes the drag clone, clears highlighting, applies card movement,
+   * and resets the dragging state.
+   */
   const handleMouseUp = useCallback(
     (e: MouseEvent) => {
       if (!draggingCard) return;
 
-      // If we never started dragging, treat it as a click
       if (!dragStartedRef.current) {
-        // Handle click behavior here if needed
         console.log("Card clicked:", draggingCard.id);
         setDraggingCard(null);
         return;
       }
 
-      // Normal drag ending behavior
       if (dragElementRef.current) {
         document.body.removeChild(dragElementRef.current);
         dragElementRef.current = null;
       }
 
-      // Rest of your existing handleMouseUp code...
-      const columnsElements = document.querySelectorAll("[data-column-id]");
-      let targetColumnId = draggingCard.columnId;
+      updateColumnHighlights(null);
 
-      columnsElements.forEach((col) => {
-        col.classList.remove(dropTargetClassName);
-        const rect = col.getBoundingClientRect();
-        if (
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom
-        ) {
-          targetColumnId = col.getAttribute("data-column-id") || targetColumnId;
-        }
-      });
+      const targetColumnId = currentTargetColumnRef.current;
 
-      // If column changed, move the card
-      if (targetColumnId !== draggingCard.columnId) {
+      // Only move the card if target is valid
+      if (
+        targetColumnId &&
+        targetColumnId !== draggingCard.columnId &&
+        isValidDropTarget(draggingCard.columnId, targetColumnId)
+      ) {
         onCardMove(draggingCard.id, draggingCard.columnId, targetColumnId);
       }
 
-      // Restore all original card styles
       const originalCards = document.querySelectorAll(
         `[data-card-id="${draggingCard.id}"]`
       );
       originalCards.forEach((card) => {
         const cardElement = card as HTMLElement;
-        // Reset all modified styles
         cardElement.style.opacity = "";
         cardElement.style.backgroundColor = "";
         cardElement.style.border = "";
         cardElement.style.transform = "";
       });
 
-      // Reset dragging state
       setDraggingCard(null);
       dragStartedRef.current = false;
+      currentTargetColumnRef.current = null;
+
+      e.preventDefault();
     },
-    [draggingCard]
+    [draggingCard, updateColumnHighlights, onCardMove, isValidDropTarget]
   );
 
-  // Add and remove event listeners
+  /**
+   * Sets up and cleans up event listeners for mouse movement and release.
+   * Only active when a card is being dragged.
+   */
   useEffect(() => {
     if (draggingCard) {
       window.addEventListener("mousemove", handleMouseMove);
