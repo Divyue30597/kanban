@@ -1,75 +1,56 @@
-import { HTMLProps, useRef, useState, useEffect } from "react";
+import { HTMLProps, useRef, useEffect } from "react";
 import styles from "./board.module.scss";
 import columnStyles from "../Column/column.module.scss";
 import Container from "../Container";
 import RenderModal from "../Modal/modal";
 import Column from "../Column";
-import Card, { CardType } from "../Card";
+import Card from "../Card";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-
-interface ColumnType {
-  id: string;
-  name: string;
-  cards: CardType[];
-}
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { selectActiveBoard, selectBoardColumns } from "../../store/selectors";
+import { setActiveBoard } from "../../store/features/boards/boardSlice";
+import { moveCardBetweenColumns } from "../../store/thunks";
 
 function Board(props: HTMLProps<HTMLDivElement>) {
   const { children, className, ...rest } = props;
-  const [columns, setColumns] = useState<ColumnType[]>([
-    {
-      id: "col-1",
-      name: "To Do",
-      cards: [
-        {
-          id: "card-1",
-          heading: "Research",
-          description: "Research Analysis",
-          columnId: "col-1",
-          links: ["https://figma.com", "https://dribbble.com"],
-          tags: ["Research", "Analysis"],
-        },
-        {
-          id: "card-2",
-          heading: "Design",
-          description: "Create wireframes",
-          columnId: "col-1",
-          images: [
-            "https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg",
-          ],
-          tags: ["Design", "Wireframes"],
-        },
-      ],
-    },
-    {
-      id: "col-2",
-      name: "In Progress",
-      cards: [
-        {
-          id: "card-3",
-          heading: "Development",
-          description: "Build prototype",
-          columnId: "col-2",
-          subTasks: [
-            "Create components",
-            "Implement state management",
-            "Connect API",
-          ],
-          tags: ["Development", "Prototype"],
-        },
-      ],
-    },
-    {
-      id: "col-3",
-      name: "Done",
-      cards: [],
-    },
-  ]);
 
+  const dispatch = useAppDispatch();
+  const activeBoard = useAppSelector(selectActiveBoard);
+  const columns = useAppSelector(selectBoardColumns);
+  const boards = useAppSelector((state) => state.boards.boards);
+  
   const boardRef = useRef<HTMLDivElement | null>(null);
   const boardContentRef = useRef<HTMLDivElement>(null);
   const isTouchDevice = useRef(false);
 
-  // Detect touch support
+  const handleCardMove = (
+    cardId: string,
+    sourceColumnId: string,
+    targetColumnId: string
+  ) => {
+    dispatch(
+      moveCardBetweenColumns({
+        cardId,
+        sourceColumnId,
+        destinationColumnId: targetColumnId,
+      })
+    );
+  };
+
+  const { handleCardMouseDown, handleCardTouchStart, isDragging } =
+    useDragAndDrop({
+      onCardMove: handleCardMove,
+      dropTargetClassName: columnStyles.validDropTarget,
+      invalidDropTargetClassName: columnStyles.invalidDropTarget,
+      boundaryRef: boardContentRef,
+    });
+
+  useEffect(() => {
+    if (!activeBoard && boards.length > 0) {
+      dispatch(setActiveBoard(boards[0].id));
+    }
+  }, [dispatch, activeBoard, boards]);
+
   useEffect(() => {
     isTouchDevice.current =
       "ontouchstart" in window ||
@@ -85,56 +66,6 @@ function Board(props: HTMLProps<HTMLDivElement>) {
     };
   }, []);
 
-  // Handle card drop between columns
-  const handleCardDrop = (
-    cardId: string,
-    sourceColumnId: string,
-    targetColumnId: string
-  ) => {
-    setColumns((prevColumns) => {
-      // Find the source and target columns
-      const sourceColumnIndex = prevColumns.findIndex(
-        (col) => col.id === sourceColumnId
-      );
-      const targetColumnIndex = prevColumns.findIndex(
-        (col) => col.id === targetColumnId
-      );
-
-      if (sourceColumnIndex === -1 || targetColumnIndex === -1)
-        return prevColumns;
-
-      // Find the card in the source column
-      const cardIndex = prevColumns[sourceColumnIndex].cards.findIndex(
-        (card) => card.id === cardId
-      );
-      if (cardIndex === -1) return prevColumns;
-
-      // Get the card and remove it from source column
-      const [movedCard] = prevColumns[sourceColumnIndex].cards.splice(
-        cardIndex,
-        1
-      );
-
-      // Update the card's columnId
-      const updatedCard = { ...movedCard, columnId: targetColumnId };
-
-      // Add the card to the target column
-      prevColumns[targetColumnIndex].cards.push(updatedCard);
-
-      // Return the updated columns array
-      return [...prevColumns];
-    });
-  };
-
-  const { handleCardMouseDown, handleCardTouchStart, isDragging } =
-    useDragAndDrop({
-      onCardMove: handleCardDrop,
-      dropTargetClassName: columnStyles.validDropTarget,
-      invalidDropTargetClassName: columnStyles.invalidDropTarget,
-      boundaryRef: boardContentRef,
-    });
-
-  // Prevent default touch behaviors when dragging
   useEffect(() => {
     const preventDefaultTouchMove = (e: TouchEvent) => {
       if (isDragging) {
@@ -151,6 +82,14 @@ function Board(props: HTMLProps<HTMLDivElement>) {
     };
   }, [isDragging]);
 
+  if (!activeBoard) {
+    return (
+      <div className={styles.emptyState}>
+        <h2>No boards available</h2>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={boardRef}
@@ -158,42 +97,61 @@ function Board(props: HTMLProps<HTMLDivElement>) {
     >
       <div className={styles.boardHeader}>
         <div className={styles.boardHeaderContent}>
-          <h1>Design weekly</h1>
-          <p>A board to keep track of design progress.</p>
+          <h1>{activeBoard?.title}</h1>
+          <p>{activeBoard.description}</p>
         </div>
         <div className={styles.boardHeaderActions}>
           <RenderModal />
         </div>
       </div>
       <div ref={boardContentRef} className={styles.boardContent}>
-        <Container {...rest} className={styles.columns}>
-          {columns.map((column) => (
-            <Column
-              key={column.id}
-              colId={column.id}
-              colName={column.name}
-              className={styles.column}
-              data-column-id={column.id}
-              onCardDrop={handleCardDrop}
-            >
-              {column.cards.map((card) => (
-                <Card
-                  key={card.id}
-                  id={card.id}
-                  heading={card.heading}
-                  description={card.description}
-                  tags={card.tags}
-                  links={card?.links}
-                  images={card?.images}
-                  subTasks={card?.subTasks}
-                  data-card-id={card.id}
-                  onMouseDown={(e) => handleCardMouseDown(e, card)}
-                  onTouchStart={(e) => handleCardTouchStart(e, card)}
-                  style={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
-                />
-              ))}
-            </Column>
-          ))}
+        <Container
+          {...rest}
+          style={{
+            gridTemplateColumns: `repeat(${
+              columns?.length || 3
+            }, minmax(28rem, 1fr))`,
+          }}
+        >
+          {columns &&
+            columns?.map((column) => (
+              <Column
+                key={column?.id}
+                className={styles.column}
+                colId={column?.id!}
+                colName={column?.title!}
+                // data-column-id={column?.id}
+                onCardDrop={(cardId, targetColumnId) => {
+                  console.log("Card drop detected", { cardId, targetColumnId });
+
+                  // The sourceColumnId will be passed from the Card component
+                  const sourceColumnId = columns.find((col) =>
+                    col?.cardIds?.includes(cardId)
+                  )?.id;
+
+                  if (sourceColumnId && sourceColumnId !== targetColumnId) {
+                    handleCardMove(cardId, sourceColumnId, targetColumnId);
+                  }
+                }}
+              >
+                {column?.cardIds?.map((cardId) => {
+                  return (
+                    <Card
+                      key={cardId}
+                      id={cardId}
+                      columnId={column.id}
+                      boardId={column.boardId}
+                      onMouseDown={(e) =>
+                        handleCardMouseDown(e, cardId, column.id)
+                      }
+                      onTouchStart={(e) =>
+                        handleCardTouchStart(e, cardId, column.id)
+                      }
+                    />
+                  );
+                })}
+              </Column>
+            ))}
         </Container>
       </div>
     </div>

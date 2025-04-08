@@ -4,13 +4,9 @@ import styles from "./column.module.scss";
 
 interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
   colName: string;
-  colId: string; // Add ID to identify the column
+  colId: string;
   children: React.ReactNode;
-  onCardDrop?: (
-    cardId: string,
-    sourceColumnId: string,
-    targetColumnId: string
-  ) => void;
+  onCardDrop?: (cardId: string, targetColumnId: string) => void;
 }
 
 function Column(props: ColumnProps) {
@@ -34,12 +30,10 @@ function Column(props: ColumnProps) {
     setIsDragOver(false);
 
     const cardId = e.dataTransfer.getData("cardId");
-    const sourceColumnId = e.dataTransfer.getData("sourceColumnId") || "";
+    const sourceColumnId = e.dataTransfer.getData("sourceColumnId");
 
-    if (cardId && sourceColumnId !== colId) {
-      if (onCardDrop) {
-        onCardDrop(cardId, sourceColumnId, colId);
-      }
+    if (cardId && onCardDrop && sourceColumnId !== colId) {
+      onCardDrop(cardId, colId);
     }
   };
 
@@ -52,7 +46,8 @@ function Column(props: ColumnProps) {
       {...rest}
     >
       <h2>{colName}</h2>
-      <div className={styles.cards + " column-content"}>
+      <div className={styles.cards + " column-content"} data-column-id={colId}>
+        {/* {children} */}
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child) && typeof child.type !== "string") {
             return React.cloneElement(child as React.ReactElement<any>, {

@@ -9,14 +9,11 @@ export interface DragCard {
   offsetY: number;
 }
 
-export type DropPosition = "top" | "bottom" | "middle";
-
 export interface UseDragAndDropProps {
   onCardMove: (
     cardId: string,
     sourceColumnId: string,
     targetColumnId: string,
-    position?: DropPosition
   ) => void;
   dropTargetClassName: string;
   invalidDropTargetClassName: string;

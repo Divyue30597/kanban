@@ -2,9 +2,12 @@ import { HTMLProps } from "react";
 import styles from "./container.module.scss";
 
 export default function Container(props: HTMLProps<HTMLDivElement>) {
-  const { children, className } = props;
+  const { children, className, ...rest } = props;
   return (
-    <div className={styles.container + (className ? ` ${className}` : "")}>
+    <div
+      {...rest}
+      className={(className ? `${className} ` : "") + styles.container}
+    >
       {children}
     </div>
   );

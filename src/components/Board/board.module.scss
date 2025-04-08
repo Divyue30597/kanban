@@ -1,5 +1,5 @@
 .board {
-  max-width: 96.4rem;
+  width: 96.4rem;
   margin: auto;
 }
 
@@ -35,12 +35,14 @@
 
   &::-webkit-scrollbar {
     width: 0.8rem;
+    height: 0.8rem;
     border-radius: 4rem;
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: #ccc;
-    border-radius: 4rem;
+    border-radius: 1rem;
+
   }
 
   &::-webkit-scrollbar-track {

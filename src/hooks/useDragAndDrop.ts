@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { CardType } from "../components/Card";
 import { DRAG_CONFIG } from "./dragConstants";
-import { DropPosition, UseDragAndDropProps, DragState } from "./dragTypes";
+import { UseDragAndDropProps, DragState } from "./dragTypes";
 
 /**
  * A custom hook that implements drag and drop functionality for cards between columns.
@@ -109,28 +108,48 @@ export function useDragAndDrop({
         const centerX = elementRect.left + elementRect.width / 2;
         const centerY = elementRect.top + elementRect.height / 2;
 
-        const columnsElements = document.querySelectorAll("[data-column-id]");
-        let targetColumnId = null;
+        const columnContents = document.querySelectorAll(columnContentSelector);
+        for (let i = 0; i < columnContents.length; i++) {
+          const content = columnContents[i];
+          const colRect = content.getBoundingClientRect();
 
-        columnsElements.forEach((col) => {
-          const colRect = col.getBoundingClientRect();
           if (
             centerX >= colRect.left &&
             centerX <= colRect.right &&
             centerY >= colRect.top &&
             centerY <= colRect.bottom
           ) {
-            targetColumnId = col.getAttribute("data-column-id");
+            // Get the parent column's ID
+            const column = content.closest("[data-column-id]") as HTMLElement;
+            if (column) {
+              return column.getAttribute("data-column-id");
+            }
           }
-        });
+        }
 
-        return targetColumnId;
+        // Fallback to checking entire columns
+        const columnsElements = document.querySelectorAll("[data-column-id]");
+        for (let i = 0; i < columnsElements.length; i++) {
+          const col = columnsElements[i];
+          const colRect = col.getBoundingClientRect();
+
+          if (
+            centerX >= colRect.left &&
+            centerX <= colRect.right &&
+            centerY >= colRect.top &&
+            centerY <= colRect.bottom
+          ) {
+            return col.getAttribute("data-column-id");
+          }
+        }
+
+        return null;
       } catch (e) {
         console.error("Error finding target column:", e);
         return null;
       }
     },
-    []
+    [columnContentSelector]
   );
 
   /**
@@ -153,10 +172,11 @@ export function useDragAndDrop({
           col.classList.remove(dropTargetClassName);
           col.classList.remove(invalidDropTargetClassName);
 
-          col.querySelectorAll("div").forEach((div) => {
-            div.classList.remove(dropTargetClassName);
-            div.classList.remove(invalidDropTargetClassName);
-          });
+          const columnContent = col.querySelector(columnContentSelector);
+          if (columnContent) {
+            columnContent.classList.remove(dropTargetClassName);
+            columnContent.classList.remove(invalidDropTargetClassName);
+          }
 
           col.setAttribute("aria-dropeffect", "none");
         });
@@ -178,6 +198,7 @@ export function useDragAndDrop({
             const columnContent = targetColumn.querySelector(
               columnContentSelector
             );
+
             if (columnContent) {
               columnContent.classList.add(classToAdd);
             } else {
@@ -228,7 +249,7 @@ export function useDragAndDrop({
         clone.style.transition = "box-shadow 0.2s ease, border 0.2s ease";
         clone.setAttribute("aria-hidden", "true");
         clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
-        document.body.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
+        // document.body.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
 
         clone.style.left = `${rect.left}px`;
         clone.style.top = `${rect.top}px`;
@@ -339,8 +360,11 @@ export function useDragAndDrop({
       }
 
       if (hitBoundary) {
-        dragElementRef.current.style.boxShadow =
-          DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK;
+        console.log("Hit boundary:", hitBoundary);
+        console.log(dragElementRef.current, "dragElementRef.current");
+        dragElementRef.current.style.boxShadow = ""
+        dragElementRef.current.style.border =
+          DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_BORDER;
 
         if (isTouch.current && navigator.vibrate) {
           navigator.vibrate(10);
@@ -432,7 +456,11 @@ export function useDragAndDrop({
    * a threshold distance, which helps distinguish between clicks and drags.
    */
   const handleCardPointerDown = useCallback(
-    (e: React.MouseEvent | React.TouchEvent, card: CardType) => {
+    (
+      e: React.MouseEvent | React.TouchEvent,
+      cardId: string,
+      cardColId: string
+    ) => {
       try {
         isTouch.current = "touches" in e;
 
@@ -451,15 +479,15 @@ export function useDragAndDrop({
 
         pointerPositionRef.current = { x: clientX, y: clientY };
         dragStartedRef.current = false;
-        currentTargetColumnRef.current = card.columnId || null;
+        currentTargetColumnRef.current = cardColId || null;
 
         cardElement.setAttribute("aria-grabbed", "true");
         updateColumnHighlights(null);
 
         setDragState({
           draggingCard: {
-            id: card.id,
-            columnId: card.columnId!,
+            id: cardId,
+            columnId: cardColId,
             initialX: clientX,
             initialY: clientY,
             offsetX: clientX - rect.left,
@@ -562,18 +590,20 @@ export function useDragAndDrop({
 
             if (isValid) {
               dragElementRef.current.style.border =
-                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_RIGHT_COLUMN_BORDER;
+                "2px solid rgba(50, 205, 50, 0.8)";
               dragElementRef.current.style.boxShadow =
-                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_RIGHT_COLUMN_BOX_SHADOW;
+                "0 0 8px rgba(50, 205, 50, 0.6)";
             } else {
               dragElementRef.current.style.border =
-                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_WRONG_COLUMN_BORDER;
+                "2px solid rgba(255, 99, 71, 0.8)";
               dragElementRef.current.style.boxShadow =
-                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_WRONG_COLUMN_BOX_SHADOW;
+                "0 0 8px rgba(255, 99, 71, 0.6)";
             }
           } else {
-            dragElementRef.current.style.border = DRAG_CONFIG.VISUAL.BORDER;
-            dragElementRef.current.style.boxShadow = "";
+            // Reset card appearance when not over a valid target
+            dragElementRef.current.style.border = "1px solid #ccc";
+            dragElementRef.current.style.boxShadow =
+              "0 2px 4px rgba(0,0,0,0.1)";
           }
         }
       } catch (err) {
@@ -613,26 +643,30 @@ export function useDragAndDrop({
       if (!draggingCard) return;
 
       try {
+        // If drag hasn't really started, treat as click
         if (!dragStartedRef.current) {
-          console.log("Card clicked:", draggingCard.id);
           cleanupDrag();
           return;
         }
 
         const targetColumnId = currentTargetColumnRef.current;
 
+        // Check if we have a valid drop target
         if (
           targetColumnId &&
           targetColumnId !== draggingCard.columnId &&
           isValidDropTarget(draggingCard.columnId, targetColumnId)
         ) {
-          const position: DropPosition = "bottom";
-          onCardMove(
-            draggingCard.id,
-            draggingCard.columnId,
-            targetColumnId,
-            position
+          // This is critical - make a copy of the values for the callback
+          const cardId = draggingCard.id;
+          const sourceColumnId = draggingCard.columnId;
+
+          // Announce the drop for accessibility
+          createAccessibilityAnnouncement(
+            `Card moved to ${targetColumnId} column.`
           );
+
+          onCardMove(cardId, sourceColumnId, targetColumnId);
         }
 
         cleanupDrag();
@@ -645,7 +679,13 @@ export function useDragAndDrop({
         cleanupDrag();
       }
     },
-    [dragState, onCardMove, isValidDropTarget, cleanupDrag]
+    [
+      dragState,
+      onCardMove,
+      isValidDropTarget,
+      cleanupDrag,
+      createAccessibilityAnnouncement,
+    ]
   );
 
   /**
