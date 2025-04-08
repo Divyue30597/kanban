@@ -13,42 +13,57 @@ interface ListItemProps {
 
 function ListItem(props: ListItemProps) {
   const { item, expanded } = props;
-  const [shouldRender, setShouldRender] = useState(expanded); // controls mounting
-  const [shouldShow, setShouldShow] = useState(expanded); // controls visual animation
+  const [shouldRender, setShouldRender] = useState(expanded);
+  const [shouldShow, setShouldShow] = useState(expanded);
+
+  const [onMouseOver, setOnMouseOver] = useState(false);
+
+  const handleMouseOver = () => {
+    setOnMouseOver(true);
+  };
+
+  const handleMouseLeave = () => {
+    setOnMouseOver(false);
+  };
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
     if (expanded) {
-      setShouldRender(true); // mount span
+      setShouldRender(true);
       timeout = setTimeout(() => {
-        setShouldShow(true); // then animate in
-      }, 100); // small delay to trigger CSS transition
+        setShouldShow(true);
+      }, 150);
     } else {
-      setShouldShow(false); // start fade/slide out
+      setShouldShow(false);
       timeout = setTimeout(() => {
-        setShouldRender(false); // unmount after animation ends
-      }, 300); // matches CSS duration
+        setShouldRender(false);
+      }, 300);
     }
 
     return () => clearTimeout(timeout);
   }, [expanded]);
 
   return (
-    <li>
-      <Link to={item.path}>
-        {item.icon}
-        {shouldRender && (
-          <span
-            className={`${styles.title} ${
-              shouldShow ? styles.expanded : styles.collapsed
-            }`}
-          >
-            {item.title}
-          </span>
+    <>
+      <li onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+        <Link to={item.path}>
+          {item.icon}
+          {shouldRender && (
+            <span
+              className={`${styles.title} ${
+                shouldShow ? styles.expanded : styles.collapsed
+              }`}
+            >
+              {item.title}
+            </span>
+          )}
+        </Link>
+        {onMouseOver && !expanded && (
+          <span className={styles.tooltip}>{item.title}</span>
         )}
-      </Link>
-    </li>
+      </li>
+    </>
   );
 }
 

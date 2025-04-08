@@ -15,6 +15,7 @@ function LeftNav() {
     { title: "Home", icon: <SVG.home />, path: "/" },
     { title: "Notes", icon: <SVG.notes />, path: "/" },
     { title: "Pomodoro", icon: <SVG.pomodoro />, path: "/" },
+    { title: "Calendar", icon: <SVG.calendar />, path: "/" },
   ];
 
   const bottomItems = [

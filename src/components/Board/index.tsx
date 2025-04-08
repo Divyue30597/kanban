@@ -164,7 +164,6 @@ function Board(props: HTMLProps<HTMLDivElement>) {
         </div>
         <div className={styles.boardHeaderActions}>
           <RenderModal />
-          <Button>Add Column</Button>
         </div>
       </div>
       <div ref={boardContentRef} className={styles.boardContent}>

@@ -1,5 +1,7 @@
 li {
   margin: 0.5rem;
+  position: relative;
+
   a {
     display: flex;
     align-items: center;
@@ -11,6 +13,7 @@ li {
     // margin: 0.8rem;
     transition: background-color 0.3s ease, color 0.3s ease;
     border-radius: 0.4rem;
+
     &:hover {
       background-color: #e6e6e6;
     }
@@ -41,4 +44,14 @@ li {
       visibility: hidden;
     }
   }
+}
+
+.tooltip {
+  position: absolute;
+  left: 6rem;
+  top: 1rem;
+  background-color: #e6e6e6;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border-radius: 0.4rem;
 }
