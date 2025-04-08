@@ -562,14 +562,14 @@ export function useDragAndDrop({
 
             if (isValid) {
               dragElementRef.current.style.border =
-                "2px solid rgba(50, 205, 50, 0.8)";
+                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_RIGHT_COLUMN_BORDER;
               dragElementRef.current.style.boxShadow =
-                "0 0 10px rgba(50, 205, 50, 0.4)";
+                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_RIGHT_COLUMN_BOX_SHADOW;
             } else {
               dragElementRef.current.style.border =
-                "2px solid rgba(255, 99, 71, 0.8)";
+                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_WRONG_COLUMN_BORDER;
               dragElementRef.current.style.boxShadow =
-                "0 0 10px rgba(255, 99, 71, 0.4)";
+                DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_OVER_WRONG_COLUMN_BOX_SHADOW;
             }
           } else {
             dragElementRef.current.style.border = DRAG_CONFIG.VISUAL.BORDER;

@@ -2,7 +2,6 @@ import { HTMLProps, useRef, useState, useEffect } from "react";
 import styles from "./board.module.scss";
 import columnStyles from "../Column/column.module.scss";
 import Container from "../Container";
-import Button from "../Button";
 import RenderModal from "../Modal/modal";
 import Column from "../Column";
 import Card, { CardType } from "../Card";
