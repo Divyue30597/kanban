@@ -4,8 +4,8 @@
   border-radius: 0.8rem;
   box-shadow: var(--box-shadow);
 
-  &:last-child {
-    margin-bottom: 0rem;
+  & > *:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -36,7 +36,7 @@
     margin-bottom: 1.2rem;
 
     &:last-child {
-      margin-bottom: 1.2rem;
+      margin-bottom: 0;
     }
   }
 }

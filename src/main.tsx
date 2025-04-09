@@ -5,7 +5,9 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
 import { Provider } from "react-redux";
 import { store } from "./store/index.ts";
-import { DragDebugProvider } from "./contexts/DragDebugContext.tsx";
+import { initializeLocalStorage } from "./store/middleware/localStorageMiddleware";
+
+initializeLocalStorage();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

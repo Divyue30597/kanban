@@ -24,6 +24,7 @@ export type Card = {
   tags?: string[];
   dueDate?: string;
   subTasks?: Subtask[];
+  links?: string[];
   assignees?: string[];
 };
 
@@ -141,6 +142,10 @@ export const data: Data = {
         { title: "Accountant contract", done: false },
         { title: "Request work payslips", done: false },
         { title: "Cancel VAT ID", done: false },
+      ],
+      links: [
+        "https://www.irs.gov/businesses/small-businesses-self-employed/filing-your-taxes",
+        "https://www.irs.gov/forms-pubs/about-publication-17",
       ],
     },
     {
