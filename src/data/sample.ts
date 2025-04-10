@@ -25,6 +25,7 @@ export type Card = {
   dueDate?: string;
   subTasks?: Subtask[];
   links?: string[];
+  images?: string[];
   assignees?: string[];
 };
 
@@ -113,7 +114,10 @@ export const data: Data = {
       id: "card-1",
       title: "Initial planning",
       description: "Outline basic project steps.",
-      tags: [],
+      tags: ["Initial", "Planning"],
+      images: [
+        "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg",
+      ],
     },
     {
       id: "card-2",
@@ -132,9 +136,15 @@ export const data: Data = {
       id: "card-4",
       title: "Setup repo",
       description: "Initialized GitHub repository and setup README.",
-      tags: [],
+      tags: ["Repo"],
+      links: ["https://github.com/Divyue30597"],
     },
-    { id: "card-5", title: "Take Coco to a vet", dueDate: "2025-04-11" },
+    {
+      id: "card-5",
+      title: "Take Coco to a vet",
+      dueDate: "2025-04-11",
+      images: ["https://images.pexels.com/photos/20787/pexels-photo.jpg"],
+    },
     {
       id: "card-6",
       title: "Taxes 😓",
@@ -152,13 +162,22 @@ export const data: Data = {
       id: "card-7",
       title: "Move",
       description: "Survive moving places in the pandemic.",
+      images: [
+        "https://images.pexels.com/photos/30959912/pexels-photo-30959912/free-photo-of-traditional-shrine-in-tokyo-with-umbrella.jpeg",
+      ],
       subTasks: [
         { title: "Request moving estimate", done: false },
         { title: "Order moving boxes", done: true },
       ],
       assignees: ["user-1"],
     },
-    { id: "card-8", title: "Nothing to be done 😌" },
+    {
+      id: "card-8",
+      title: "Nothing to be done 😌",
+      images: [
+        "https://images.pexels.com/photos/31165982/pexels-photo-31165982/free-photo-of-beautiful-plum-blossoms-in-nanjing-spring.jpeg",
+      ],
+    },
     {
       id: "card-9",
       title: "Review scope",
@@ -171,6 +190,13 @@ export const data: Data = {
       subTasks: [
         { title: "Schedule time", done: true },
         { title: "Set up a Figma board", done: false },
+      ],
+      tags: ["Retro", "Synthwave", "Retrowave"],
+      images: [
+        "https://images.pexels.com/photos/1389429/pexels-photo-1389429.jpeg",
+      ],
+      links: [
+        "https://open.spotify.com/track/7MZM9KhwGQG8QJ4BycsnQn?si=e2c4e9a9a71e4cc4",
       ],
     },
     {
@@ -189,6 +215,9 @@ export const data: Data = {
         { title: "Schedule time", done: true },
         { title: "Set up a Figma board", done: false },
         { title: "Review exercises with the team", done: false },
+      ],
+      images: [
+        "https://images.pexels.com/photos/31508335/pexels-photo-31508335/free-photo-of-serene-waterfall-in-forest-landscape.jpeg",
       ],
       assignees: ["user-1"],
     },

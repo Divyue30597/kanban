@@ -1,5 +1,5 @@
 import styles from "./leftNav.module.scss";
-import { SVG } from "../SVG";
+import { SVG } from "../../SVG";
 import { useState } from "react";
 import ListItem from "../ListItem";
 import { useEffect } from "react";
@@ -13,15 +13,16 @@ function LeftNav() {
 
   const menuItems = [
     { title: "Home", icon: <SVG.home />, path: "/" },
-    { title: "Notes", icon: <SVG.notes />, path: "/" },
-    { title: "Pomodoro", icon: <SVG.pomodoro />, path: "/" },
-    { title: "Calendar", icon: <SVG.calendar />, path: "/" },
-    { title: "Subscriptions", icon: <SVG.subscriptions />, path: "/" },
+    { title: "Notes", icon: <SVG.notes />, path: "/notes" },
+    { title: "Pomodoro", icon: <SVG.pomodoro />, path: "/pomodoro" },
+    { title: "Calendar", icon: <SVG.calendar />, path: "/calendar" },
+    { title: "Subscriptions", icon: <SVG.subscriptions />, path: "/subscriptions" },
+    { title: "Settings", icon: <SVG.settings />, path: "/settings" },
   ];
 
   const bottomItems = [
-    { title: "Profile", icon: <SVG.profile />, path: "/" },
-    { title: "Help", icon: <SVG.help />, path: "/" },
+    { title: "Profile", icon: <SVG.profile />, path: "/profile" },
+    { title: "Help", icon: <SVG.help />, path: "/help" },
     { title: "Logout", icon: <SVG.logout />, path: "/" },
   ];
 
@@ -50,7 +51,7 @@ function LeftNav() {
   }, [expanded, handleKeyDown]);
 
   return (
-    <div
+    <nav
       className={
         styles.leftNav +
         (expanded ? ` ${styles.expanded}` : ` ${styles.collapse}`)
@@ -77,12 +78,12 @@ function LeftNav() {
           ))}
         </div>
         <div className={styles.leftNavListGroup}>
-          {bottomItems.map((item, index) => (
+          {bottomItems?.map((item, index) => (
             <ListItem key={index} item={item} expanded={expanded} />
           ))}
         </div>
       </ul>
-    </div>
+    </nav>
   );
 }
 

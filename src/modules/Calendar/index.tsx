@@ -1,9 +1,9 @@
 import Section from "../../components/Section";
 
-export default function Settings() {
+export default function Calendar() {
   return (
     <Section>
-      <h1>Settings</h1>
+      <h1>Calendar</h1>
     </Section>
   );
 }

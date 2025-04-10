@@ -19,3 +19,13 @@ export function getTagColors(tag: string): {
     color,
   };
 }
+
+export function timeFormatting(timeLeft: number): string {
+  return (
+    `${Math.floor(timeLeft / 60)
+      .toString()
+      .padStart(2, "0")}` +
+    ":" +
+    `${(timeLeft % 60).toString().padStart(2, "0")}`
+  );
+}

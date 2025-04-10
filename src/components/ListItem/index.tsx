@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 import styles from "./listItem.module.scss";
 import { useEffect, useState } from "react";
 
@@ -46,8 +46,15 @@ function ListItem(props: ListItemProps) {
 
   return (
     <>
-      <li onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
-        <Link to={item.path}>
+      <li
+        title={item.title}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
+      >
+        <NavLink
+          to={item.path}
+          className={({ isActive }) => `${isActive ? styles.active : ""}`}
+        >
           {item.icon}
           {shouldRender && (
             <span
@@ -58,7 +65,7 @@ function ListItem(props: ListItemProps) {
               {item.title}
             </span>
           )}
-        </Link>
+        </NavLink>
         {onMouseOver && !expanded && (
           <span className={styles.tooltip}>{item.title}</span>
         )}

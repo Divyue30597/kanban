@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { SVG } from "../SVG";
+import { SVG } from "../../SVG";
 import styles from "./link.module.scss";
 import { LinkProps } from "react-router";
 

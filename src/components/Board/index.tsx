@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectActiveBoard, selectBoardColumns } from "../../store/selectors";
 import { setActiveBoard } from "../../store/features/boards/boardSlice";
 import { moveCardBetweenColumns } from "../../store/thunks";
+import Section from "../Section";
 
 function Board(props: HTMLProps<HTMLDivElement>) {
   const { children, className, ...rest } = props;
@@ -18,7 +19,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
   const activeBoard = useAppSelector(selectActiveBoard);
   const columns = useAppSelector(selectBoardColumns);
   const boards = useAppSelector((state) => state.boards.boards);
-  
+
   const boardRef = useRef<HTMLDivElement | null>(null);
   const boardContentRef = useRef<HTMLDivElement>(null);
   const isTouchDevice = useRef(false);
@@ -90,11 +91,18 @@ function Board(props: HTMLProps<HTMLDivElement>) {
     );
   }
 
+  const handleCardDrop = (cardId: string, targetColumnId: string) => {
+    const sourceColumnId = columns.find((col) =>
+      col?.cardIds?.includes(cardId)
+    )?.id;
+
+    if (sourceColumnId && sourceColumnId !== targetColumnId) {
+      handleCardMove(cardId, sourceColumnId, targetColumnId);
+    }
+  };
+
   return (
-    <div
-      ref={boardRef}
-      className={styles.board + (className ? ` ${className}` : "")}
-    >
+    <Section ref={boardRef} {...rest}>
       <div className={styles.boardHeader}>
         <div className={styles.boardHeaderContent}>
           <h1>{activeBoard?.title}</h1>
@@ -120,19 +128,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
                 className={styles.column}
                 colId={column?.id!}
                 colName={column?.title!}
-                // data-column-id={column?.id}
-                onCardDrop={(cardId, targetColumnId) => {
-                  console.log("Card drop detected", { cardId, targetColumnId });
-
-                  // The sourceColumnId will be passed from the Card component
-                  const sourceColumnId = columns.find((col) =>
-                    col?.cardIds?.includes(cardId)
-                  )?.id;
-
-                  if (sourceColumnId && sourceColumnId !== targetColumnId) {
-                    handleCardMove(cardId, sourceColumnId, targetColumnId);
-                  }
-                }}
+                onCardDrop={handleCardDrop}
               >
                 {column?.cardIds?.map((cardId) => {
                   return (
@@ -154,7 +150,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
             ))}
         </Container>
       </div>
-    </div>
+    </Section>
   );
 }
 

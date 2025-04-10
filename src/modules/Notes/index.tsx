@@ -1,9 +1,9 @@
 import Section from "../../components/Section";
 
-export default function Settings() {
+export default function Notes() {
   return (
     <Section>
-      <h1>Settings</h1>
+      <h1>Notes</h1>
     </Section>
   );
 }

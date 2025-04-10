@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./form.module.scss";
 import FormInput, { FormInputProps } from "../FormInput";
+import Button from "../Button";
 
 const formInputs: FormInputProps[] = [
   {
@@ -113,6 +114,7 @@ function Form() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Form submitted:", formState);
   };
 
   return (
@@ -135,6 +137,7 @@ function Form() {
           />
         );
       })}
+      <Button type="submit">Submit</Button>
     </form>
   );
 }

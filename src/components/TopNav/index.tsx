@@ -1,7 +1,7 @@
 import Button from "../Button";
 import Dropdown from "../Dropdown";
 import styles from "./topNav.module.scss";
-import { SVG } from "../SVG";
+import { SVG } from "../../SVG";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setActiveBoard } from "../../store/features/boards/boardSlice";
 

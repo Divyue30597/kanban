@@ -1,0 +1,60 @@
+$color: #f4eddb;
+
+.pomodoro {
+  background-color: #4186f4;
+  color: $color;
+  height: calc(100dvh - 11.2rem);
+  margin: 2.8rem;
+  border-radius: 0.8rem;
+
+  & > h1 {
+    font-size: 6rem;
+    font-weight: 900;
+    color: $color;
+    text-align: center;
+    margin-bottom: 2.4rem;
+
+    & > svg {
+      width: 3.6rem !important;
+      height: 3.6rem !important;
+    }
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pomodoroContent {
+  width: 48rem;
+  margin-bottom: 3.2rem;
+}
+
+.clock {
+  height: 0.4rem;
+  background-color: #000;
+  overflow-x: auto;
+}
+
+.time {
+  text-align: center;
+  font-size: 12rem;
+  font-weight: 900;
+  margin-top: 2.4rem;
+}
+
+.tabTitles {
+  font-size: 1.6rem;
+}
+
+.startButton {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  width: 7.2rem;
+  height: 7.2rem;
+  font-size: 0;
+  cursor: pointer;
+  
+}

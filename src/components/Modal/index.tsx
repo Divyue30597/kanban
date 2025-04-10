@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import styles from "./modal.module.scss";
-import { SVG } from "../SVG";
+import { SVG } from "../../SVG";
 
 const ModalContext = createContext<{
   isOpen: boolean;

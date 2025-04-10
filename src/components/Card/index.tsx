@@ -50,7 +50,7 @@ export default function Card(props: CardType) {
     >
       <h1 className={styles.heading}>{title}</h1>
       <p className={styles.description}>{description}</p>
-      {subTasks && renderSubTasks({ subTasks })}
+      {subTasks && renderSubTasks({ subTasks, cardId: id })}
       {links && renderLinks({ links })}
       {images && renderImages({ images })}
       {tags && renderTags({ tags })}
@@ -58,15 +58,20 @@ export default function Card(props: CardType) {
   );
 }
 
-function renderSubTasks(props: { subTasks?: Subtask[] }) {
-  const { subTasks } = props;
+function renderSubTasks(props: { subTasks?: Subtask[]; cardId: string }) {
+  const { subTasks, cardId } = props;
   return (
     <div className={styles.subTasks}>
       <h2>Sub tasks</h2>
       {subTasks?.map((subTask, index) => {
         return (
           <div className={styles.subTask} key={index}>
-            <CheckboxWithText label={subTask.title} checked={subTask.done} />
+            <CheckboxWithText
+              label={subTask.title}
+              checked={subTask.done}
+              cardId={cardId}
+              index={index}
+            />
           </div>
         );
       })}
