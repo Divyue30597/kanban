@@ -17,18 +17,18 @@ const SHORTCUTS: Shortcuts[] = [
   {
     featureName: "General Shortcuts",
     shortcuts: [
-      { id: 1, key: ["Ctrl", "Shift", "H"], description: "Open Help." },
-      { id: 2, key: ["Ctrl", "Shift", "N"], description: "Open Notes." },
-      { id: 3, key: ["Ctrl", "Shift", "P"], description: "Open Pomodoro." },
-      { id: 4, key: ["Ctrl", "Shift", "C"], description: "Open Calendar." },
+      { id: 1, key: ["Shift", "Alt", "H"], description: "Open Home." },
+      { id: 2, key: ["Shift", "Alt", "N"], description: "Open Notes." },
+      { id: 3, key: ["Shift", "Alt", "P"], description: "Open Pomodoro." },
+      { id: 4, key: ["Shift", "Alt", "C"], description: "Open Calendar." },
       {
         id: 5,
-        key: ["Ctrl", "Shift", "S"],
+        key: ["Shift", "Alt", "S"],
         description: "Open Subscriptions.",
       },
-      { id: 6, key: ["Ctrl", "Shift", "U"], description: "Open Settings." },
-      { id: 7, key: ["Ctrl", "Shift", "L"], description: "Open Profile." },
-      { id: 8, key: ["Ctrl", "Shift", "Q"], description: "Log Out." },
+      { id: 6, key: ["Shift", "Alt", "U"], description: "Open Settings." },
+      { id: 7, key: ["Shift", "Alt", "L"], description: "Open Profile." },
+      { id: 8, key: ["Shift", "Alt", "Q"], description: "Open Help." },
     ],
   },
   {
@@ -57,14 +57,16 @@ function Help() {
             <h3>{shortcut.featureName}</h3>
             {shortcut.shortcuts.map((item, ind) => (
               <div className={styles.table} key={item.id}>
-                {item.key.map((k: string, index) => (
-                  <span
-                    key={(k + ind + index).toString()}
-                    className={styles.key}
-                  >
-                    <kbd>{k}</kbd>
-                  </span>
-                ))}
+                <kbd key={item.id} className={styles.key}>
+                  {item.key.map((k: string, index) => (
+                    <span>
+                      {k}{" "}
+                      {item.key.length > 0 &&
+                        index !== item.key.length - 1 &&
+                        "+ "}
+                    </span>
+                  ))}
+                </kbd>
                 <p>{item.description}</p>
               </div>
             ))}

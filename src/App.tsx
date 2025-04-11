@@ -10,14 +10,40 @@ import Notes from "./modules/Notes";
 import Calendar from "./modules/Calendar";
 import Subscriptions from "./modules/Subscriptions";
 import Help from "./modules/Help";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 function App() {
   const navigate = useNavigate();
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "h") navigate("/");
-  };
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "h") {
+        navigate("/");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "n") {
+        navigate("/notes");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "p") {
+        navigate("/pomodoro");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "c") {
+        navigate("/calendar");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "s") {
+        navigate("/subscriptions");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "u") {
+        navigate("/settings");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "l") {
+        navigate("/profile");
+      }
+      if (e.shiftKey && e.altKey && e.key.toLowerCase() === "q") {
+        navigate("/help");
+      }
+    },
+    [navigate]
+  );
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
