@@ -2,15 +2,6 @@
   --animation-duration: 1500s; /* Default 25min in seconds */
   --progress: 0%;
 
-  @keyframes lineMovement {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
-  }
-
   background-color: var(--primary-text);
   width: 100%;
   border-block: 0.4rem solid var(--text);
@@ -40,5 +31,14 @@
     left: var(--progress);
     z-index: 2;
     transform: scale(-1, 1); // Combine transforms and force GPU acceleration
+  }
+}
+
+@keyframes lineMovement {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
   }
 }

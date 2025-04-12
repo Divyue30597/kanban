@@ -1,17 +1,25 @@
 .button {
-  padding: 0.6rem 1.2rem;
+  padding: 0.8rem 1.4rem;
   border-radius: 0.4rem;
   font-size: 1.4rem;
   font-weight: 600;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  background-color: var(--primary);
-  color: var(--text);
-  border: none;
+  color: var(--primary-text);
+  background-color: inherit;
+  border: 0.2rem solid var(--primary);
+  border-bottom: 0.4rem solid var(--primary);
+  border-radius: 0.6rem;
   outline: none;
 
   &:hover {
+    background-color: var(--primary);
+    color: var(--text);
+  }
+
+  &:active {
+    border-bottom: 0.2rem solid var(--primary-hover);
     background-color: var(--primary-hover);
     color: var(--text);
   }

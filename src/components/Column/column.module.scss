@@ -7,6 +7,18 @@
     text-transform: uppercase;
     width: fit-content;
 
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    & > span {
+      background-color: #777777;
+      color:  var(--text);
+      padding: 0.2rem 0.6rem;
+      font-size: 1.2rem;
+      border-radius: 0.6rem;
+    }
+
     background-color: #e1e1e1;
     padding: 0.4rem 1.2rem;
     border-radius: 1.2rem;

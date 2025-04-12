@@ -57,7 +57,7 @@ const ModalComponent = ({ isOpen, onClose, children }: ModalProps) => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
       if (shouldRender) {
-        document.body.style.overflow = "auto";
+        document.body.style.overflow = "hidden";
       }
     };
   }, [isOpen, onClose, shouldRender]);

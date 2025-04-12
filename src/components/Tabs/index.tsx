@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./tabs.module.scss";
+import Button from "../Button";
 
 interface Tab extends React.HTMLProps<HTMLDivElement> {
   activeTab?: number | string;
@@ -35,7 +36,7 @@ function Tabs(props: Tab) {
     >
       <div className={styles.tabList + ` ${className ? className : ""}`}>
         {tabs.map((tab, index) => (
-          <button
+          <Button
             type="button"
             disabled={activeTab === index}
             className={styles.tabItem}
@@ -47,7 +48,7 @@ function Tabs(props: Tab) {
             }}
           >
             {tab.label}
-          </button>
+          </Button>
         ))}
       </div>
       <div className="tab-content">{tabs[activeTab].children}</div>

@@ -128,6 +128,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
                 className={styles.column}
                 colId={column?.id!}
                 colName={column?.title!}
+                numOfCards={column?.cardIds?.length || 0}
                 onCardDrop={handleCardDrop}
               >
                 {column?.cardIds?.map((cardId) => {

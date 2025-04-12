@@ -17,10 +17,9 @@ export const selectBoardColumns = createSelector(
   (activeBoard, columns) => {
     if (!activeBoard) return [];
 
-    // Get the column objects and sort by their order in columnIds
     return activeBoard.columnIds
       .map((columnId) => columns.find((col) => col.id === columnId))
-      .filter(Boolean); // Remove any undefined values
+      .filter(Boolean);
   }
 );
 
