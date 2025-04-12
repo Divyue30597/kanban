@@ -17,11 +17,11 @@
   border: none;
   width: 100%;
   background-color: inherit;
-  color: var(--text);
   text-align: center;
+  font-weight: 700;
 
   &:disabled {
-    border-bottom: 0.4rem solid #f4eddb;
-    font-weight: 900 !important;
+    cursor: not-allowed;
+    border-bottom: 0.4rem solid var(--primary);
   }
 }

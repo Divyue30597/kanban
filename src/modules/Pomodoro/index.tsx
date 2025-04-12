@@ -3,6 +3,8 @@ import Tabs from "../../components/Tabs";
 import { SVG } from "../../SVG";
 import { useEffect, useState } from "react";
 import { timeFormatting } from "../../utils/utils";
+import Car from "./Car";
+import svg from "./Car/sedan car-bro.svg";
 
 type TimeLeft = {
   pomodoro: number;
@@ -19,7 +21,6 @@ type IsRunning = {
 type activeTabType = "pomodoro" | "shortBreak" | "longBreak";
 
 export default function Pomodoro() {
-  // Add missing state variables for the timer
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     pomodoro: 25 * 60,
     shortBreak: 5 * 60,
@@ -34,26 +35,7 @@ export default function Pomodoro() {
   const [activeTab, setActiveTab] = useState<activeTabType>("pomodoro");
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key.toLowerCase() === "j") {
-      setIsRunning((prev) => ({
-        ...prev,
-        [activeTab]: !prev[activeTab],
-      }));
-    } else if (e.key.toLowerCase() === "k") {
-      setIsRunning((prev) => ({
-        ...prev,
-        pomodoro: false,
-        shortBreak: false,
-        longBreak: false,
-      }));
-    } else if (e.key.toLowerCase() === "p") {
-      setActiveTab("pomodoro");
-    } else if (e.key.toLowerCase() === "s") {
-      console.log("pressed s")
-      setActiveTab("shortBreak");
-    } else if (e.key.toLowerCase() === "l") {
-      setActiveTab("longBreak");
-    } else if (e.key.toLowerCase() === "r") {
+    if (e.key.toLowerCase() === "r") {
       setTimeLeft({
         pomodoro: 25 * 60,
         shortBreak: 5 * 60,
@@ -124,29 +106,33 @@ export default function Pomodoro() {
 
   return (
     <div className={styles.pomodoro}>
-      <h1>
-        pomodor
-        <SVG.pomodoroClock />
-      </h1>
-      <div className={styles.pomodoroContent}>
-        <Tabs
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={(id) => setActiveTab(id as activeTabType)}
-        />
+      <Car timer={25} isRunning={isRunning} />
+      <div className={styles.pomodoroContainer}>
+        <h1>
+          pomodor
+          <SVG.pomodoroClock />
+        </h1>
+        <div className={styles.pomodoroContent}>
+          <Tabs
+            className={styles.tabBtn}
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={(id) => setActiveTab(id as activeTabType)}
+          />
+        </div>
+        <button
+          className={styles.startButton}
+          type="button"
+          onClick={() =>
+            setIsRunning({
+              ...isRunning,
+              [activeTab]: !isRunning[activeTab],
+            })
+          }
+        >
+          {!isRunning[activeTab] ? <SVG.playButton /> : <SVG.pauseButton />}
+        </button>
       </div>
-      <button
-        className={styles.startButton}
-        type="button"
-        onClick={() =>
-          setIsRunning({
-            ...isRunning,
-            [activeTab]: !isRunning[activeTab],
-          })
-        }
-      >
-        {!isRunning[activeTab] ? <SVG.playButton /> : <SVG.pauseButton />}
-      </button>
     </div>
   );
 }

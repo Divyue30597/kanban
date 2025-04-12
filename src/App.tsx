@@ -11,6 +11,11 @@ import Calendar from "./modules/Calendar";
 import Subscriptions from "./modules/Subscriptions";
 import Help from "./modules/Help";
 import { useCallback, useEffect } from "react";
+import KanbanSettings from "./modules/Settings/Kanban";
+import NotesSettings from "./modules/Settings/Notes";
+import CalendarSettings from "./modules/Settings/Calendar";
+import SubscriptionsSettings from "./modules/Settings/Subscriptions";
+import PomodoroSettings from "./modules/Settings/Pomodoro";
 
 function App() {
   const navigate = useNavigate();
@@ -63,7 +68,16 @@ function App() {
           <Route path="/pomodoro" element={<Pomodoro />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/subscriptions" element={<Subscriptions />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings" element={<Settings />}>
+            <Route path="/settings/kanban" element={<KanbanSettings />} />
+            <Route path="/settings/notes" element={<NotesSettings />} />
+            <Route path="/settings/calendar" element={<CalendarSettings />} />
+            <Route path="/settings/pomodoro" element={<PomodoroSettings />} />
+            <Route
+              path="/settings/subscriptions"
+              element={<SubscriptionsSettings />}
+            />
+          </Route>
           <Route path="/profile" element={<Profile />} />
           <Route path="/help" element={<Help />} />
         </Routes>

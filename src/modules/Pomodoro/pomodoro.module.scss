@@ -7,23 +7,32 @@ $color: #f4eddb;
   margin: 2.8rem;
   border-radius: 0.8rem;
 
-  & > h1 {
-    font-size: 6rem;
-    font-weight: 900;
-    color: $color;
-    text-align: center;
-    margin-bottom: 2.4rem;
+  &:first-child {
+    flex-flow: 0;
+  }
 
-    & > svg {
-      width: 3.6rem !important;
-      height: 3.6rem !important;
+  .pomodoroContainer {
+    & > h1 {
+      font-size: 6rem;
+      font-weight: 900;
+      color: $color;
+      text-align: center;
+      margin-bottom: 2.4rem;
+
+      & > svg {
+        width: 3.6rem !important;
+        height: 3.6rem !important;
+      }
     }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .pomodoroContent {
@@ -42,6 +51,7 @@ $color: #f4eddb;
   font-size: 12rem;
   font-weight: 900;
   margin-top: 2.4rem;
+  font-style: italic;
 }
 
 .tabTitles {
@@ -56,5 +66,23 @@ $color: #f4eddb;
   height: 7.2rem;
   font-size: 0;
   cursor: pointer;
-  
+}
+
+.tabBtn {
+  font-size: 1.6rem;
+  gap: 1.6rem;
+  padding: 0;
+
+  & > button {
+    color: $color;
+    border: 0.2rem solid $color;
+    border-radius: 0.8rem;
+    border-bottom: 0.4rem solid $color;
+  }
+
+  & > button:disabled {
+    font-weight: 800 !important;
+    color: $color;
+    border-bottom: 0.2rem solid $color;
+  }
 }

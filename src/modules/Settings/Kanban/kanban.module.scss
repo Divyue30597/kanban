@@ -1,0 +1,25 @@
+.kanbanSettings {
+  & > h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.tabBtn {
+  font-size: 1.6rem;
+  color: var(--primary-text);
+  width: fit-content;
+  gap: 1.6rem;
+  padding: 0;
+
+  & > button {
+    border-radius: 0.8rem;
+    border: 0.2rem solid var(--primary);
+    border-bottom: 0.4rem solid var(--primary);
+  }
+
+  & > button:disabled {
+    color: var(--primary);
+    border-bottom: 0.2rem solid var(--primary);
+  }
+}

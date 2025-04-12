@@ -3,7 +3,7 @@ import styles from "./tabs.module.scss";
 
 interface Tab extends React.HTMLProps<HTMLDivElement> {
   activeTab?: number | string;
-  onTabChange: (id: string | number) => void;
+  onTabChange?: (id: string | number) => void;
   tabs: Array<{
     id: number | string;
     label: React.ReactNode | string;
@@ -16,7 +16,7 @@ function Tabs(props: Tab) {
     tabs,
     onTabChange,
     activeTab: propActiveTab,
-    onKeyDown,
+    className,
     ...rest
   } = props;
 
@@ -31,19 +31,19 @@ function Tabs(props: Tab) {
       className={styles.tabs}
       role="tablist"
       aria-orientation="horizontal"
-      onKeyDown={onKeyDown}
       {...rest}
     >
-      <div className={styles.tabList}>
+      <div className={styles.tabList + ` ${className ? className : ""}`}>
         {tabs.map((tab, index) => (
           <button
             type="button"
             disabled={activeTab === index}
             className={styles.tabItem}
+            role="tab"
             key={tab.id}
             onClick={() => {
               handleTabClick(index);
-              onTabChange(propActiveTab || tab.id);
+              onTabChange && onTabChange(propActiveTab || tab.id);
             }}
           >
             {tab.label}

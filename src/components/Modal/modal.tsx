@@ -16,17 +16,6 @@ function RenderModal() {
         <Modal.Body>
           <Form />
         </Modal.Body>
-        <Modal.Footer>
-          <button onClick={closeModal}>Cancel</button>
-          <button
-            onClick={() => {
-              console.log("Submit action");
-              closeModal();
-            }}
-          >
-            Submit
-          </button>
-        </Modal.Footer>
       </Modal>
     </>
   );

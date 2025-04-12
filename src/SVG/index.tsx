@@ -315,4 +315,5 @@ export const SVG = {
       />
     </svg>
   ),
+
 };
