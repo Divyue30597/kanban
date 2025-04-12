@@ -13,6 +13,16 @@
   border-radius: 0.6rem;
   outline: none;
 
+  &[type="submit"] {
+    border-color: var(--secondary);
+  }
+
+  &[type="submit"]:hover {
+    background-color: var(--secondary);
+    color: var(--text);
+    border-bottom-color: var(--secondary);
+  }
+
   &:hover {
     background-color: var(--primary);
     color: var(--text);

@@ -1,0 +1,86 @@
+.boardSettings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.4rem;
+}
+
+.form {
+  box-shadow: var(--box-shadow);
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+
+  .updateBoard {
+    & > p {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    height: 3rem;
+    margin-bottom: 1.2rem;
+
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+  }
+
+  & > h3 {
+    font-size: 2rem;
+    margin-bottom: 1.8rem !important;
+    font-weight: 700;
+  }
+
+  & > :not(:last-child) {
+    margin-bottom: 1.2rem;
+  }
+}
+
+.dropdownBtn {
+  width: fit-content;
+
+  & > * > button {
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+.deleteBoard {
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  border-radius: 0.8rem;
+  grid-column: 1 / -1;
+  width: fit-content;
+  .deleteBtn {
+    &:hover {
+      background-color: #cc5656;
+      border-color: #cc5656;
+    }
+    border-color: #ff6b6b;
+  }
+}
+
+.deleteBoardText {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  white-space: nowrap;
+  height: 2.6rem;
+
+  font-size: 2rem;
+  line-height: 1.5;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  height: 4rem;
+}
+
+.updateSubmitBtn {
+  border-color: var(--tertiary) !important;
+
+  &:hover {
+    background-color: var(--tertiary) !important;
+    color: var(--text);
+  }
+}

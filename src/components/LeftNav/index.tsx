@@ -16,7 +16,11 @@ function LeftNav() {
     { title: "Notes", icon: <SVG.notes />, path: "/notes" },
     { title: "Pomodoro", icon: <SVG.pomodoro />, path: "/pomodoro" },
     { title: "Calendar", icon: <SVG.calendar />, path: "/calendar" },
-    { title: "Subscriptions", icon: <SVG.subscriptions />, path: "/subscriptions" },
+    {
+      title: "Subscriptions",
+      icon: <SVG.subscriptions />,
+      path: "/subscriptions",
+    },
     { title: "Settings", icon: <SVG.settings />, path: "/settings" },
   ];
 
@@ -66,23 +70,24 @@ function LeftNav() {
           className={expanded ? styles.chevronLeft : styles.chevronRight}
         />
       </button>
-      <ul className={styles.leftNavList}>
-        <div className={styles.leftNavListGroup}>
-          <li className={styles.logo}>
-            <span>KN</span>
-            <span>BN</span>
-          </li>
-          <hr />
-          {menuItems.map((item, index) => (
-            <ListItem key={index} item={item} expanded={expanded} />
-          ))}
+      <div className={styles.logo}>
+        <span>KN</span>
+        <span>BN</span>
+      </div>
+      <div className={styles.leftNavList}>
+        <div>
+          <ul className={styles.leftNavListGroup}>
+            {menuItems.map((item, index) => (
+              <ListItem key={index} item={item} expanded={expanded} />
+            ))}
+          </ul>
         </div>
-        <div className={styles.leftNavListGroup}>
+        <ul className={styles.leftNavListGroup}>
           {bottomItems?.map((item, index) => (
             <ListItem key={index} item={item} expanded={expanded} />
           ))}
-        </div>
-      </ul>
+        </ul>
+      </div>
     </nav>
   );
 }

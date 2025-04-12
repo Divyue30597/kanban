@@ -1,10 +1,10 @@
 import styles from "./pomodoro.module.scss";
 import Tabs from "../../components/Tabs";
+import Section from "../../components/Section";
 import { SVG } from "../../SVG";
 import { useEffect, useState } from "react";
 import { timeFormatting } from "../../utils/utils";
 import Car from "./Car";
-import svg from "./Car/sedan car-bro.svg";
 
 type TimeLeft = {
   pomodoro: number;

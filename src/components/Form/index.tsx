@@ -10,7 +10,7 @@ import { createCardInColumn } from "../../store/thunks";
 const formInputs: FormInputProps[] = [
   {
     id: "title",
-    label: "title",
+    label: "Title",
     type: "text",
     required: true,
     pattern: "^[\\w\\s\\p{P}\\p{S}]+$",

@@ -1,16 +1,22 @@
 .topNav {
+  top: 0;
+  position: sticky;
+  z-index: 100;
+  background-color: var(--background-color, #fff);
+  height: 6.6rem;
   border-bottom: 0.1rem solid var(--border-color);
-  // margin-bottom: 2.8rem;
+  width: calc(100dvw - 6rem);
 }
 
 .topNavContent {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   max-width: 96.4rem;
-  margin: 1.4rem auto;
-  // padding: 1.4rem 0;
+  padding-block: 1.4rem;
+  margin: 0 auto;
 
   & > p {
     font-size: 1.8rem;
@@ -23,6 +29,7 @@
   display: flex;
   gap: 2.4rem;
   align-items: center;
+  height: 4rem;
 }
 
 .dropdownBtn {

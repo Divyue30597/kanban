@@ -34,7 +34,6 @@ const boardSlice = createSlice({
       };
 
       state?.boards?.push(newBoard);
-      state.activeBoard = newBoard.id;
     },
 
     updateBoard: (

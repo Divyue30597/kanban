@@ -1,8 +1,8 @@
+import styles from "./kanban.module.scss";
 import Tabs from "../../../components/Tabs";
 import BoardSettings from "./Board";
 import CardSettings from "./Card";
 import ColumnSettings from "./Column";
-import styles from "./kanban.module.scss";
 
 function KanbanSettings() {
   const tabs = [
