@@ -2,7 +2,7 @@ import { HTMLProps, useRef, useEffect } from "react";
 import styles from "./board.module.scss";
 import columnStyles from "../Column/column.module.scss";
 import Container from "../Container";
-import RenderModal from "../Modal/modal";
+import AddTaskModal from "../Modal/addTaskModal";
 import Column from "../Column";
 import Card from "../Card";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
@@ -109,7 +109,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
           <p>{activeBoard.description}</p>
         </div>
         <div className={styles.boardHeaderActions}>
-          <RenderModal />
+          <AddTaskModal />
         </div>
       </div>
       <div ref={boardContentRef} className={styles.boardContent}>

@@ -7,10 +7,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function Button(props: ButtonProps) {
-  const { children, icon, className, ...rest } = props;
+  const { children, icon, className, type, ...rest } = props;
 
   return (
-    <button {...rest} type="button" className={styles.button + " " + className}>
+    <button
+      {...rest}
+      type={type || "button"}
+      className={styles.button + " " + className}
+    >
       {children}
       {icon && <span className={styles.icon}>{icon}</span>}
     </button>

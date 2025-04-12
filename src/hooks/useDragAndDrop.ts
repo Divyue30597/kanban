@@ -360,9 +360,7 @@ export function useDragAndDrop({
       }
 
       if (hitBoundary) {
-        console.log("Hit boundary:", hitBoundary);
-        console.log(dragElementRef.current, "dragElementRef.current");
-        dragElementRef.current.style.boxShadow = ""
+        dragElementRef.current.style.boxShadow = "";
         dragElementRef.current.style.border =
           DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_BORDER;
 

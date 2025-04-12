@@ -3,7 +3,8 @@ import styles from "./input.module.scss";
 
 type InputElementType = HTMLInputElement | HTMLTextAreaElement;
 
-interface FormInputProps {
+// Extend FormInputProps with React's HTML attributes
+type FormInputProps = {
   label: string;
   type: string;
   id: string;
@@ -18,8 +19,9 @@ interface FormInputProps {
   onBlur?: (event: React.FocusEvent<InputElementType>) => void;
   rows?: number;
   cols?: number;
-  [key: string]: any; // To allow other properties from HTML attributes
-}
+  infoMessage?: string;
+} & React.InputHTMLAttributes<HTMLInputElement> &
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 function FormInput(props: FormInputProps) {
   const {
@@ -35,6 +37,7 @@ function FormInput(props: FormInputProps) {
     onChange,
     onBlur,
     errorMessage,
+    infoMessage,
     rows = 4,
     cols = 50,
     ...rest
@@ -77,6 +80,9 @@ function FormInput(props: FormInputProps) {
     <div className={styles.input}>
       <label htmlFor={id}>{label}</label>
       {renderInput()}
+      {infoMessage?.length && (
+        <span className={styles.infoMessage}>{infoMessage}</span>
+      )}
       {errorMessage && <span className={styles.error}>{errorMessage}</span>}
     </div>
   );

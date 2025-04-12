@@ -3,7 +3,7 @@ import Modal from ".";
 import Button from "../Button";
 import Form from "../Form";
 
-function RenderModal() {
+function AddTaskModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
   const openModal = () => setIsModalOpen(true);
@@ -21,4 +21,4 @@ function RenderModal() {
   );
 }
 
-export default RenderModal;
+export default AddTaskModal;

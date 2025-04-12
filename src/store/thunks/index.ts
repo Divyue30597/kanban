@@ -13,6 +13,7 @@ import {
 } from "../features/column/columnSlice";
 import { createCard, deleteCardsByIds } from "../features/cards/cardSlice";
 import { v4 as uuidv4 } from "uuid";
+import { Card } from "../types";
 
 export const deleteBoardWithRelated = createAsyncThunk<
   string,
@@ -74,21 +75,15 @@ export const deleteColumnWithRelated = createAsyncThunk<
 // Create a new card and add it to a column
 export const createCardInColumn = createAsyncThunk<
   string,
-  {
-    columnId: string;
-    title: string;
-    description?: string;
-    tags?: string[];
-    dueDate?: string;
-  },
+  Card & { columnId: string },
   { dispatch: AppDispatch }
 >("cards/createCardInColumn", async (cardData, { dispatch }) => {
   const { columnId, ...cardDetails } = cardData;
   const cardId = uuidv4();
   dispatch(
     createCard({
-      id: cardId,
       ...cardDetails,
+      id: cardId,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })

@@ -2,13 +2,15 @@
   &:not(:last-child) {
     margin-bottom: 0;
   }
-  
+
   & > * {
     margin-bottom: 1rem;
   }
 
   & > button {
     width: 100%;
-    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.6rem;
+    padding-block: 1rem;
   }
 }
