@@ -33,14 +33,6 @@
   }
 }
 
-.dropdownBtn {
-  width: fit-content;
-
-  & > * > button {
-    padding: 0.4rem 0.8rem;
-  }
-}
-
 .deleteBoard {
   box-shadow: var(--box-shadow);
   padding: 2rem;

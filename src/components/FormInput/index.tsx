@@ -10,7 +10,7 @@ type FormInputProps = {
   id: string;
   name: string;
   placeholder?: string;
-  value?: string | number | readonly string[];
+  value: string | string[] | File[];
   errorMessage: string;
   required?: boolean;
   pattern?: string;

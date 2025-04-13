@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectActiveBoard } from "../../store/selectors";
 import { createCardInColumn } from "../../store/thunks";
+import { Subtask } from "../../store/types";
 
 const formInputs: FormInputProps[] = [
   {
@@ -17,6 +18,7 @@ const formInputs: FormInputProps[] = [
     placeholder: "e.g. Design Weekly",
     name: "title",
     errorMessage: "Heading is required.",
+    value: "",
   },
   {
     id: "description",
@@ -30,6 +32,7 @@ const formInputs: FormInputProps[] = [
       "e.g. Create wireframes and high-fidelity designs for the app's main screens.",
     name: "description",
     errorMessage: "Description is required.",
+    value: "",
   },
   {
     id: "tags",
@@ -43,6 +46,7 @@ const formInputs: FormInputProps[] = [
     name: "tags",
     errorMessage: "Tags are required.",
     infoMessage: "Please enter comma separated tags.",
+    value: "",
   },
   {
     id: "links",
@@ -54,17 +58,19 @@ const formInputs: FormInputProps[] = [
     name: "links",
     errorMessage: "Links are optional.",
     infoMessage: "Please enter comma separated URLs.",
+    value: "",
   },
   {
-    id: "subtasks",
+    id: "subTasks",
     label: "Subtasks",
     type: "text",
     required: false,
     placeholder: "e.g. Design the login screen, Fix UI/UX issues",
     pattern: "^[\\w\\s\\p{P}\\p{S}]+(\\s*,\\s*[\\w\\s\\p{P}\\p{S}]+)*$",
-    name: "subtasks",
+    name: "subTasks",
     errorMessage: "Subtasks are optional.",
     infoMessage: "Please enter comma separated subtasks.",
+    value: [],
   },
   {
     id: "images",
@@ -74,6 +80,8 @@ const formInputs: FormInputProps[] = [
     accept: "image/*",
     name: "images",
     errorMessage: "Images are optional.",
+    infoMessage: "Please upload images with resolution 1024*1024.",
+    value: [],
   },
 ];
 
@@ -82,8 +90,8 @@ interface FormState {
   description: string;
   tags: string[];
   links?: string[];
-  subtasks?: string[];
-  images?: string[];
+  subTasks?: Subtask[];
+  images?: File[];
   columnId: string;
 }
 
@@ -95,8 +103,8 @@ function Form() {
     description: "",
     tags: [""],
     links: [""],
-    subtasks: [""],
-    images: [""],
+    subTasks: [{ title: "", done: false }],
+    images: [],
     columnId: "",
   });
 
@@ -109,7 +117,7 @@ function Form() {
     if (isFileInput) {
       const files = (event.target as HTMLInputElement).files;
       if (files) {
-        const fileArray = Array.from(files).map((file) => file.name);
+        const fileArray = Array.from(files);
         setFormState((prevState) => ({
           ...prevState,
           [name]: fileArray,
@@ -117,7 +125,19 @@ function Form() {
       }
       return;
     }
-    if (type === "text" || type === "url") {
+    if (name === "subTasks") {
+      const subtaskTitles = value
+        ? value.split(",").map((title) => title.trim())
+        : [];
+      const subtasks = subtaskTitles.map((title) => ({
+        title,
+        done: false,
+      }));
+      setFormState((prevState) => ({
+        ...prevState,
+        [name]: subtasks,
+      }));
+    } else if (type === "text" || type === "url") {
       setFormState((prevState) => ({
         ...prevState,
         [name]: value.split(","),
@@ -133,19 +153,41 @@ function Form() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const formEntries = Object.fromEntries(formData.entries());
-    const formState: FormState & { id: string } = {
+
+    if (formState.images && formState.images.length > 0) {
+      formData.delete("images");
+
+      formState.images.forEach((file) => {
+        formData.append("images", file);
+      });
+    }
+
+    // Process subTasks from the form input
+    const subTasksInput = formData.get("subTasks") as string;
+    const subTasks = subTasksInput
+      ? subTasksInput.split(",").map((title) => ({
+          title: title.trim(),
+          done: false,
+        }))
+      : [];
+
+    const cardData = {
       id: uuidv4(),
-      title: formEntries.title as string,
-      description: formEntries.description as string,
-      tags: (formEntries.tags as string).split(","),
-      links: (formEntries.links as string).split(","),
-      subtasks: (formEntries.subtasks as string).split(","),
-      // images: (formEntries?.images as string).split(","),
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      tags: (formData.get("tags") as string).split(","),
+      links: (formData.get("links") as string)?.split(",") || [],
+      subTasks,
       columnId: boardId?.columnIds?.[0]!,
     };
+
     if (boardId?.id) {
-      dispatch(createCardInColumn(formState));
+      dispatch(
+        createCardInColumn({
+          ...cardData,
+          images: formState.images,
+        })
+      );
     }
   };
 
@@ -160,8 +202,17 @@ function Form() {
           placeholder,
           name,
           errorMessage,
+          value: inputValue,
           ...rest
         } = input;
+
+        let displayValue = formState[name as keyof FormState];
+        if (name === "subTasks" && Array.isArray(displayValue)) {
+          displayValue = (displayValue as Subtask[])
+            .filter((task) => task.title)
+            .map((task) => task.title)
+            .join(", ");
+        }
 
         return (
           <FormInput
@@ -170,8 +221,8 @@ function Form() {
             id={id}
             label={label}
             type={type}
-            value={formState[name as keyof FormState]}
             onChange={handleChange}
+            value={displayValue as string}
             required={required}
             placeholder={placeholder}
             errorMessage={errorMessage}

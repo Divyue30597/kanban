@@ -16,7 +16,7 @@ export interface Card extends CommonProps {
   tags: string[];
   dueDate?: string;
   subTasks?: Subtask[];
-  images?: string[];
+  images?: (File | string)[];
   links?: string[];
 }
 

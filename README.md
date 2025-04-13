@@ -70,35 +70,16 @@ The `useDragAndDrop` hook accepts these configuration options:
 
 ## Roadmap
 
-### Short-Term Enhancements
-
-- Card positioning at specific locations (top/middle/bottom)
-- Visual indicators showing where card will be placed
-- Auto-sorting options for cards
-
-### Medium-Term Features
-
-- Data persistence with localStorage/IndexedDB
-- Undo/redo functionality
-- Filtering and searching capabilities
-- Column management (add/remove/rename)
-- Work-in-progress limits for columns
-
-### Long-Term Features
-
-- Swimlanes for horizontal categorization
-- Multiple board views (kanban/list/calendar)
-- Analytics and insights
-- Team collaboration features
-
-### Accessibility improvements
-
-This implementation follows accessibility best practices:
-
-- Keyboard navigation support (Enter/Space to drop, Escape to cancel)
-- ARIA attributes for screen readers
-- Focus management
-- Screen reader announcements during drag operations
-
-
-PS - Most of this project is built using [Anthropic's Claude Sonnet 3.7 model](https://www.anthropic.com/claude)
+- [ ] Add access based on user role
+- [ ] Admin user should be able to create board and give access to other users.
+- [ ] Make the user before signing in to select something they are interested in getting.
+- [ ] Set limit to number of tasks and columns that can be added to board.
+- [ ] User Access management
+- [ ] Make useDragAndDrop generic so that it can be used for any scenario where drag and drop is required.
+- [ ] Every action on the page should be done by a keyboard action. Keep actions less, but there should be a way to start that action using keyboard shortcut.
+- [ ] If possible get the screentime through the device, so that the user can get an indepth analysis.
+- [ ] Think of creating a mobile application as well.
+- [ ] Try to add more gamification to this project, by mostly adding a reward system (think of how this can be achived and be more rewardful)
+- [ ] An indepth modal / page / notes for the cards added to jira, mostly creating a WYSIWYG editor.
+- [ ] This should be generic to all user, they can be from different field. 
+- [ ] If some page needs to be shared, try to provide a link (private / public and write / read only) or pdf option to share.

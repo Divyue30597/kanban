@@ -75,17 +75,62 @@ export const deleteColumnWithRelated = createAsyncThunk<
 // Create a new card and add it to a column
 export const createCardInColumn = createAsyncThunk<
   string,
-  Card & { columnId: string },
+  Card & { columnId: string; images?: (File | string)[] },
   { dispatch: AppDispatch }
 >("cards/createCardInColumn", async (cardData, { dispatch }) => {
-  const { columnId, ...cardDetails } = cardData;
+  const { columnId, images, ...cardDetails } = cardData;
   const cardId = uuidv4();
+
+  // Process images if present
+  let imageData: string[] = [];
+
+  if (images && images.length > 0) {
+    try {
+      // Convert images to Base64 strings for localStorage
+      imageData = await Promise.all(
+        images.map(
+          (file) =>
+            new Promise<string>((resolve, reject) => {
+              // Check if file is actually a File object (not a string)
+              if (typeof file === "string") {
+                resolve(file); // If it's already a string, just use it
+                return;
+              }
+
+              // For smaller images (<1MB), Base64 is manageable in localStorage
+              if (file.size > 1024 * 1024) {
+                // Skip large files to avoid localStorage quota issues
+                resolve(`large-file:${file.name}`);
+                return;
+              }
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                resolve(reader.result as string);
+              };
+              reader.onerror = () => {
+                reject(new Error(`Failed to read file: ${file.name}`));
+              };
+              reader.readAsDataURL(file);
+            })
+        )
+      );
+    } catch (error) {
+      console.error("Failed to process images:", error);
+      // Fallback to just storing names if conversion fails
+      imageData = images.map((file) =>
+        typeof file === "string" ? file : file.name
+      );
+    }
+  }
+
+  // Create the card with image data
   dispatch(
     createCard({
       ...cardDetails,
       id: cardId,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      images: imageData,
     })
   );
 

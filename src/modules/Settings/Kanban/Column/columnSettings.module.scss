@@ -1,0 +1,15 @@
+.columnSettings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.formHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  height: 4rem;
+  gap: 1.2rem;
+  font-size: 2rem ;
+}
