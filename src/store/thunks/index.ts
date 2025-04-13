@@ -91,15 +91,12 @@ export const createCardInColumn = createAsyncThunk<
         images.map(
           (file) =>
             new Promise<string>((resolve, reject) => {
-              // Check if file is actually a File object (not a string)
               if (typeof file === "string") {
-                resolve(file); // If it's already a string, just use it
+                resolve(file);
                 return;
               }
 
-              // For smaller images (<1MB), Base64 is manageable in localStorage
               if (file.size > 1024 * 1024) {
-                // Skip large files to avoid localStorage quota issues
                 resolve(`large-file:${file.name}`);
                 return;
               }
@@ -116,14 +113,12 @@ export const createCardInColumn = createAsyncThunk<
       );
     } catch (error) {
       console.error("Failed to process images:", error);
-      // Fallback to just storing names if conversion fails
       imageData = images.map((file) =>
         typeof file === "string" ? file : file.name
       );
     }
   }
 
-  // Create the card with image data
   dispatch(
     createCard({
       ...cardDetails,

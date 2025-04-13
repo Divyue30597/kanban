@@ -33,10 +33,16 @@
     background-color: var(--tertiary) !important;
     color: var(--text);
   }
+
+  &:disabled {
+    background-color: inherit !important;
+    color: inherit !important;
+    cursor: not-allowed;
+  }
 }
 
 .deleteCol {
-  width: 100%;
+  // width: 100%;
   width: fit-content;
   grid-column: 1 / -1;
 
@@ -58,8 +64,21 @@
 
 .deleteBtn {
   &:hover {
-    background-color: #cc5656;
-    border-color: #cc5656;
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
   }
   border-color: #ff6b6b;
+}
+
+.deleteAlert {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  color: #ff6b6b;
+  & > svg {
+    width: 2rem;
+    height: 2rem;
+  }
 }

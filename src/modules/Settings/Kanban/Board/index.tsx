@@ -5,6 +5,13 @@ import Section from "../../../../components/Section";
 import Button from "../../../../components/Button";
 import BoardDropDown from "../../../../components/BoardDropDown";
 import { Board } from "../../../../store/types";
+import { SVG } from "../../../../SVG";
+import { useAppDispatch } from "../../../../store/hooks";
+import {
+  createBoard,
+  updateBoard,
+} from "../../../../store/features/boards/boardSlice";
+import { deleteBoardWithRelated } from "../../../../store/thunks";
 
 const boardInputs = [
   {
@@ -33,36 +40,20 @@ const boardInputs = [
 ];
 
 function BoardSettings() {
-  const [delActiveBoard, setDelActiveBoard] = useState<Board | string>(
-    "Pick a board"
-  );
-
   return (
     <Section className={styles.boardSettings}>
       <BoardSettingForm />
-      <div className={styles.updateBoard}>
-        <BoardSettingForm isUpdating={true} />
-      </div>
-      <div className={styles.deleteBoard}>
-        <div className={styles.deleteBoardText}>
-          <p>Are you sure you want to delete</p>
-          <BoardDropDown
-            activeBoard={delActiveBoard}
-            setActiveBoard={setDelActiveBoard}
-          />
-          <p>board?</p>
-        </div>
-        <Button type="button" className={styles.deleteBtn}>
-          Delete
-        </Button>
-      </div>
+      <BoardSettingForm isUpdating={true} />
+      <DeleteBoard />
     </Section>
   );
 }
 
 function BoardSettingForm({ isUpdating = false }: { isUpdating?: boolean }) {
+  const dispatch = useAppDispatch();
+
   const [activeBoard, setActiveBoard] = useState<string | Board>(
-    "Pick a board"
+    isUpdating ? "Pick a board" : ""
   );
 
   const updating =
@@ -74,19 +65,24 @@ function BoardSettingForm({ isUpdating = false }: { isUpdating?: boolean }) {
     title: updating ? activeBoard.title : "",
     description: isUpdating ? "" : "",
   });
-  
-  // Update form state when activeBoard changes
+
   useEffect(() => {
     if (updating) {
       setFormState({
         title: activeBoard.title,
-        description: activeBoard.description || "",
+        description: activeBoard.description,
       });
     }
   }, [activeBoard, updating]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (updating) {
+      dispatch(updateBoard({ ...formState, id: activeBoard.id }));
+      setActiveBoard("Pick a board");
+    } else {
+      dispatch(createBoard(formState));
+    }
   };
 
   const handleOnChange = (
@@ -139,11 +135,55 @@ function BoardSettingForm({ isUpdating = false }: { isUpdating?: boolean }) {
       })}
       <Button
         type="submit"
+        disabled={activeBoard === "Pick a board"}
         className={isUpdating ? styles.updateSubmitBtn : ""}
       >
         {isUpdating ? "Update" : "Submit"}
       </Button>
     </form>
+  );
+}
+
+function DeleteBoard() {
+  const [delActiveBoard, setDelActiveBoard] = useState<Board | string>(
+    "Pick a board"
+  );
+
+  const dispatch = useAppDispatch();
+
+  const handleDelete = () => {
+    if (typeof delActiveBoard !== "string") {
+      dispatch(deleteBoardWithRelated(delActiveBoard.id));
+      setDelActiveBoard("Pick a board");
+    }
+  };
+
+  return (
+    <div className={styles.deleteBoard}>
+      <div className={styles.deleteBoardText}>
+        <p>Are you sure you want to delete</p>
+        <BoardDropDown
+          activeBoard={delActiveBoard}
+          setActiveBoard={setDelActiveBoard}
+        />
+        <p>board?</p>
+      </div>
+      <p className={styles.deleteAlert}>
+        <SVG.alert /> Deleting a board will delete it's column and cards.
+        <br /> This action is not reversible. Proceed with caution.
+      </p>
+      <Button
+        type="button"
+        disabled={
+          (delActiveBoard as Board).id === "" ||
+          delActiveBoard === "Pick a board"
+        }
+        onClick={handleDelete}
+        className={styles.deleteBtn}
+      >
+        Delete
+      </Button>
+    </div>
   );
 }
 

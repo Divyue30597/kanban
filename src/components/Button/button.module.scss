@@ -35,8 +35,8 @@
   }
 
   &:disabled {
-    background-color: inherit;
-    color: var(--text-primary);
+    background-color: #fff !important;
+    color: var(--text-primary) !important;
     cursor: not-allowed;
   }
 
