@@ -16,11 +16,11 @@ function KanbanSettings() {
       label: <p className={styles.label}>Columns</p>,
       children: <ColumnSettings />,
     },
-    {
-      id: "card",
-      label: <p className={styles.label}>Card</p>,
-      children: <CardSettings />,
-    },
+    // {
+    //   id: "card",
+    //   label: <p className={styles.label}>Card</p>,
+    //   children: <CardSettings />,
+    // },
   ];
 
   return (

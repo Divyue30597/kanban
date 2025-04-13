@@ -4,12 +4,62 @@
   gap: 2rem;
 }
 
+.form {
+  padding: 1.2rem;
+  box-shadow: var(--box-shadow);
+  border-radius: 0.8rem;
+}
+
+.formBody {
+  & > * {
+    margin-bottom: 1.2rem;
+  }
+}
+
 .formHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.2rem;
 
   height: 4rem;
   gap: 1.2rem;
-  font-size: 2rem ;
+  font-size: 2rem;
+}
+
+.updateSubmitBtn {
+  border-color: var(--tertiary) !important;
+
+  &:hover {
+    background-color: var(--tertiary) !important;
+    color: var(--text);
+  }
+}
+
+.deleteCol {
+  width: 100%;
+  width: fit-content;
+  grid-column: 1 / -1;
+
+  box-shadow: var(--box-shadow);
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+}
+
+.deleteColBody {
+  & > h3 {
+    font-size: 2rem;
+  }
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  margin-bottom: 1.2rem;
+}
+
+.deleteBtn {
+  &:hover {
+    background-color: #cc5656;
+    border-color: #cc5656;
+  }
+  border-color: #ff6b6b;
 }

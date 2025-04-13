@@ -4,33 +4,37 @@ import styles from "./boardDropDown.module.scss";
 import { SVG } from "../../SVG";
 import Button from "../Button";
 import Dropdown from "../Dropdown";
+import { Board } from "../../store/types";
 
 interface BoardDropDownProps {
-  activeBoard?: string;
-  setActiveBoard?: Dispatch<SetStateAction<string>>;
+  activeBoard?: Board | string;
+  setActiveBoard?: Dispatch<SetStateAction<string | Board>>;
 }
 
 function BoardDropDown(props: BoardDropDownProps) {
   const { setActiveBoard, activeBoard } = props;
 
   const boards = useAppSelector((state) => state.boards.boards);
-  const boardsName = boards.map((board) => board.title);
 
   return (
     <Dropdown
       className={styles.dropdownBtn}
       placement="bottom-left"
-      trigger={<Button icon={<SVG.chevronDown />}>{activeBoard}</Button>}
+      trigger={
+        <Button icon={<SVG.chevronDown />}>
+          {typeof activeBoard === "string" ? activeBoard : activeBoard?.title}
+        </Button>
+      }
     >
-      {boardsName?.map((board) => (
+      {boards?.map((board) => (
         <button
           type="button"
-          key={board}
+          key={board.id}
           onClick={() => {
             setActiveBoard && setActiveBoard(board);
           }}
         >
-          {board}
+          {board.title}
         </button>
       ))}
     </Dropdown>

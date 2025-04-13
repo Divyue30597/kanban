@@ -11,9 +11,9 @@ export default function Button(props: ButtonProps) {
 
   return (
     <button
-      {...rest}
       type={type || "button"}
       className={styles.button + " " + className}
+      {...rest}
     >
       {children}
       {icon && <span className={styles.icon}>{icon}</span>}

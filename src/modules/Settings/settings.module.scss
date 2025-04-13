@@ -41,5 +41,7 @@
 }
 
 .hr {
+  border: none;
+  border-top: 0.1rem solid var(--border-color);
   margin-block: 2.4rem;
 }

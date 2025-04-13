@@ -1,12 +1,10 @@
 import styles from "./boardSetting.module.scss";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState, useEffect } from "react";
 import FormInput from "../../../../components/FormInput";
 import Section from "../../../../components/Section";
 import Button from "../../../../components/Button";
-import Dropdown from "../../../../components/Dropdown";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { SVG } from "../../../../SVG";
 import BoardDropDown from "../../../../components/BoardDropDown";
+import { Board } from "../../../../store/types";
 
 const boardInputs = [
   {
@@ -35,9 +33,9 @@ const boardInputs = [
 ];
 
 function BoardSettings() {
-  const [delActiveBoard, setDelActiveBoard] = useState("Pick a board");
-
-  const dispatch = useAppDispatch();
+  const [delActiveBoard, setDelActiveBoard] = useState<Board | string>(
+    "Pick a board"
+  );
 
   return (
     <Section className={styles.boardSettings}>
@@ -63,11 +61,29 @@ function BoardSettings() {
 }
 
 function BoardSettingForm({ isUpdating = false }: { isUpdating?: boolean }) {
-  const [activeBoard, setActiveBoard] = useState("Pick a board");
+  const [activeBoard, setActiveBoard] = useState<string | Board>(
+    "Pick a board"
+  );
+
+  const updating =
+    isUpdating &&
+    activeBoard !== "Pick a board" &&
+    typeof activeBoard !== "string";
+
   const [formState, setFormState] = useState({
-    title: isUpdating ? activeBoard : "",
+    title: updating ? activeBoard.title : "",
     description: isUpdating ? "" : "",
   });
+  
+  // Update form state when activeBoard changes
+  useEffect(() => {
+    if (updating) {
+      setFormState({
+        title: activeBoard.title,
+        description: activeBoard.description || "",
+      });
+    }
+  }, [activeBoard, updating]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,12 +100,11 @@ function BoardSettingForm({ isUpdating = false }: { isUpdating?: boolean }) {
     <form className={styles.form} onSubmit={handleOnSubmit}>
       {isUpdating ? (
         <div className={styles.updateBoard}>
-          <p>Update </p>
+          <p>To Update {"->"}</p>
           <BoardDropDown
             activeBoard={activeBoard}
             setActiveBoard={setActiveBoard}
           />
-          <p>board</p>
         </div>
       ) : (
         <h3>Add Board</h3>
