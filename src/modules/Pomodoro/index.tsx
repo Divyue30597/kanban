@@ -1,6 +1,5 @@
 import styles from "./pomodoro.module.scss";
 import Tabs from "../../components/Tabs";
-import Section from "../../components/Section";
 import { SVG } from "../../SVG";
 import { useEffect, useState } from "react";
 import { timeFormatting } from "../../utils/utils";
@@ -22,7 +21,7 @@ type activeTabType = "pomodoro" | "shortBreak" | "longBreak";
 
 export default function Pomodoro() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    pomodoro: 25 * 60,
+    pomodoro: 1 * 60,
     shortBreak: 5 * 60,
     longBreak: 15 * 60,
   });
@@ -34,22 +33,30 @@ export default function Pomodoro() {
 
   const [activeTab, setActiveTab] = useState<activeTabType>("pomodoro");
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key.toLowerCase() === "r") {
-      setTimeLeft({
-        pomodoro: 25 * 60,
-        shortBreak: 5 * 60,
-        longBreak: 15 * 60,
-      });
-      setIsRunning({
-        pomodoro: false,
-        shortBreak: false,
-        longBreak: false,
-      });
-    }
-  };
-
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === "r") {
+        setTimeLeft({
+          pomodoro: 25 * 60,
+          shortBreak: 5 * 60,
+          longBreak: 15 * 60,
+        });
+        setIsRunning({
+          pomodoro: false,
+          shortBreak: false,
+          longBreak: false,
+        });
+      } else if (e.key.toLowerCase() === "j") {
+        setIsRunning((prev) => {
+          return { ...prev, [activeTab]: true };
+        });
+      } else if (e.key.toLowerCase() === "k") {
+        setIsRunning((prev) => {
+          return { ...prev, [activeTab]: false };
+        });
+      }
+    };
+
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);

@@ -13,21 +13,21 @@ function LeftNav() {
 
   const menuItems = [
     { title: "Home", icon: <SVG.home />, path: "/" },
-    // { title: "Notes", icon: <SVG.notes />, path: "/notes" },
+    { title: "Notes", icon: <SVG.notes />, path: "/notes" },
     { title: "Pomodoro", icon: <SVG.pomodoro />, path: "/pomodoro" },
-    // { title: "Calendar", icon: <SVG.calendar />, path: "/calendar" },
-    // {
-    //   title: "Subscriptions",
-    //   icon: <SVG.subscriptions />,
-    //   path: "/subscriptions",
-    // },
+    { title: "Calendar", icon: <SVG.calendar />, path: "/calendar" },
+    {
+      title: "Subscriptions",
+      icon: <SVG.subscriptions />,
+      path: "/subscriptions",
+    },
     { title: "Settings", icon: <SVG.settings />, path: "/settings" },
   ];
 
   const bottomItems = [
-    // { title: "Profile", icon: <SVG.profile />, path: "/profile" },
+    { title: "Profile", icon: <SVG.profile />, path: "/profile" },
     { title: "Help", icon: <SVG.help />, path: "/help" },
-    // { title: "Logout", icon: <SVG.logout />, path: "/" },
+    { title: "Logout", icon: <SVG.logout />, path: "/" },
   ];
 
   const handleKeyDown = (event: KeyboardEvent) => {

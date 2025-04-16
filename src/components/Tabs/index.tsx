@@ -44,7 +44,7 @@ function Tabs(props: Tab) {
             key={tab.id}
             onClick={() => {
               handleTabClick(index);
-              onTabChange && onTabChange(propActiveTab || tab.id);
+              onTabChange && onTabChange(tab.id);
             }}
           >
             {tab.label}
