@@ -1,89 +1,89 @@
 $color: #f4eddb;
 
 .pomodoro {
-  background-color: #4186f4;
-  color: $color;
-  height: calc(100dvh - 11.2rem);
-  margin: 1.8rem;
-  border-radius: 0.8rem;
+	background-color: #4186f4;
+	color: $color;
+	height: calc(100dvh - 11.2rem);
+	margin: 1.8rem;
+	border-radius: 0.8rem;
 
-  &:first-child {
-    flex-flow: 0;
-  }
+	&:first-child {
+		flex-flow: 0;
+	}
 
-  .pomodoroContainer {
-    & > h1 {
-      font-size: 6rem;
-      font-weight: 900;
-      color: $color;
-      text-align: center;
-      margin-bottom: 2.4rem;
+	.pomodoroContainer {
+		& > h1 {
+			font-size: 6rem;
+			font-weight: 900;
+			color: $color;
+			text-align: center;
+			margin-bottom: 2.4rem;
 
-      & > svg {
-        width: 3.6rem !important;
-        height: 3.6rem !important;
-      }
-    }
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+			& > svg {
+				width: 3.6rem !important;
+				height: 3.6rem !important;
+			}
+		}
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
 }
 
 .pomodoroContent {
-  width: 48rem;
-  margin-bottom: 3.2rem;
+	width: 48rem;
+	margin-bottom: 3.2rem;
 }
 
 .clock {
-  height: 0.4rem;
-  background-color: #000;
-  overflow-x: auto;
+	height: 0.4rem;
+	background-color: #000;
+	overflow-x: auto;
 }
 
 .time {
-  text-align: center;
-  font-size: 12rem;
-  font-weight: 900;
-  margin-top: 2.4rem;
-  font-style: italic;
+	text-align: center;
+	font-size: 12rem;
+	font-weight: 900;
+	margin-top: 2.4rem;
+	font-style: italic;
 }
 
 .tabTitles {
-  font-size: 1.6rem;
+	font-size: 1.6rem;
 }
 
 .startButton {
-  background-color: transparent;
-  color: inherit;
-  border: none;
-  width: 7.2rem;
-  height: 7.2rem;
-  font-size: 0;
-  cursor: pointer;
+	background-color: transparent;
+	color: inherit;
+	border: none;
+	width: 7.2rem;
+	height: 7.2rem;
+	font-size: 0;
+	cursor: pointer;
 }
 
 .tabBtn {
-  font-size: 1.6rem;
-  gap: 1.6rem;
-  padding: 0;
+	font-size: 1.6rem;
+	gap: 1.6rem;
+	padding: 0;
 
-  & > button {
-    color: $color;
-    border: 0.2rem solid $color;
-    border-radius: 0.8rem;
-    border-bottom: 0.4rem solid $color;
-  }
+	& > button {
+		color: $color;
+		border: 0.2rem solid $color;
+		border-radius: 0.8rem;
+		border-bottom: 0.4rem solid $color;
+	}
 
-  & > button:disabled {
-    font-weight: 800 !important;
-    background-color: var(--primary) !important;
-    color: $color;
-    border-bottom: 0.2rem solid $color;
-  }
+	& > button:disabled {
+		font-weight: 800 !important;
+		background-color: var(--primary) !important;
+		color: $color;
+		border-bottom: 0.2rem solid $color;
+	}
 }

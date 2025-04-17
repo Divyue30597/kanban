@@ -1,70 +1,71 @@
 @font-face {
-  font-family: "Inter";
-  src: url(font/Inter.ttf) format("truetype");
+	font-family: 'Inter';
+	src: url(font/Inter.ttf) format('truetype');
 }
 
 * {
-  padding: 0px;
-  margin: 0px;
-  box-sizing: border-box;
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
 }
 
 :root {
-  font-size: 62.5%;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
+	font-size: 62.5%;
+	font-family: 'Inter', sans-serif;
+	font-weight: 500;
 
-  /* Colors */
-  --primary: #4186f4;
-  --secondary: #12b066;
-  --tertiary: #9747ff;
+	/* Colors */
+	--primary: #4186f4;
+	--secondary: #12b066;
+	--tertiary: #9747ff;
 
-  /* Text */
-  /* --primary-text: #000000; */
-  --text: #ffffff;
-  --primary-text: #1d2939;
-  --secondary-text: #1d293960;
+	/* Text */
+	/* --primary-text: #000000; */
+	--text: #ffffff;
+	--primary-text: #1d2939;
+	--secondary-text: #1d293960;
 
-  /* Hover */
-  --primary-hover: #2e5eab;
-  --secondary-hover: #0d7b47;
-  --tertiary-hover: #6a32b3;
+	/* Hover */
+	--primary-hover: #2e5eab;
+	--secondary-hover: #0d7b47;
+	--tertiary-hover: #6a32b3;
 
-  /* Background */
-  --background: #ffffff;
+	/* Background */
+	--background: #ffffff;
 
-  /* border */
-  --border-color: #1018284d;
+	/* border */
+	--border-color: #1018284d;
 
-  /* box-shadow */
-  --box-shadow: 0rem 0.05rem 0.2rem 0rem #1018284d;
+	/* box-shadow */
+	--box-shadow: 0rem 0.05rem 0.2rem 0rem #1018284d;
 }
 
 body {
-  overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 .box {
-  padding: 1.6rem;
-  border-radius: 0.8rem;
-  box-shadow: var(--box-shadow);
-  background-color: var(--background);
-  color: var(--primary-text);
-  font-size: 1.4rem;
-  width: fit-content;
+	padding: 1.6rem;
+	border-radius: 0.8rem;
+	box-shadow: var(--box-shadow);
+	background-color: var(--background);
+	color: var(--primary-text);
+	font-size: 1.4rem;
+	width: fit-content;
 }
 
 kbd {
-  background-color: #eee;
-  border-radius: 0.3rem;
-  border: 0.1rem solid #b4b4b4;
-  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.2),
-    0 0.2rem 0 0 rgba(255, 255, 255, 0.7) inset;
-  color: #333;
-  display: inline-block;
-  font-size: 0.85em;
-  font-weight: 700;
-  line-height: 1;
-  padding: 0.2rem 0.4rem;
-  white-space: nowrap;
+	background-color: #eee;
+	border-radius: 0.3rem;
+	border: 0.1rem solid #b4b4b4;
+	box-shadow:
+		0 0.1rem 0.1rem rgba(0, 0, 0, 0.2),
+		0 0.2rem 0 0 rgba(255, 255, 255, 0.7) inset;
+	color: #333;
+	display: inline-block;
+	font-size: 0.85em;
+	font-weight: 700;
+	line-height: 1;
+	padding: 0.2rem 0.4rem;
+	white-space: nowrap;
 }

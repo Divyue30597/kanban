@@ -1,62 +1,66 @@
 li {
-  margin: 0.5rem;
-  position: relative;
+	margin: 0.5rem;
+	position: relative;
 
-  a {
-    display: flex;
-    align-items: center;
-    font-size: 1.4rem;
-    text-decoration: none;
-    color: var(--primary-text);
-    width: 100%;
-    padding: 0.5rem 1rem;
-    // margin: 0.8rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 0.4rem;
+	a {
+		display: flex;
+		align-items: center;
+		font-size: 1.4rem;
+		text-decoration: none;
+		color: var(--primary-text);
+		width: 100%;
+		padding: 0.5rem 1rem;
+		// margin: 0.8rem;
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
+		border-radius: 0.4rem;
 
-    &:hover {
-      background-color: #e6e6e6;
-    }
+		&:hover {
+			background-color: #e6e6e6;
+		}
 
-    svg {
-      width: 2rem;
-      height: 2rem;
-      flex-shrink: 0;
-      margin: 0.4rem;
-    }
+		svg {
+			width: 2rem;
+			height: 2rem;
+			flex-shrink: 0;
+			margin: 0.4rem;
+		}
 
-    .title {
-      margin-left: 1rem;
-      white-space: nowrap;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      display: inline-block;
-    }
+		.title {
+			margin-left: 1rem;
+			white-space: nowrap;
+			transition:
+				opacity 0.3s ease,
+				transform 0.3s ease;
+			display: inline-block;
+		}
 
-    .expanded {
-      opacity: 1;
-      transform: translateX(0);
-      visibility: visible;
-    }
+		.expanded {
+			opacity: 1;
+			transform: translateX(0);
+			visibility: visible;
+		}
 
-    .collapsed {
-      opacity: 0;
-      transform: translateX(10px);
-      visibility: hidden;
-    }
-  }
+		.collapsed {
+			opacity: 0;
+			transform: translateX(10px);
+			visibility: hidden;
+		}
+	}
 }
 
 .tooltip {
-  position: absolute;
-  left: 6rem;
-  top: 1rem;
-  background-color: #e6e6e6;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border-radius: 0.4rem;
-  z-index: 99999;
+	position: absolute;
+	left: 6rem;
+	top: 1rem;
+	background-color: #e6e6e6;
+	padding: 0.4rem;
+	font-size: 1.2rem;
+	border-radius: 0.4rem;
+	z-index: 99999;
 }
 
 .active {
-  background-color: #e6e6e6;
+	background-color: #e6e6e6;
 }

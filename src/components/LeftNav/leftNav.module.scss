@@ -1,81 +1,81 @@
 .leftNav {
-  width: 18rem;
-  position: sticky;
-  top: 0;
-  transition: width 0.3s ease-in-out; // ← move transition here
-  height: 100dvh;
+	width: 18rem;
+	position: sticky;
+	top: 0;
+	transition: width 0.3s ease-in-out; // ← move transition here
+	height: 100dvh;
 
-  &.collapse {
-    width: 6rem;
-  }
+	&.collapse {
+		width: 6rem;
+	}
 }
 
 .leftNavList {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: calc(100% - 6.8rem);
-  border-right: 0.1rem solid var(--border-color);
-  list-style: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100% - 6.8rem);
+	border-right: 0.1rem solid var(--border-color);
+	list-style: none;
 }
 
 .logo {
-  font-size: 1.8rem;
-  font-weight: 900;
-  line-height: 0.8;
-  text-align: center;
-  padding: 0.75rem 0.5rem;
-  margin-block: 0.6rem;
-  background-color: rgb(255, 255, 255);
-  height: 5.4rem;
+	font-size: 1.8rem;
+	font-weight: 900;
+	line-height: 0.8;
+	text-align: center;
+	padding: 0.75rem 0.5rem;
+	margin-block: 0.6rem;
+	background-color: rgb(255, 255, 255);
+	height: 5.4rem;
 
-  & > span {
-    display: block;
-    &:first-child {
-      margin-top: 0.8rem;
-    }
-  }
+	& > span {
+		display: block;
+		&:first-child {
+			margin-top: 0.8rem;
+		}
+	}
 }
 
 hr {
-  border: none;
-  margin-bottom: 0.6rem;
+	border: none;
+	margin-bottom: 0.6rem;
 }
 
 .leftNavListGroup {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-  &:last-child {
-    margin-bottom: 2rem;
-  }
+	&:last-child {
+		margin-bottom: 2rem;
+	}
 }
 
 .toggle_button {
-  position: absolute;
-  top: calc(100dvh / 2);
-  right: -1.2rem;
-  width: 2.4rem;
-  height: 2.4rem;
-  // padding: 1rem;
-  background-color: #ffffff;
-  // border: none;
-  color: #000;
-  border-radius: 50%;
-  cursor: pointer;
+	position: absolute;
+	top: calc(100dvh / 2);
+	right: -1.2rem;
+	width: 2.4rem;
+	height: 2.4rem;
+	// padding: 1rem;
+	background-color: #ffffff;
+	// border: none;
+	color: #000;
+	border-radius: 50%;
+	cursor: pointer;
 
-  & > svg {
-    width: 2rem;
-    height: 2rem;
-  }
+	& > svg {
+		width: 2rem;
+		height: 2rem;
+	}
 }
 
 .chevronLeft {
-  rotate: 180deg;
-  transition: rotate 0.3s ease-in-out;
+	rotate: 180deg;
+	transition: rotate 0.3s ease-in-out;
 }
 
 .chevronRight {
-  rotate: 0deg;
-  transition: rotate 0.3s ease-in-out;
+	rotate: 0deg;
+	transition: rotate 0.3s ease-in-out;
 }

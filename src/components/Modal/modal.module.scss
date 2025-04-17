@@ -1,84 +1,86 @@
 .modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  transition: opacity 0.3s ease;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	transition: opacity 0.3s ease;
 
-  &.visible {
-    opacity: 1;
-  }
+	&.visible {
+		opacity: 1;
+	}
 
-  &.hidden {
-    opacity: 0;
-  }
+	&.hidden {
+		opacity: 0;
+	}
 }
 
 .modalContainer {
-  background-color: white;
-  border-radius: 0.8rem;
-  box-shadow: var(--box-shadow);
-  max-height: calc(100dvh - 4rem);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+	background-color: white;
+	border-radius: 0.8rem;
+	box-shadow: var(--box-shadow);
+	max-height: calc(100dvh - 4rem);
+	display: flex;
+	flex-direction: column;
+	transition:
+		transform 0.3s ease,
+		opacity 0.3s ease;
 
-  &.visible {
-    opacity: 1;
-  }
+	&.visible {
+		opacity: 1;
+	}
 
-  &.hidden {
-    opacity: 0;
-  }
+	&.hidden {
+		opacity: 0;
+	}
 }
 
 .modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #eaeaea;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 2rem;
+	border-bottom: 1px solid #eaeaea;
 }
 
 .modalTitle {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text-color);
+	font-size: 1.8rem;
+	font-weight: 700;
+	color: var(--text-color);
 }
 
 .closeButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: color 0.2s;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--text-color);
+	transition: color 0.2s;
 
-  & > svg {
-    width: 1.8rem;
-    height: 1.8rem;
-  }
+	& > svg {
+		width: 1.8rem;
+		height: 1.8rem;
+	}
 
-  &:hover {
-    color: #969494;
-  }
+	&:hover {
+		color: #969494;
+	}
 }
 
 .modalBody {
-  padding: 2rem;
-  overflow-y: auto;
-  font-size: 1.4rem;
+	padding: 2rem;
+	overflow-y: auto;
+	font-size: 1.4rem;
 }
 
 .modalFooter {
-  padding: 1rem 2rem;
-  border-top: 0.1rem solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-  gap: 1.2rem;
+	padding: 1rem 2rem;
+	border-top: 0.1rem solid var(--border-color);
+	display: flex;
+	justify-content: flex-end;
+	gap: 1.2rem;
 }

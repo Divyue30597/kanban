@@ -15,42 +15,46 @@ A modern, accessible drag-and-drop Kanban board implementation built with React.
 ## Usage
 
 ```jsx
-import { useDragAndDrop } from "./hooks/useDragAndDrop";
-import styles from "./styles.module.scss";
+import { useDragAndDrop } from './hooks/useDragAndDrop';
+import styles from './styles.module.scss';
 
 function Board() {
-  const { handleCardMouseDown, handleCardTouchStart, isDragging } =
-    useDragAndDrop({
-      onCardMove: (cardId, sourceColumnId, targetColumnId) => {
-        // Handle card movement logic here
-      },
-      dropTargetClassName: styles.validDropTarget,
-      invalidDropTargetClassName: styles.invalidDropTarget,
-      boundaryRef: boardContentRef,
-      allowBackwardMovement: false, // Only allow cards to move forward
-    });
+	const { handleCardMouseDown, handleCardTouchStart, isDragging } =
+		useDragAndDrop({
+			onCardMove: (cardId, sourceColumnId, targetColumnId) => {
+				// Handle card movement logic here
+			},
+			dropTargetClassName: styles.validDropTarget,
+			invalidDropTargetClassName: styles.invalidDropTarget,
+			boundaryRef: boardContentRef,
+			allowBackwardMovement: false, // Only allow cards to move forward
+		});
 
-  return (
-    <div ref={boardContentRef}>
-      {columns.map((column) => (
-        <div key={column.id} data-column-id={column.id}>
-          <h2>{column.name}</h2>
-          <div className="column-content">
-            {column.cards.map((card) => (
-              <div
-                key={card.id}
-                data-card-id={card.id}
-                onMouseDown={(e) => handleCardMouseDown(e, card)}
-                onTouchStart={(e) => handleCardTouchStart(e, card)}
-              >
-                {card.title}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+	return (
+		<div ref={boardContentRef}>
+			{columns.map((column) => (
+				<div key={column.id} data-column-id={column.id}>
+					<h2>{column.name}</h2>
+					<div className="column-content">
+						{column.cards.map((card) => (
+							<div
+								key={card.id}
+								data-card-id={card.id}
+								onMouseDown={(e) =>
+									handleCardMouseDown(e, card)
+								}
+								onTouchStart={(e) =>
+									handleCardTouchStart(e, card)
+								}
+							>
+								{card.title}
+							</div>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+	);
 }
 ```
 
@@ -81,5 +85,5 @@ The `useDragAndDrop` hook accepts these configuration options:
 - [ ] Think of creating a mobile application as well.
 - [ ] Try to add more gamification to this project, by mostly adding a reward system (think of how this can be achived and be more rewardful)
 - [ ] An indepth modal / page / notes for the cards added to jira, mostly creating a WYSIWYG editor.
-- [ ] This should be generic to all user, they can be from different field. 
+- [ ] This should be generic to all user, they can be from different field.
 - [ ] If some page needs to be shared, try to provide a link (private / public and write / read only) or pdf option to share.

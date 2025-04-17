@@ -1,37 +1,37 @@
 .topNav {
-  top: 0;
-  position: sticky;
-  z-index: 100;
-  background-color: var(--background-color, #fff);
-  height: 6.6rem;
-  border-bottom: 0.1rem solid var(--border-color);
-  width: calc(100dvw - 6rem);
+	top: 0;
+	position: sticky;
+	z-index: 100;
+	background-color: var(--background-color, #fff);
+	height: 6.6rem;
+	border-bottom: 0.1rem solid var(--border-color);
+	width: calc(100dvw - 6rem);
 }
 
 .topNavContent {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
-  max-width: 96.4rem;
-  padding-block: 1.4rem;
-  margin: 0 auto;
+	max-width: 96.4rem;
+	padding-block: 1.4rem;
+	margin: 0 auto;
 
-  & > p {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--primary-text);
-  }
+	& > p {
+		font-size: 1.8rem;
+		font-weight: 600;
+		color: var(--primary-text);
+	}
 }
 
 .topNavActions {
-  display: flex;
-  gap: 2.4rem;
-  align-items: center;
-  height: 4rem;
+	display: flex;
+	gap: 2.4rem;
+	align-items: center;
+	height: 4rem;
 }
 
 .dropdownBtn {
-  padding: 0.6rem;
+	padding: 0.6rem;
 }

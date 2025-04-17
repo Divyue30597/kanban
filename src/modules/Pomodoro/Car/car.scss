@@ -1,45 +1,48 @@
 .road {
-  --animation-duration: 1500s; /* Default 25min in seconds */
-  --progress: 0%;
+	--animation-duration: 1500s; /* Default 25min in seconds */
+	--progress: 0%;
 
-  background-color: var(--primary-text);
-  width: 100%;
-  border-block: 0.4rem solid var(--text);
-  position: relative;
-  height: 5rem;
+	background-color: var(--primary-text);
+	width: 100%;
+	border-block: 0.4rem solid var(--text);
+	position: relative;
+	height: 5rem;
 
-  .road__lines-container {
-    position: absolute;
-    display: flex;
-    width: 200%; /* Double width for smoother animation loop */
-    animation: lineMovement var(--animation-duration) linear infinite;
-    top: calc(100% / 2.5);
-    left: 0;
-    z-index: 0;
-    will-change: transform; // Hint for browser to optimize
-  }
+	.road__lines-container {
+		position: absolute;
+		display: flex;
+		width: 200%; /* Double width for smoother animation loop */
+		animation: lineMovement var(--animation-duration) linear infinite;
+		top: calc(100% / 2.5);
+		left: 0;
+		z-index: 0;
+		will-change: transform; // Hint for browser to optimize
+	}
 
-  .road__line {
-    flex: 0 0 4rem;
-    height: 0.4rem;
-    background-color: var(--text);
-    margin-right: 12rem;
-  }
+	.road__line {
+		flex: 0 0 4rem;
+		height: 0.4rem;
+		background-color: var(--text);
+		margin-right: 12rem;
+	}
 
-  & > img {
-    position: absolute;
-    top: -10rem;
-    left: var(--progress);
-    z-index: 2;
-    transform: scale(-1, 1); // Combine transforms and force GPU acceleration
-  }
+	& > img {
+		position: absolute;
+		top: -10rem;
+		left: var(--progress);
+		z-index: 2;
+		transform: scale(
+			-1,
+			1
+		); // Combine transforms and force GPU acceleration
+	}
 }
 
 @keyframes lineMovement {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
 }

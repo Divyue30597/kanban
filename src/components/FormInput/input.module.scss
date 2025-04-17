@@ -1,80 +1,80 @@
 .input {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  // min-width: 36rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
+	// min-width: 36rem;
 
-  & > label {
-    font-size: 1.4rem;
-  }
+	& > label {
+		font-size: 1.4rem;
+	}
 
-  & > input,
-  & > textarea {
-    font-size: 1.4rem;
-    font-family: inherit;
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.4rem;
-    color: var(--primary-text);
-    transition: border-color 0.3s ease-in-out;
+	& > input,
+	& > textarea {
+		font-size: 1.4rem;
+		font-family: inherit;
+		width: 100%;
+		padding: 0.8rem;
+		border: 1px solid var(--border-color);
+		border-radius: 0.4rem;
+		color: var(--primary-text);
+		transition: border-color 0.3s ease-in-out;
 
-    &:focus {
-      border-color: var(--color-primary);
-      outline: none;
-    }
-  }
+		&:focus {
+			border-color: var(--color-primary);
+			outline: none;
+		}
+	}
 
-  & > textarea {
-    resize: none;
-  }
+	& > textarea {
+		resize: none;
+	}
 
-  & > input[type="file"] {
-    padding: 0.6rem;
-    cursor: pointer;
+	& > input[type='file'] {
+		padding: 0.6rem;
+		cursor: pointer;
 
-    &::-webkit-file-upload-button,
-    &::file-selector-button {
-      font-family: inherit;
-      font-size: 1.4rem;
-      padding: 0.6rem 1.2rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 0.4rem;
-      background-color: var(--primary);
-      color: var(--text);
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-right: 1.2rem;
+		&::-webkit-file-upload-button,
+		&::file-selector-button {
+			font-family: inherit;
+			font-size: 1.4rem;
+			padding: 0.6rem 1.2rem;
+			font-weight: 600;
+			border: none;
+			border-radius: 0.4rem;
+			background-color: var(--primary);
+			color: var(--text);
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			margin-right: 1.2rem;
 
-      &:hover {
-        background-color: var(--primary-hover);
-      }
-    }
-  }
+			&:hover {
+				background-color: var(--primary-hover);
+			}
+		}
+	}
 
-  & > input:invalid[class="focused"],
-  & > textarea:invalid[class="focused"] {
-    border-color: #ee3b3b;
-  }
+	& > input:invalid[class='focused'],
+	& > textarea:invalid[class='focused'] {
+		border-color: #ee3b3b;
+	}
 
-  & > input:invalid[class="focused"] ~ .error,
-  & > textarea:invalid[class="focused"] ~ .error {
-    display: block;
-  }
+	& > input:invalid[class='focused'] ~ .error,
+	& > textarea:invalid[class='focused'] ~ .error {
+		display: block;
+	}
 }
 
 .error {
-  font-size: 1.2rem;
-  color: #ee3b3b;
-  font-weight: 600;
-  display: none;
+	font-size: 1.2rem;
+	color: #ee3b3b;
+	font-weight: 600;
+	display: none;
 }
 
 .infoMessage {
-  font-size: 1.2rem;
-  color: #FFB22C;
-  font-weight: 600;
-  display: block;
+	font-size: 1.2rem;
+	color: #ffb22c;
+	font-weight: 600;
+	display: block;
 }

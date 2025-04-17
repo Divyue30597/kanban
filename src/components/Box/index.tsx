@@ -1,10 +1,10 @@
-import { HTMLProps } from "react";
+import { HTMLProps } from 'react';
 
 export default function Box(props: HTMLProps<HTMLDivElement>) {
-  const { children, className, ...rest } = props;
-  return (
-    <div className={`box ${className ? ` ${className}` : ""}`} {...rest}>
-      {children}
-    </div>
-  );
+	const { children, className, ...rest } = props;
+	return (
+		<div className={`box ${className ? ` ${className}` : ''}`} {...rest}>
+			{children}
+		</div>
+	);
 }

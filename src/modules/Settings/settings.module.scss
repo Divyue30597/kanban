@@ -1,47 +1,47 @@
 .settingsContainer {
-          & > h1 {
-    font-size: 2.4rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-  }
+	& > h1 {
+		font-size: 2.4rem;
+		font-weight: 900;
+		margin-bottom: 2rem;
+	}
 }
 
 .settings {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.6rem;
-  margin-bottom: 2rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.6rem;
+	margin-bottom: 2rem;
 
-  & > a {
-    display: inline-block;
-    text-decoration: none;
-    margin-bottom: 0.6rem;
-    font-size: 1.6rem;
-    color: var(--primary-text);
-  }
+	& > a {
+		display: inline-block;
+		text-decoration: none;
+		margin-bottom: 0.6rem;
+		font-size: 1.6rem;
+		color: var(--primary-text);
+	}
 }
 
 .setting {
-  width: 100%;
-  & > h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-  }
+	width: 100%;
+	& > h3 {
+		font-size: 1.8rem;
+		font-weight: 700;
+		margin-bottom: 0.6rem;
+	}
 
-  & > p {
-    color: var(--secondary-text);
-  }
+	& > p {
+		color: var(--secondary-text);
+	}
 }
 
 .icon {
-  width: 2rem;
-  height: 2rem;
-  margin-bottom: 1.2rem;
+	width: 2rem;
+	height: 2rem;
+	margin-bottom: 1.2rem;
 }
 
 .hr {
-  border: none;
-  border-top: 0.1rem solid var(--border-color);
-  margin-block: 2.4rem;
+	border: none;
+	border-top: 0.1rem solid var(--border-color);
+	margin-block: 2.4rem;
 }

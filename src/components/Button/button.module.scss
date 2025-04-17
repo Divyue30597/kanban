@@ -1,53 +1,55 @@
 .button {
-  padding: 0.8rem 1.4rem;
-  border-radius: 0.4rem;
-  font-size: 1.4rem;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  color: var(--primary-text);
-  background-color: inherit;
-  border: 0.2rem solid var(--primary);
-  border-bottom: 0.4rem solid var(--primary);
-  border-radius: 0.6rem;
-  outline: none;
+	padding: 0.8rem 1.4rem;
+	border-radius: 0.4rem;
+	font-size: 1.4rem;
+	font-weight: 600;
+	text-align: center;
+	cursor: pointer;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
+	color: var(--primary-text);
+	background-color: inherit;
+	border: 0.2rem solid var(--primary);
+	border-bottom: 0.4rem solid var(--primary);
+	border-radius: 0.6rem;
+	outline: none;
 
-  &[type="submit"] {
-    border-color: var(--secondary);
-  }
+	&[type='submit'] {
+		border-color: var(--secondary);
+	}
 
-  &[type="submit"]:hover {
-    background-color: var(--secondary);
-    color: var(--text);
-    border-bottom-color: var(--secondary);
-  }
+	&[type='submit']:hover {
+		background-color: var(--secondary);
+		color: var(--text);
+		border-bottom-color: var(--secondary);
+	}
 
-  &:hover {
-    background-color: var(--primary);
-    color: var(--text);
-  }
+	&:hover {
+		background-color: var(--primary);
+		color: var(--text);
+	}
 
-  &:active {
-    border-bottom: 0.2rem solid var(--primary-hover);
-    background-color: var(--primary-hover);
-    color: var(--text);
-  }
+	&:active {
+		border-bottom: 0.2rem solid var(--primary-hover);
+		background-color: var(--primary-hover);
+		color: var(--text);
+	}
 
-  &:disabled {
-    background-color: #fff !important;
-    color: var(--text-primary) !important;
-    cursor: not-allowed;
-  }
+	&:disabled {
+		background-color: #fff !important;
+		color: var(--text-primary) !important;
+		cursor: not-allowed;
+	}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .icon {
-  display: inline-block;
-  margin-left: 0.6rem;
-  height: 2rem;
-  width: 2rem;
+	display: inline-block;
+	margin-left: 0.6rem;
+	height: 2rem;
+	width: 2rem;
 }

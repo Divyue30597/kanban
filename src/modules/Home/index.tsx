@@ -1,7 +1,7 @@
-import Board from "../../components/Board";
+import Board from '../../components/Board';
 
 function Home() {
-  return <Board />;
+	return <Board />;
 }
 
 export default Home;

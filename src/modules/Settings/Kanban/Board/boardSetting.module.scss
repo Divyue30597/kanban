@@ -1,103 +1,103 @@
 .boardSettings {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.4rem;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 2.4rem;
 }
 
 .form {
-  box-shadow: var(--box-shadow);
-  padding: 1.2rem;
-  border-radius: 0.8rem;
+	box-shadow: var(--box-shadow);
+	padding: 1.2rem;
+	border-radius: 0.8rem;
 
-  .updateBoard {
-    & > p {
-      font-size: 2rem;
-      font-weight: 700;
-    }
-    height: 3rem;
-    margin-bottom: 1.2rem;
+	.updateBoard {
+		& > p {
+			font-size: 2rem;
+			font-weight: 700;
+		}
+		height: 3rem;
+		margin-bottom: 1.2rem;
 
-    display: flex;
-    gap: 1.2rem;
-    align-items: center;
-  }
+		display: flex;
+		gap: 1.2rem;
+		align-items: center;
+	}
 
-  & > h3 {
-    font-size: 2rem;
-    margin-bottom: 1.8rem !important;
-    font-weight: 700;
-  }
+	& > h3 {
+		font-size: 2rem;
+		margin-bottom: 1.8rem !important;
+		font-weight: 700;
+	}
 
-  & > :not(:last-child) {
-    margin-bottom: 1.2rem;
-  }
+	& > :not(:last-child) {
+		margin-bottom: 1.2rem;
+	}
 }
 
 .deleteBoard {
-  box-shadow: var(--box-shadow);
-  padding: 2rem;
-  border-radius: 0.8rem;
-  grid-column: 1 / -1;
-  width: fit-content;
-  .deleteBtn {
-    &:disabled {
-      background-color: inherit !important;
-      color: inherit !important;
-      cursor: not-allowed;
-    }
+	box-shadow: var(--box-shadow);
+	padding: 2rem;
+	border-radius: 0.8rem;
+	grid-column: 1 / -1;
+	width: fit-content;
+	.deleteBtn {
+		&:disabled {
+			background-color: inherit !important;
+			color: inherit !important;
+			cursor: not-allowed;
+		}
 
-    &:hover {
-      background-color: #ff6b6b;
-      border-color: #ff6b6b;
-    }
-    border-color: #ff6b6b;
-  }
+		&:hover {
+			background-color: #ff6b6b;
+			border-color: #ff6b6b;
+		}
+		border-color: #ff6b6b;
+	}
 }
 
 .deleteBoardText {
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-  white-space: nowrap;
-  height: 2.6rem;
+	display: flex;
+	gap: 1.2rem;
+	align-items: center;
+	white-space: nowrap;
+	height: 2.6rem;
 
-  font-size: 2rem;
-  line-height: 1.5;
-  font-weight: 700;
-  margin-bottom: 2rem;
+	font-size: 2rem;
+	line-height: 1.5;
+	font-weight: 700;
+	margin-bottom: 2rem;
 }
 
 .dropdown {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  height: 4rem;
+	display: flex;
+	align-items: center;
+	gap: 1.2rem;
+	height: 4rem;
 }
 
 .updateSubmitBtn {
-  border-color: var(--tertiary) !important;
+	border-color: var(--tertiary) !important;
 
-  &:hover {
-    background-color: var(--tertiary) !important;
-    color: var(--text);
-  }
+	&:hover {
+		background-color: var(--tertiary) !important;
+		color: var(--text);
+	}
 
-  &:disabled {
-    background-color: inherit !important;
-    color: inherit !important;
-    cursor: not-allowed;
-  }
+	&:disabled {
+		background-color: inherit !important;
+		color: inherit !important;
+		cursor: not-allowed;
+	}
 }
 
 .deleteAlert {
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-  margin-bottom: 2rem;
-  font-size: 1.4rem;
-  color: #ff6b6b;
-  & > svg {
-    width: 2rem;
-    height: 2rem;
-  }
+	display: flex;
+	gap: 1.2rem;
+	align-items: center;
+	margin-bottom: 2rem;
+	font-size: 1.4rem;
+	color: #ff6b6b;
+	& > svg {
+		width: 2rem;
+		height: 2rem;
+	}
 }
