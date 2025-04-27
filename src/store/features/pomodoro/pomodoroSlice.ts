@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type TimeLeft = {
 	pomodoro: number;
@@ -41,5 +41,17 @@ const initialState: PomodoroState = {
 const pomodoroSlice = createSlice({
 	name: 'pomodoro',
 	initialState,
-	reducers: {},
+	reducers: {
+		setTimer: (state, action: PayloadAction<TimeLeft>) => {
+			state.timeLeft = action.payload;
+			state.initialTimes = action.payload;
+		},
+		toggleActiveTimer: (state, action: PayloadAction<ActiveTabType>) => {
+			state.isRunning[action.payload] = !state.isRunning[action.payload];
+		}
+	},
 });
+
+export const { setTimer, toggleActiveTimer } = pomodoroSlice.actions;
+
+export default pomodoroSlice.reducer;

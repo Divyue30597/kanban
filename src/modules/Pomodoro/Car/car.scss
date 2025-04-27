@@ -2,9 +2,9 @@
 	--animation-duration: 1500s; /* Default 25min in seconds */
 	--progress: 0%;
 
-	background-color: var(--primary-text);
+	background-color: var(--primary-text-color);
 	width: 100%;
-	border-block: 0.4rem solid var(--text);
+	border-block: 0.4rem solid var(--text-color);
 	position: relative;
 	height: 5rem;
 
@@ -22,7 +22,7 @@
 	.road__line {
 		flex: 0 0 4rem;
 		height: 0.4rem;
-		background-color: var(--text);
+		background-color: var(--text-color);
 		margin-right: 12rem;
 	}
 

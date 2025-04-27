@@ -1,22 +1,28 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes, forwardRef } from 'react'; // Import forwardRef
 import styles from './button.module.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-	children: React.ReactNode;
-	icon?: React.ReactNode;
+    children: React.ReactNode;
+    icon?: React.ReactNode;
 }
 
-export default function Button(props: ButtonProps) {
-	const { children, icon, className, type, ...rest } = props;
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+    const { children, icon, className, type, ...rest } = props;
 
-	return (
-		<button
-			type={type || 'button'}
-			className={styles.button + ' ' + className}
-			{...rest}
-		>
-			{children}
-			{icon && <span className={styles.icon}>{icon}</span>}
-		</button>
-	);
-}
+    return (
+        <button
+            ref={ref} 
+            type={type || 'button'}
+            className={`${styles.button} ${className || ''}`.trim()}
+            {...rest}
+        >
+            {children}
+            {icon && <span className={styles.icon}>{icon}</span>}
+        </button>
+    );
+});
+
+// Add display name for better debugging
+Button.displayName = 'Button';
+
+export default Button;

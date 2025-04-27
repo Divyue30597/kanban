@@ -1,6 +1,5 @@
 .button {
 	padding: 0.8rem 1.4rem;
-	border-radius: 0.4rem;
 	font-size: 1.4rem;
 	font-weight: 600;
 	text-align: center;
@@ -8,32 +7,30 @@
 	transition:
 		background-color 0.3s ease,
 		color 0.3s ease;
-	color: var(--primary-text);
-	background-color: inherit;
-	border: 0.2rem solid var(--primary);
-	border-bottom: 0.4rem solid var(--primary);
+	color: var(--primary-text-color);
+	border: 0.2rem solid var(--primary-color);
 	border-radius: 0.6rem;
 	outline: none;
 
 	&[type='submit'] {
-		border-color: var(--secondary);
+		border-color: var(--secondary-color);
 	}
 
 	&[type='submit']:hover {
-		background-color: var(--secondary);
-		color: var(--text);
-		border-bottom-color: var(--secondary);
+		background-color: var(--secondary-color);
+		color: var(--primary-text-color);
+		border-bottom-color: var(--secondary-color);
 	}
 
 	&:hover {
-		background-color: var(--primary);
-		color: var(--text);
+		background-color: var(--primary-color);
+		color: var(--primary-text-color);
 	}
 
 	&:active {
-		border-bottom: 0.2rem solid var(--primary-hover);
-		background-color: var(--primary-hover);
-		color: var(--text);
+		border-bottom: 0.2rem solid var(--primary-hover-color);
+		background-color: var(--primary-hover-color);
+		color: var(--primary-text-color);
 	}
 
 	&:disabled {

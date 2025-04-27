@@ -82,7 +82,7 @@ $color: #f4eddb;
 
 	& > button:disabled {
 		font-weight: 800 !important;
-		background-color: var(--primary) !important;
+		background-color: var(--primary-color) !important;
 		color: $color;
 		border-bottom: 0.2rem solid $color;
 	}

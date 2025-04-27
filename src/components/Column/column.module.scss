@@ -2,7 +2,7 @@
 	& > h2 {
 		font-size: 1.4rem;
 		font-weight: 800;
-		color: var(--primary-text);
+		color: var(--primary-text-color);
 		margin-bottom: 2rem;
 		text-transform: uppercase;
 		width: fit-content;
@@ -13,7 +13,7 @@
 
 		& > span {
 			background-color: #777777;
-			color: var(--text);
+			color: var(--text-color);
 			padding: 0.2rem 0.6rem;
 			font-size: 1.2rem;
 			border-radius: 0.6rem;

@@ -8,18 +8,31 @@
 
 .tabBtn {
 	font-size: 1.6rem;
-	color: var(--primary-text);
+	color: var(--primary-color-text-color);
 	width: fit-content;
 	gap: 1.6rem;
 	padding: 0;
+	height: 3.6rem;
 
 	& > button {
-		border: 0.2rem solid var(--primary);
-		border-bottom: 0.4rem solid var(--primary);
+		border: 0.2rem solid var(--primary-color);
+		border-bottom: 0.4rem solid var(--primary-color);
+		background-color: #ffffff !important;
+		
+		&[aria-selected="true"] {
+			pointer-events: none;
+			color: var(--primary-color);
+			border-bottom: 0.2rem solid var(--primary-color) !important;
+		}
+		
+		&[aria-selected="false"] {
+			background-color: var(--primary-color);
+			border-bottom-color: var(--primary-color);
+		}
+
+		&:hover {
+			color: var(--primary-color);
+		}
 	}
 
-	& > button:disabled {
-		color: var(--primary);
-		border-bottom: 0.2rem solid var(--primary);
-	}
 }

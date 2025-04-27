@@ -1,10 +1,14 @@
 import styles from './kanban.module.scss';
 import Tabs from '../../../components/Tabs';
 import BoardSettings from './Board';
-import CardSettings from './Card';
 import ColumnSettings from './Column';
+import { useState } from 'react';
+
+type activeSettingsType = 'board' | 'column';
 
 function KanbanSettings() {
+	const [activeTab, setActiveTab] = useState<activeSettingsType>('board');
+
 	const tabs = [
 		{
 			id: 'board',
@@ -26,7 +30,12 @@ function KanbanSettings() {
 	return (
 		<div className={styles.kanbanSettings}>
 			<h2>Kanban Settings</h2>
-			<Tabs className={styles.tabBtn} tabs={tabs} />
+			<Tabs
+				className={styles.tabBtn}
+				tabs={tabs}
+				activeTab={activeTab}
+				onTabChange={(id) => setActiveTab(id as activeSettingsType)}
+			/>
 		</div>
 	);
 }
