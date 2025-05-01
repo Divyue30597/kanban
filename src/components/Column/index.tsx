@@ -61,7 +61,6 @@ function Column(props: ColumnProps) {
 				className={styles.cards + ' column-content'}
 				data-column-id={colId}
 			>
-				{/* {children} */}
 				{React.Children.map(children, (child) => {
 					if (
 						React.isValidElement(child) &&

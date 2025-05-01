@@ -2,7 +2,7 @@
 	width: 18rem;
 	position: sticky;
 	top: 0;
-	transition: width 0.3s ease-in-out; // ← move transition here
+	transition: width 0.3s ease-in-out; 
 	height: 100dvh;
 
 	&.collapse {
@@ -14,7 +14,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: calc(100% - 6.8rem);
+	height: calc(100dvh - 6.6rem);
 	border-right: 0.1rem solid var(--border-color);
 	list-style: none;
 }
@@ -57,9 +57,7 @@ hr {
 	right: -1.2rem;
 	width: 2.4rem;
 	height: 2.4rem;
-	// padding: 1rem;
 	background-color: #ffffff;
-	// border: none;
 	color: #000;
 	border-radius: 50%;
 	cursor: pointer;

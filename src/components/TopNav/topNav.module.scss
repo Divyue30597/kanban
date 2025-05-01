@@ -5,7 +5,6 @@
 	background-color: var(--background-color, #fff);
 	height: 6.6rem;
 	border-bottom: 0.1rem solid var(--border-color);
-	width: calc(100dvw - 6rem);
 }
 
 .topNavContent {
@@ -14,8 +13,7 @@
 	justify-content: space-between;
 	align-items: center;
 
-	max-width: 96.4rem;
-	padding-block: 1.4rem;
+	padding: 1.4rem 2.4rem;
 	margin: 0 auto;
 
 	& > p {

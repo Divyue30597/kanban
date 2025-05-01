@@ -60,7 +60,7 @@ function App() {
 	return (
 		<div className={styles.app}>
 			<LeftNav />
-			<div className={styles.mainContent}>
+			<main className={styles.mainContent}>
 				<TopNav />
 				<Routes>
 					<Route index path="/" element={<Home />} />
@@ -93,7 +93,7 @@ function App() {
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/help" element={<Help />} />
 				</Routes>
-			</div>
+			</main>
 		</div>
 	);
 }

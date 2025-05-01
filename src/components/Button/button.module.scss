@@ -7,13 +7,16 @@
 	transition:
 		background-color 0.3s ease,
 		color 0.3s ease;
-	color: var(--primary-text-color);
+	color: var(--text-color);
+	background-color: var(--primary-color);
 	border: 0.2rem solid var(--primary-color);
 	border-radius: 0.6rem;
 	outline: none;
 
 	&[type='submit'] {
 		border-color: var(--secondary-color);
+		background-color: var(--secondary-color);
+		color: var(--primary-text-color);
 	}
 
 	&[type='submit']:hover {
@@ -23,8 +26,8 @@
 	}
 
 	&:hover {
-		background-color: var(--primary-color);
-		color: var(--primary-text-color);
+		background-color: var(--primary-hover-color);
+		color: var(--text-color);
 	}
 
 	&:active {

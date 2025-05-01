@@ -13,7 +13,7 @@ import { moveCardBetweenColumns } from '../../store/thunks';
 import Section from '../Section';
 
 function Board(props: HTMLProps<HTMLDivElement>) {
-	const { children, className, ...rest } = props;
+	const { ...rest } = props;
 
 	const dispatch = useAppDispatch();
 	const activeBoard = useAppSelector(selectActiveBoard);
@@ -122,12 +122,12 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 					}}
 				>
 					{columns &&
-						columns?.map((column) => (
+						columns?.map((column) => column && (
 							<Column
 								key={column?.id}
 								className={styles.column}
-								colId={column?.id!}
-								colName={column?.title!}
+								colId={column?.id}
+								colName={column?.title}
 								numOfCards={column?.cardIds?.length || 0}
 								onCardDrop={handleCardDrop}
 							>

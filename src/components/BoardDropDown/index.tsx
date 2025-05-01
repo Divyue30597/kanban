@@ -33,7 +33,7 @@ function BoardDropDown(props: BoardDropDownProps) {
 					type="button"
 					key={board.id}
 					onClick={() => {
-						setActiveBoard && setActiveBoard(board);
+						setActiveBoard?.(board);
 					}}
 				>
 					{board.title}
