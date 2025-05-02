@@ -1,6 +1,6 @@
 import styles from './leftNav.module.scss';
 import { SVG } from '../../SVG';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import ListItem from '../ListItem';
 import { useEffect } from 'react';
 
@@ -30,8 +30,7 @@ function LeftNav() {
 		{ title: 'Logout', icon: <SVG.logout />, path: '/' },
 	];
 
-	const handleKeyDown = (event: KeyboardEvent) => {
-		// Skip if the event target is an input, textarea or any editable element
+	const handleKeyDown = useCallback((event: KeyboardEvent) => {
 		if (
 			event.target instanceof HTMLElement &&
 			(event.target.tagName === 'INPUT' ||
@@ -45,7 +44,7 @@ function LeftNav() {
 			event.preventDefault();
 			toggleExpand();
 		}
-	};
+	}, [toggleExpand]);
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
