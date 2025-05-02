@@ -78,12 +78,17 @@ $color: #f4eddb;
 		border: 0.2rem solid $color;
 		border-radius: 0.8rem;
 		border-bottom: 0.4rem solid $color;
-	}
 
-	& > button:disabled {
-		font-weight: 800 !important;
-		background-color: var(--primary-color) !important;
-		color: $color;
-		border-bottom: 0.2rem solid $color;
+		&:active {
+			border: 0.2rem solid $color;
+			outline: 0.2rem solid $color;
+		}
+
+		&:disabled {
+			font-weight: 800 !important;
+			background-color: var(--primary-color) !important;
+			color: $color;
+			border-bottom: 0.2rem solid $color;
+		}
 	}
 }

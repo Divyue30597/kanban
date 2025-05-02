@@ -1,7 +1,6 @@
 import styles from './boardSetting.module.scss';
 import { useState, useEffect } from 'react';
 import FormInput from '../../../../components/FormInput';
-import Section from '../../../../components/Section';
 import Button from '../../../../components/Button';
 import BoardDropDown from '../../../../components/BoardDropDown';
 import { Board } from '../../../../store/types';
@@ -41,11 +40,11 @@ const boardInputs = [
 
 function BoardSettings() {
 	return (
-		<Section className={styles.boardSettings}>
+		<div className={styles.boardSettings}>
 			<BoardSettingForm />
 			<BoardSettingForm isUpdating={true} />
 			<DeleteBoard />
-		</Section>
+		</div>
 	);
 }
 

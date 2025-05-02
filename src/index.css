@@ -18,6 +18,8 @@
 	--primary: #4186f4;
 	--secondary: #12b066;
 	--tertiary: #9747ff;
+	--danger: #ff6b6b;
+	--warning: #ffb74d;
 
 	--text: #ffffff;
 	--primary-text: #1d2939;
@@ -27,10 +29,18 @@
 	--primary-hover: #2e5eab;
 	--secondary-hover: #0d7b47;
 	--tertiary-hover: #6a32b3;
+	--danger-hover: #b34b4b;
+	--warning-hover: #b38036;
 	
 	--background: #ffffff;
-
+	
 	--border: #1018284d;
+	
+	--primary-outline :#7aaaf7;
+	--secondary-outline: #59c894;
+	--tertiary-outline: #b67eff;
+	--danger-outline: #ff9797;
+	--warning-outline: #ffcd82;
 
 	--box-shadow: 0rem 0.05rem 0.2rem 0rem #1018284d;
 	
@@ -38,6 +48,9 @@
 	--primary-color: var(--primary);
 	--secondary-color: var(--secondary);
 	--tertiary-color: var(--tertiary);
+	--danger-color: var(--danger);
+	--warning-color: var(--warning);
+
 
 	--text-color: var(--text);
 	--primary-text-color: var(--primary-text);
@@ -47,6 +60,14 @@
 	--primary-hover-color: var(--primary-hover);
 	--secondary-hover-color: var(--secondary-hover);
 	--tertiary-hover-color: var(--tertiary-hover);
+	--danger-hover-color: var(--danger-hover);
+	--warning-hover-color: var(--warning-hover);
+
+	--primary-outline-color: var(--primary-outline);
+	--secondary-outline-color: var(--secondary-outline);
+	--tertiary-outline-color: var(--tertiary-outline);
+	--danger-outline-color: var(--danger-outline);
+	--warning-outline-color: var(--warning-outline);
 
 	--background-color: var(--background);
 

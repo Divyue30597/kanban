@@ -2,6 +2,7 @@
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 2.4rem;
+	padding-top: 2.4rem;
 }
 
 .form {
@@ -37,20 +38,29 @@
 	box-shadow: var(--box-shadow);
 	padding: 2rem;
 	border-radius: 0.8rem;
-	grid-column: 1 / -1;
-	width: fit-content;
-	.deleteBtn {
-		&:disabled {
-			background-color: inherit !important;
-			color: inherit !important;
-			cursor: not-allowed;
-		}
+	
+}
 
-		&:hover {
-			background-color: #ff6b6b;
-			border-color: #ff6b6b;
-		}
-		border-color: #ff6b6b;
+.deleteBtn {
+	border-color: var(--danger-color) !important;
+	background-color: var(--danger-color) !important;
+
+	&:hover {
+		background-color: var(--danger-hover-color) !important;
+		color: var(--text-color);
+	}
+
+	&:active {
+		background-color: var(--danger-hover-color) !important;
+		color: var(--text-color);
+		border-color: var(--danger-color) !important;
+		outline: 0.2rem solid var(--danger-outline-color) !important;
+	}
+
+	&:disabled {
+		background-color: var(--background-color) !important;
+		color: inherit !important;
+		cursor: not-allowed;
 	}
 }
 
@@ -75,15 +85,23 @@
 }
 
 .updateSubmitBtn {
-	border-color: var(--tertiary) !important;
+	border-color: var(--tertiary-color) !important;
+	background-color: var(--tertiary-color) !important;
 
 	&:hover {
-		background-color: var(--tertiary) !important;
+		background-color: var(--tertiary-hover-color) !important;
 		color: var(--text-color);
 	}
 
+	&:active {
+		background-color: var(--tertiary-hover-color) !important;
+		color: var(--text-color);
+		border-color: var(--tertiary-color) !important;
+		outline: 0.2rem solid var(--tertiary-outline-color) !important;
+	}
+
 	&:disabled {
-		background-color: inherit !important;
+		background-color: var(--background-color) !important;
 		color: inherit !important;
 		cursor: not-allowed;
 	}
@@ -95,7 +113,7 @@
 	align-items: center;
 	margin-bottom: 2rem;
 	font-size: 1.4rem;
-	color: #ff6b6b;
+	color: var(--warning-color);
 	& > svg {
 		width: 2rem;
 		height: 2rem;
