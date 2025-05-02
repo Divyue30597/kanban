@@ -7,9 +7,9 @@ import { useEffect } from 'react';
 function LeftNav() {
 	const [expanded, setExpanded] = useState<boolean>(false);
 
-	const toggleExpand = () => {
+	const toggleExpand = useCallback(() => {
 		setExpanded(!expanded);
-	};
+	}, [expanded]);
 
 	const menuItems = [
 		{ title: 'Home', icon: <SVG.home />, path: '/' },

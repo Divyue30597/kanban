@@ -11,15 +11,16 @@
 
 :root {
 	font-size: 62.5%;
-	font-family: 'Inter', sans-serif;
 	font-weight: 500;
+	--font-family: 'Inter', sans-serif;
 
-	/* Generic terms */
 	--primary: #4186f4;
 	--secondary: #12b066;
 	--tertiary: #9747ff;
 	--danger: #ff6b6b;
 	--warning: #ffb74d;
+
+	--card-background: #ffffff;
 
 	--text: #ffffff;
 	--primary-text: #1d2939;
@@ -31,26 +32,29 @@
 	--tertiary-hover: #6a32b3;
 	--danger-hover: #b34b4b;
 	--warning-hover: #b38036;
-	
+
 	--background: #ffffff;
-	
+	--secondary-background: #ffffff80;
+	--tertiary-background: #ffffff60;
+
 	--border: #1018284d;
-	
-	--primary-outline :#7aaaf7;
+
+	--border-radius: 0.8rem;
+
+	--primary-outline: #7aaaf7;
 	--secondary-outline: #59c894;
 	--tertiary-outline: #b67eff;
 	--danger-outline: #ff9797;
 	--warning-outline: #ffcd82;
 
 	--box-shadow: 0rem 0.05rem 0.2rem 0rem #1018284d;
-	
-	/* Colors */
+
+	/* Generic terms */
 	--primary-color: var(--primary);
 	--secondary-color: var(--secondary);
 	--tertiary-color: var(--tertiary);
 	--danger-color: var(--danger);
 	--warning-color: var(--warning);
-
 
 	--text-color: var(--text);
 	--primary-text-color: var(--primary-text);
@@ -71,9 +75,44 @@
 
 	--background-color: var(--background);
 
+	--card-background-color: var(--card-background);
+
 	--border-color: var(--border);
 
 	--box-shadow-color: var(--box-shadow);
+
+	font-family: var(--font-family);
+}
+
+/* Fix selectors to target html directly without :root */
+html[data-theme='light'] {
+	--background: #ffffff;
+	--secondary-background: #f1f1f1;
+	--tertiary-background: #cccccc;
+
+	--card-background: #ffffff;
+
+	--primary-text: #000000;
+	--secondary-text: #1a1a1a70;
+	--tertiary-text: #000000;
+
+	--box-shadow: 0rem 0.05rem 0.2rem 0rem #1018284d;
+	--border-color: #0000003a;
+}
+
+html[data-theme='dark'] {
+	--background: #000000;
+	--secondary-background: #1a1a1a;
+	--tertiary-background: #333333;
+
+	--card-background: #1a1a1a;
+
+	--primary-text: #ffffff;
+	--secondary-text: #ffffff80;
+	--tertiary-text: #ffffff;
+
+	--box-shadow: 0rem 0.05em 0.2rem 0rem #c9c9c9a3;
+	--border-color: #ffffff3a;
 }
 
 body {
@@ -88,6 +127,7 @@ body {
 	color: var(--primary-text);
 	font-size: 1.4rem;
 	width: fit-content;
+	/* border: 0.2rem solid var(--border-color); */
 }
 
 kbd {
@@ -113,14 +153,14 @@ kbd {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #ccc;
+	background-color: var(--tertiary-background);
 	border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: #f0f0f0;
+	background-color: var(--background-color);
 }
 
 ::-webkit-scrollbar-corner {
-	background-color: #f0f0f0;
+	background-color: var(--background-color);
 }

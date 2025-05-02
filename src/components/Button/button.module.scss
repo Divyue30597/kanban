@@ -6,14 +6,13 @@
 	cursor: pointer;
 	transition:
 		background-color 0.3s ease,
-		outline 0.1s ease,
-		border 0.1s ease,
+		outline 0.3s ease,
+		border 0.3s ease,
 		color 0.3s ease;
 	color: var(--text-color);
 	background-color: var(--primary-color);
 	border: 0.2rem solid var(--primary-color);
-	border-radius: 0.6rem;
-	outline: none;
+	border-radius: var(--border-radius);
 
 	&[type='submit'] {
 		border-color: var(--secondary-color);
@@ -31,7 +30,6 @@
 		background-color: var(--secondary-hover-color);
 		color: var(--text-color);
 		border-color: var(--secondary-color);
-		outline: 0.2rem solid var(--secondary-outline-color);
 	}
 
 	&:hover {
@@ -41,13 +39,11 @@
 
 	&:active {
 		border: 0.2rem solid var(--primary-hover-color);
-		outline: 0.2rem solid var(--primary-outline-color);
 		background-color: var(--primary-hover-color);
-		// color: var(--primary-text-color);
 	}
 
 	&:disabled {
-		background-color: #fff !important;
+		background-color: var(--background-color) !important;
 		color: var(--text-primary) !important;
 		cursor: not-allowed;
 	}

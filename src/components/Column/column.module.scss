@@ -3,6 +3,7 @@
 		font-size: 1.4rem;
 		font-weight: 800;
 		color: var(--primary-text-color);
+		// background-color: var(--tertiary-background);
 		margin-bottom: 1.2rem;
 		text-transform: uppercase;
 		width: fit-content;
@@ -16,19 +17,20 @@
 			color: var(--text-color);
 			padding: 0.2rem 0.6rem;
 			font-size: 1.2rem;
-			border-radius: 0.6rem;
+			border-radius: calc(var(--border-radius) / 2);
 		}
 
-		background-color: #e1e1e1;
+		background-color: var(--tertiary-background);
 		padding: 0.6rem 1.2rem;
 		margin-left: 1.4rem;
-		border-radius: 1.6rem;
+		border-radius: var(--border-radius);
 	}
 }
 
 .cards {
-	min-height: calc(100vh - 32.2rem);
+	min-height: calc(100dvh - 32.2rem);
 	padding: 1.6rem;
+	// height: calc(100% - 32.2rem);
 }
 
 .cards > *:not(:last-child) {
@@ -39,14 +41,15 @@
 	background-color: rgba(255, 99, 71, 0.15);
 	box-shadow: inset 0 0 0 2px rgba(255, 99, 71, 0.4);
 	transition: all 0.3s ease;
-	border-radius: 0.8rem;
+	border-radius: var(--border-radius);
 }
 
 .validDropTarget {
 	background-color: rgba(50, 205, 50, 0.15);
 	box-shadow: inset 0 0 0 2px rgba(50, 205, 50, 0.4);
 	transition: all 0.3s ease;
-	border-radius: 0.8rem;
+	border-radius: var(--border-radius);
+	height: 100%;
 }
 
 /* Add this to your Card component CSS */

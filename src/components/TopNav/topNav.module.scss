@@ -33,3 +33,21 @@
 .dropdownBtn {
 	padding: 0.6rem;
 }
+
+
+
+.themeBtn {
+	background: transparent;
+	color: var(--primary-text-color);
+	border-color: var(--border-color);
+	& > span {
+		margin: 0;
+	}
+
+	&:active, 
+	&:hover {
+		background: transparent;
+		color: var(--primary-text-color);
+	}
+
+}

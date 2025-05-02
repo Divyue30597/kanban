@@ -8,7 +8,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 1000;
+	z-index: 99999;
 	transition: opacity 0.3s ease;
 
 	&.visible {
@@ -21,8 +21,9 @@
 }
 
 .modalContainer {
-	background-color: white;
-	border-radius: 0.8rem;
+	background-color: var(--card-background-color);
+	color: var(--primary-text);
+	border-radius: var(--border-radius);
 	box-shadow: var(--box-shadow);
 	max-height: calc(100dvh - 4rem);
 	display: flex;
@@ -45,21 +46,23 @@
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem 2rem;
-	border-bottom: 1px solid #eaeaea;
+	border-bottom: 0.1rem solid var(--border-color);
+	// background-color: white;
 }
 
 .modalTitle {
 	font-size: 1.8rem;
 	font-weight: 700;
-	color: var(--text-color);
+	color: var(--primary-text);
 }
 
 .closeButton {
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: var(--text-color);
+	color: var(--primary-text);
 	transition: color 0.2s;
+	font-size: 0rem;
 
 	& > svg {
 		width: 1.8rem;

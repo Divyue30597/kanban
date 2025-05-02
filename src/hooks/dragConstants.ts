@@ -3,7 +3,7 @@ export const DRAG_CONFIG = {
 	VISUAL: {
 		ROTATION: 'rotate(3deg)',
 		OPACITY: '0.6',
-		BACKGROUND: '#f5f5f5',
+		// BACKGROUND: '#f5f5f5',
 		BORDER: '0.2rem dashed #ccc',
 		Z_INDEX: '1000',
 		BOUNDARY_FEEDBACK_BORDER: 'solid 0.2rem #ff6b6b',

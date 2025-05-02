@@ -17,12 +17,12 @@
 	& > button {
 		border: 0.2rem solid var(--primary-color);
 		border-bottom: 0.4rem solid var(--primary-color);
-		background-color: #ffffff !important;
+		background-color: var(--background-color) !important;
 
 		&:active {
 			border: 0.2rem solid var(--primary-color);
 			outline: 0.2rem solid var(--primary-color);
-			background-color: #ffffff !important;
+			background-color: var(--background-color) !important;
 		}
 		
 		&[aria-selected="true"] {

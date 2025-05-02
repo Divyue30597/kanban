@@ -48,6 +48,8 @@ export default function Card(props: CardType) {
 			draggable={true}
 			onDragStart={handleDragStart}
 			data-card-id={id}
+			data-column-id={columnId}
+			data-board-id={boardId}
 		>
 			<h1 className={styles.heading}>{title}</h1>
 			<p className={styles.description}>{description}</p>
@@ -107,12 +109,13 @@ function renderLinks(props: { links?: string[] }) {
 	);
 }
 
-function renderImages(props: { images?: string[] }) {
+function renderImages(props: { images?: (string | File)[] }) {
 	const { images } = props;
 	return (
 		<div className={styles.images}>
 			{images?.map((image, index) => {
-				return <img key={index} src={image} alt="" />;
+				const src = typeof image === 'string' ? image : URL.createObjectURL(image);
+				return <img key={index} src={src} alt="" />;
 			})}
 		</div>
 	);

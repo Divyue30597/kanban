@@ -273,8 +273,8 @@ export function useDragAndDrop({
 				document.body.appendChild(clone);
 
 				cardElement.style.opacity = DRAG_CONFIG.VISUAL.OPACITY;
-				cardElement.style.backgroundColor =
-					DRAG_CONFIG.VISUAL.BACKGROUND;
+				// cardElement.style.backgroundColor =
+				// 	DRAG_CONFIG.VISUAL.BACKGROUND;
 				cardElement.style.border = DRAG_CONFIG.VISUAL.BORDER;
 
 				return clone;
@@ -589,8 +589,8 @@ export function useDragAndDrop({
 				}
 
 				if (dragStartedRef.current && dragElementRef.current) {
-					let newLeft = clientX - draggingCard.offsetX;
-					let newTop = clientY - draggingCard.offsetY;
+					const newLeft = clientX - draggingCard.offsetX;
+					const newTop = clientY - draggingCard.offsetY;
 
 					const cardRect =
 						dragElementRef.current.getBoundingClientRect();

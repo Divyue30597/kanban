@@ -1,8 +1,7 @@
 .road {
-	--animation-duration: 1500s; /* Default 25min in seconds */
+	--animation-duration: 1500s;
 	--progress: 0%;
-
-	background-color: var(--primary-text-color);
+	background-color: #000;
 	width: 100%;
 	border-block: 0.4rem solid var(--text-color);
 	position: relative;
@@ -34,7 +33,7 @@
 		transform: scale(
 			-1,
 			1
-		); // Combine transforms and force GPU acceleration
+		);
 	}
 }
 

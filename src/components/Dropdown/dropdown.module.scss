@@ -11,8 +11,7 @@
 .dropdown {
 	position: absolute;
 	min-width: 16rem;
-	background-color: white;
-	border-radius: 0.4rem;
+	border-radius: var(--border-radius);
 	padding: 0.8rem 0;
 	box-shadow: var(--box-shadow);
 	z-index: 100;
@@ -24,24 +23,28 @@
 		top: 100%;
 		left: 0;
 		margin-top: 0.8rem;
+		background-color: var(--secondary-background);
 	}
 
 	&.bottom-right {
 		top: 100%;
 		right: 0;
 		margin-top: 0.8rem;
+		background-color: var(--secondary-background);
 	}
 
 	&.top-left {
 		bottom: 100%;
 		left: 0;
 		margin-bottom: 0.8rem;
+		background-color: var(--secondary-background);
 	}
 
 	&.top-right {
 		bottom: 100%;
 		right: 0;
 		margin-bottom: 0.8rem;
+		background-color: var(--secondary-background);
 	}
 
 	a,
@@ -54,19 +57,13 @@
 		font-size: 1.4rem;
 		text-align: left;
 		width: 100%;
-		background: none;
 		border: none;
 		cursor: pointer;
 		transition: background-color 0.2s;
+		background-color: var(--secondary-background);
 
 		&:hover {
-			background-color: #f5f5f5;
+			background-color:var(--tertiary-background);
 		}
-	}
-
-	hr {
-		margin: 0.8rem 0;
-		border: none;
-		border-top: 0.1rem solid #eaeaea;
 	}
 }

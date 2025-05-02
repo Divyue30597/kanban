@@ -1,7 +1,8 @@
 .help {
-	background-color: #f1f1f1;
+	background-color: var(--secondary-background);
 	height: calc(100vh - 12rem);
 	padding: 1.6rem;
+	margin: 2.4rem;
 	border-radius: 0.8rem;
 
 	& > h1 {
@@ -31,12 +32,12 @@
 	& > p {
 		font-size: 1.4rem;
 		font-weight: 500;
-		color: var(--primary-color-text-color);
+		color: var(--primary-text-color);
 	}
 }
 
 .helpContent {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(20rem, 1fr));
+	display: flex;
+	flex-wrap: wrap;
 	gap: 1.6rem;
 }

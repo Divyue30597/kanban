@@ -1,5 +1,4 @@
 import styles from './columnSettings.module.scss';
-import Section from '../../../../components/Section';
 import FormInput from '../../../../components/FormInput';
 import { useEffect, useState } from 'react';
 import BoardDropDown from '../../../../components/BoardDropDown';
@@ -29,11 +28,11 @@ const COLUMN_INPUT = [
 
 function ColumnSettings() {
 	return (
-		<Section className={styles.columnSettings}>
+		<div className={styles.columnSettings}>
 			<UpdateForm />
 			<UpdateForm isUpdating={true} />
 			<DeleteColumn />
-		</Section>
+		</div>
 	);
 }
 

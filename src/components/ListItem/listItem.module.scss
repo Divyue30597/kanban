@@ -14,10 +14,10 @@ li {
 		transition:
 			background-color 0.3s ease,
 			color 0.3s ease;
-		border-radius: 0.4rem;
+		border-radius: var(--border-radius);
 
 		&:hover {
-			background-color: #e6e6e6;
+			background-color: var(--tertiary-background);
 		}
 
 		svg {
@@ -34,6 +34,7 @@ li {
 				opacity 0.3s ease,
 				transform 0.3s ease;
 			display: inline-block;
+			color: var(--primary-text-color);
 		}
 
 		.expanded {
@@ -54,13 +55,15 @@ li {
 	position: absolute;
 	left: 6rem;
 	top: 1rem;
-	background-color: #e6e6e6;
+	background-color: var(--tertiary-background);
+	color: var(--primary-text-color);
 	padding: 0.4rem;
 	font-size: 1.2rem;
-	border-radius: 0.4rem;
+	border-radius: var(--border-radius);
 	z-index: 99999;
 }
 
 .active {
-	background-color: #e6e6e6;
+	background-color: var(--tertiary-background);
+	color: var(--primary-text-color);
 }

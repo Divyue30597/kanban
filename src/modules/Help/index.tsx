@@ -67,7 +67,7 @@ function Help() {
 						key={shortcut.featureName.toLowerCase()}
 					>
 						<h3>{shortcut.featureName}</h3>
-						{shortcut.shortcuts.map((item, ind) => (
+						{shortcut.shortcuts.map((item) => (
 							<div className={styles.table} key={item.id}>
 								<kbd key={item.id} className={styles.key}>
 									{item.key.map((k: string, index) => (

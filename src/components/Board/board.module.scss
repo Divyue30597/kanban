@@ -21,9 +21,9 @@
 }
 
 .boardContent {
-	background-color: #f8f8f8;
+	background-color: var(--secondary-background);
 	padding: 1.4rem 0;
-	border-radius: 0.8rem;
+	border-radius: var(--border-radius);
 	height: calc(100dvh - 20rem);
 
 	overflow-y: scroll;
@@ -37,7 +37,7 @@
 
 .dropTarget {
 	background-color: rgb(140, 216, 150);
-	border-radius: 0.8rem;
+	border-radius: var(--border-radius);
 	transition: all 0.3s ease;
 	min-height: calc(100vh - 24rem);
 	height: 100%;
