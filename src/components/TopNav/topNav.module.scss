@@ -40,14 +40,19 @@
 	background: transparent;
 	color: var(--primary-text-color);
 	border-color: var(--border-color);
+
 	& > span {
 		margin: 0;
 	}
 
-	&:active, 
+	&:active,
 	&:hover {
 		background: transparent;
 		color: var(--primary-text-color);
+		border-color: var(--border-color);
 	}
-
+	
+	&:active {
+		outline: 0.1rem solid var(--border-color);
+	} 
 }

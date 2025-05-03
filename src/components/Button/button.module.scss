@@ -13,6 +13,7 @@
 	background-color: var(--primary-color);
 	border: 0.2rem solid var(--primary-color);
 	border-radius: var(--border-radius);
+	outline: 0.1rem solid transparent;
 
 	&[type='submit'] {
 		border-color: var(--secondary-color);
@@ -30,6 +31,7 @@
 		background-color: var(--secondary-hover-color);
 		color: var(--text-color);
 		border-color: var(--secondary-color);
+		outline: 0.1rem solid var(--secondary-outline-color);
 	}
 
 	&:hover {
@@ -39,6 +41,7 @@
 
 	&:active {
 		border: 0.2rem solid var(--primary-hover-color);
+		outline: 0.1rem solid var(--primary-outline-color);
 		background-color: var(--primary-hover-color);
 	}
 

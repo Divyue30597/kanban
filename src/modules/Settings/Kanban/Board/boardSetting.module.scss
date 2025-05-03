@@ -54,7 +54,7 @@
 		background-color: var(--danger-hover-color) !important;
 		color: var(--text-color);
 		border-color: var(--danger-color) !important;
-		outline: 0.2rem solid var(--danger-outline-color) !important;
+		outline: 0.1rem solid var(--danger-outline-color) !important;
 	}
 
 	&:disabled {
@@ -97,7 +97,7 @@
 		background-color: var(--tertiary-hover-color) !important;
 		color: var(--text-color);
 		border-color: var(--tertiary-color) !important;
-		outline: 0.2rem solid var(--tertiary-outline-color) !important;
+		outline: 0.1rem solid var(--tertiary-outline-color) !important;
 	}
 
 	&:disabled {

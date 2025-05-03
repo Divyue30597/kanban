@@ -5,13 +5,11 @@ import { SVG } from '../../SVG';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setActiveBoard } from '../../store/features/boards/boardSlice';
 import { useLocation } from 'react-router';
-import { useEffect, useState } from 'react';
-
-type theme = 'light' | 'dark';
+import { useTheme } from '../../hooks/useTheme';
 
 function TopNav() {
 	const pathname = useLocation().pathname;
-	const [theme, setTheme] = useState<theme>('light');
+	const { theme, toggleTheme } = useTheme();
 	const boards = useAppSelector((state) => state.boards.boards);
 
 	const dispatch = useAppDispatch();
@@ -19,30 +17,11 @@ function TopNav() {
 	const activeBoard = useAppSelector((state) => state.boards.activeBoard);
 	const activeBoardData = boards?.find((board) => board.id === activeBoard);
 
-	useEffect(() => {
-		const currentTheme = localStorage.getItem('theme') as theme;
-		const initialTheme = currentTheme || 'light';
-		setTheme(initialTheme);
-		localStorage.setItem('theme', initialTheme);
-		document.documentElement.dataset.theme = initialTheme;
-	}, []);
-
-	useEffect(() => {
-		document.documentElement.dataset.theme = theme;
-		localStorage.setItem('theme', theme);
-	}, [theme]);
-
 	if (!activeBoardData) {
 		return null;
 	}
 
 	const { title } = activeBoardData;
-
-	const handleThemeToggle = () => {
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		setTheme(newTheme);
-		document.documentElement.dataset.theme = newTheme;
-	};
 
 	return (
 		<div className={styles.topNav}>
@@ -54,8 +33,8 @@ function TopNav() {
 						aria-label="Toggle theme"
 						aria-pressed={theme === 'dark'}
 						aria-controls="theme"
-						onClick={handleThemeToggle}
-						icon={theme === 'light' ? <SVG.sun /> : <SVG.moon />}
+						onClick={toggleTheme}
+						icon={theme === 'light' ? <SVG.moon /> : <SVG.sun />}
 					/>
 					<div className={styles.topNavActions}>
 						{pathname === '/' && (
