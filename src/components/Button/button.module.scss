@@ -2,6 +2,7 @@
 	padding: 0.8rem 1.4rem;
 	font-size: 1.4rem;
 	font-weight: 600;
+	font-family: var(--font-family);
 	text-align: center;
 	cursor: pointer;
 	transition:
@@ -18,25 +19,25 @@
 	&[type='submit'] {
 		border-color: var(--secondary-color);
 		background-color: var(--secondary-color);
-		color: var(--text-color);
+		color: var(--primary-text-color);
 	}
 
 	&[type='submit']:hover {
 		background-color: var(--secondary-hover-color);
-		color: var(--text-color);
+		color: var(--secondry-text-color);
 		border-color: var(--secondary-color);
 	}
 
 	&[type='submit']:active {
 		background-color: var(--secondary-hover-color);
-		color: var(--text-color);
+		color: var(--secondry-text-color);
 		border-color: var(--secondary-color);
 		outline: 0.1rem solid var(--secondary-outline-color);
 	}
 
 	&:hover {
 		background-color: var(--primary-hover-color);
-		color: var(--text-color);
+		border-color: var(--primary-color);
 	}
 
 	&:active {

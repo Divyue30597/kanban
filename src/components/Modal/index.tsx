@@ -85,6 +85,7 @@ const ModalComponent = ({ isOpen, onClose, children }: ModalProps) => {
 			className={`${styles.modalOverlay} ${
 				isAnimating ? styles.visible : styles.hidden
 			}`}
+			id='modal-overlay'
 		>
 			<div
 				className={`${styles.modalContainer} ${

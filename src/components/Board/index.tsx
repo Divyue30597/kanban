@@ -102,7 +102,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 	};
 
 	return (
-		<Section ref={boardRef} {...rest}>
+		<Section ref={boardRef}  {...rest}>
 			<div className={styles.boardHeader}>
 				<div className={styles.boardHeaderContent}>
 					<h1>{activeBoard?.title}</h1>
@@ -122,41 +122,46 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 					}}
 				>
 					{columns &&
-						columns?.map((column) => column && (
-							<Column
-								key={column?.id}
-								className={styles.column}
-								colId={column?.id}
-								colName={column?.title}
-								numOfCards={column?.cardIds?.length || 0}
-								onCardDrop={handleCardDrop}
-							>
-								{column?.cardIds?.map((cardId) => {
-									return (
-										<Card
-											key={cardId}
-											id={cardId}
-											columnId={column.id}
-											boardId={column.boardId}
-											onMouseDown={(e) =>
-												handleCardMouseDown(
-													e,
-													cardId,
-													column.id
-												)
-											}
-											onTouchStart={(e) =>
-												handleCardTouchStart(
-													e,
-													cardId,
-													column.id
-												)
-											}
-										/>
-									);
-								})}
-							</Column>
-						))}
+						columns?.map(
+							(column) =>
+								column && (
+									<Column
+										key={column?.id}
+										className={styles.column}
+										colId={column?.id}
+										colName={column?.title}
+										numOfCards={
+											column?.cardIds?.length || 0
+										}
+										onCardDrop={handleCardDrop}
+									>
+										{column?.cardIds?.map((cardId) => {
+											return (
+												<Card
+													key={cardId}
+													id={cardId}
+													columnId={column.id}
+													boardId={column.boardId}
+													onMouseDown={(e) =>
+														handleCardMouseDown(
+															e,
+															cardId,
+															column.id
+														)
+													}
+													onTouchStart={(e) =>
+														handleCardTouchStart(
+															e,
+															cardId,
+															column.id
+														)
+													}
+												/>
+											);
+										})}
+									</Column>
+								)
+						)}
 				</Container>
 			</div>
 		</Section>

@@ -40,12 +40,6 @@ $color: #f4eddb;
 	margin-bottom: 3.2rem;
 }
 
-.clock {
-	height: 0.4rem;
-	background-color: #000;
-	overflow-x: auto;
-}
-
 .time {
 	text-align: center;
 	font-size: 12rem;
@@ -77,18 +71,19 @@ $color: #f4eddb;
 		color: $color;
 		border: 0.2rem solid $color;
 		border-radius: var(--border-radius);
-		border-bottom: 0.4rem solid $color;
+		background-color: transparent !important;
+		border-bottom: 0.4rem solid $color !important;
 
-		&:active {
-			border: 0.2rem solid $color;
+		&[aria-selected="false"] {
+			border: 0.2rem solid $color !important;
 			outline: 0.1rem solid $color;
 		}
 
-		&:disabled {
+		&[aria-selected="true"] {
 			font-weight: 800 !important;
-			background-color: var(--primary-color) !important;
+			background-color: transparent !important;
 			color: $color;
-			border-bottom: 0.2rem solid $color;
+			border-bottom: 0.2rem solid $color !important;
 		}
 	}
 }

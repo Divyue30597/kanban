@@ -1,9 +1,10 @@
+import Calendar from '../../components/Calendar';
 import Section from '../../components/Section';
 
-export default function Calendar() {
+export default function CalendarPage() {
 	return (
 		<Section>
-			<h1>Calendar</h1>
+			<Calendar />
 		</Section>
 	);
 }

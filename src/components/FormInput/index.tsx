@@ -80,7 +80,7 @@ function FormInput(props: FormInputProps) {
 		<div className={styles.input}>
 			<label htmlFor={id}>{label}</label>
 			{renderInput()}
-			{infoMessage?.length && (
+			{infoMessage && (
 				<span className={styles.infoMessage}>{infoMessage}</span>
 			)}
 			{errorMessage && (
@@ -89,6 +89,42 @@ function FormInput(props: FormInputProps) {
 		</div>
 	);
 }
+
+function Input() {
+
+}
+
+function TextArea() {
+
+}
+
+function Checkbox() {
+
+}
+
+function Radio() {
+
+}
+
+function Select() {
+
+}
+
+function FileInput() {
+
+}
+
+function DateInput() {
+
+}
+
+FormInput.Input = Input;
+FormInput.TextArea = TextArea;
+FormInput.Checkbox = Checkbox;
+FormInput.Radio = Radio;
+FormInput.Select = Select;
+FormInput.FileInput = FileInput;
+FormInput.DateInput = DateInput;
 
 export default FormInput;
 export type { FormInputProps };

@@ -6,9 +6,9 @@
 	height: 100dvh;
 	background-color: var(--background-color);
 	z-index: 9999;
+
 	&.collapse {
 		width: 6rem;
-		// position: relative;
 	}
 }
 

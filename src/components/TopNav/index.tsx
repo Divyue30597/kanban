@@ -6,6 +6,18 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setActiveBoard } from '../../store/features/boards/boardSlice';
 import { useLocation } from 'react-router';
 import { useTheme } from '../../hooks/useTheme';
+// import MakeYourOwnModal from './makeYourOwnModal';
+
+// const themes = [
+// 	{
+// 		name: 'Light',
+// 		icon: <SVG.sun />,
+// 	},
+// 	{
+// 		name: 'Dark',
+// 		icon: <SVG.moon />,
+// 	},
+// ];
 
 function TopNav() {
 	const pathname = useLocation().pathname;
@@ -28,16 +40,45 @@ function TopNav() {
 			<div className={styles.topNavContent}>
 				<p>Hi, John Doe 👋</p>
 				<div className={styles.topNavActions}>
-					<Button
-						className={styles.themeBtn}
-						aria-label="Toggle theme"
-						aria-pressed={theme === 'dark'}
-						aria-controls="theme"
-						onClick={toggleTheme}
-						icon={theme === 'light' ? <SVG.moon /> : <SVG.sun />}
-					/>
-					<div className={styles.topNavActions}>
-						{pathname === '/' && (
+					<Button className={styles.themeBtn} onClick={toggleTheme}>
+						{theme === 'light' ? <SVG.moon /> : <SVG.sun />}
+					</Button>
+					{/* <Dropdown
+						placement="bottom-right"
+						trigger={
+							<Button
+								className={styles.themeBtn}
+								icon={<SVG.chevronDown />}
+							>
+								<div className={styles.themeBtnDropdown}>
+									{theme === 'light' ? (
+										<SVG.moon />
+									) : (
+										<SVG.sun />
+									)}
+									{theme[0].toUpperCase() + theme.slice(1)}
+								</div>
+							</Button>
+						}
+					>
+						{themes.map((theme) => (
+							<button
+								type="button"
+								key={theme.name.toLowerCase()}
+								onClick={() => {
+									toggleTheme();
+								}}
+							>
+								<div className={styles.themeBtnDropdown}>
+									{theme.icon} {theme?.name}
+								</div>
+							</button>
+						))}
+						<hr />
+						<MakeYourOwnModal />
+					</Dropdown> */}
+					{pathname === '/' && (
+						<div className={styles.topNavActions}>
 							<Dropdown
 								placement="bottom-right"
 								trigger={
@@ -61,8 +102,8 @@ function TopNav() {
 									</button>
 								))}
 							</Dropdown>
-						)}
-					</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

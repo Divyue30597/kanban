@@ -8,12 +8,12 @@
 }
 
 .topNavContent {
-	width: 100%;
-	display: flex;
+	width: calc(100dvw * 0.85);
+ 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 
-	padding: 1.4rem 2.4rem;
+	padding-block: 1.4rem;
 	margin: 0 auto;
 
 	& > p {
@@ -41,8 +41,9 @@
 	color: var(--primary-text-color);
 	border-color: var(--border-color);
 
-	& > span {
-		margin: 0;
+	& > svg {
+		width: 2rem;
+		height: 2rem;
 	}
 
 	&:active,
@@ -55,4 +56,18 @@
 	&:active {
 		outline: 0.1rem solid var(--border-color);
 	} 
+}
+
+.themeBtnDropdown {
+	color: var(--primary-text-color);
+	border-color: var(--border-color);
+
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+
+	& > svg {
+		width: 2rem;
+		height: 2rem;
+	}
 }

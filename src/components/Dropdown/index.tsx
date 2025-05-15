@@ -28,11 +28,15 @@ const Dropdown: React.FC<DropdownProps> = ({
 		if (!closeOnOutsideClick) return;
 
 		const handleOutsideClick = (event: MouseEvent) => {
+			const modalOverlay = document.getElementById('modal-overlay');
+
 			if (
 				dropdownRef.current &&
 				triggerRef.current &&
 				!dropdownRef.current.contains(event.target as Node) &&
-				!triggerRef.current.contains(event.target as Node)
+				!triggerRef.current.contains(event.target as Node) &&
+				modalOverlay &&
+				!modalOverlay.contains(event.target as Node)
 			) {
 				setIsOpen(false);
 			}
@@ -82,10 +86,10 @@ const Dropdown: React.FC<DropdownProps> = ({
 				<div
 					ref={dropdownRef}
 					className={`
-            ${styles.dropdown} 
-            ${styles[placement]} 
-            ${dropdownClassName}
-          `}
+						${styles.dropdown} 
+						${styles[placement]} 
+						${dropdownClassName}
+          			`}
 				>
 					{enhancedChildren}
 				</div>

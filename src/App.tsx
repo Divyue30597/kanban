@@ -16,9 +16,39 @@ import NotesSettings from './modules/Settings/Notes';
 import CalendarSettings from './modules/Settings/Calendar';
 import SubscriptionsSettings from './modules/Settings/Subscriptions';
 import PomodoroSettings from './modules/Settings/Pomodoro';
+import { useAppSelector } from './store/hooks';
 
 function App() {
 	const navigate = useNavigate();
+
+	const { data } = useAppSelector((state) => state.themeGenerator);
+	console.log('Theme data:', data);
+	useEffect(() => {
+		if (data !== null && data !== undefined) {
+			const cssBlock = data?.data
+				?.replace(/^```css\s*/i, '')
+				?.replace(/```$/, '')
+				?.trim();
+
+			const styleTag = document.createElement('style');
+			styleTag.innerHTML = cssBlock;
+			document.head.appendChild(styleTag);
+
+			const fontFamilyMatch = cssBlock.match(/--font-family:\s*([^;]+);/);
+			if (fontFamilyMatch && fontFamilyMatch[1]) {
+				const fontFamily = fontFamilyMatch[1].trim();
+				const firstFont =
+					fontFamily.match(/['"]?([^,'"]+)['"]?/)?.[1] || '';
+				const link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = `https://fonts.googleapis.com/css?family=${encodeURIComponent(firstFont)}:400,700&display=swap`;
+				document.head.appendChild(link);
+			}
+
+			// Remove any existing theme attribute
+			document.documentElement.removeAttribute('data-theme');
+		}
+	}, [data]);
 
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent) => {

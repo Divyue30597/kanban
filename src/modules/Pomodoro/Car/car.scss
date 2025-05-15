@@ -3,25 +3,25 @@
 	--progress: 0%;
 	background-color: #000;
 	width: 100%;
-	border-block: 0.4rem solid var(--text-color);
+	border-block: 0.4rem solid #fff;
 	position: relative;
 	height: 5rem;
 
 	.road__lines-container {
 		position: absolute;
 		display: flex;
-		width: 200%; /* Double width for smoother animation loop */
+		width: 200%; 
 		animation: lineMovement var(--animation-duration) linear infinite;
 		top: calc(100% / 2.5);
 		left: 0;
 		z-index: 0;
-		will-change: transform; // Hint for browser to optimize
+		will-change: transform; 
 	}
 
 	.road__line {
 		flex: 0 0 4rem;
 		height: 0.4rem;
-		background-color: var(--text-color);
+		background-color: #fff;
 		margin-right: 12rem;
 	}
 

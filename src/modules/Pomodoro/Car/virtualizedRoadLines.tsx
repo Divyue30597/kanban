@@ -63,12 +63,12 @@ const VirtualizedRoadLines = memo(function VirtualizedRoadLines({
 					width: '100%',
 					height: '0.4rem',
 					backgroundImage: `repeating-linear-gradient(
-            to right,
-            var(--text) 0,
-            var(--text) ${lineWidth / 16}rem,
-            transparent ${lineWidth / 16}rem,
-            transparent ${(lineWidth + lineMargin) / 16}rem
-          )`,
+						to right,
+						#fff 0,
+						#fff ${lineWidth / 16}rem,
+						transparent ${lineWidth / 16}rem,
+						transparent ${(lineWidth + lineMargin) / 16}rem
+						)`,
 					backgroundPosition: `var(--pattern-offset, 0px) 0`,
 					backgroundSize: `${(lineWidth + lineMargin) / 16}rem 0.4rem`,
 					transition: 'background-position 50ms linear',

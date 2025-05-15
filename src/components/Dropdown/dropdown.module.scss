@@ -12,7 +12,7 @@
 	position: absolute;
 	min-width: 16rem;
 	border-radius: var(--border-radius);
-	padding: 0.8rem 0;
+	// padding: 0.8rem 0;
 	box-shadow: var(--box-shadow);
 	z-index: 100;
 	overflow: hidden;
@@ -51,6 +51,7 @@
 	button,
 	.item {
 		display: block;
+		font-family: var(--font-family);
 		padding: 0.8rem 1.6rem;
 		text-decoration: none;
 		color: var(--primary-text-color);

@@ -4,14 +4,13 @@
 		font-weight: 800;
 		color: var(--primary-text-color);
 		// background-color: var(--tertiary-background);
-		margin-bottom: 1.2rem;
 		text-transform: uppercase;
 		width: fit-content;
-
+		
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
-
+		
 		& > span {
 			background-color: #777777;
 			color: var(--text-color);
@@ -19,10 +18,11 @@
 			font-size: 1.2rem;
 			border-radius: calc(var(--border-radius) / 2);
 		}
-
+		
 		background-color: var(--tertiary-background);
 		padding: 0.6rem 1.2rem;
-		margin-left: 1.4rem;
+		margin-inline: 1.4rem;
+		margin-bottom: 0.8rem;
 		border-radius: var(--border-radius);
 	}
 }

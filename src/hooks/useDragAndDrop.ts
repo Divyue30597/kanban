@@ -256,16 +256,16 @@ export function useDragAndDrop({
 
 				clone.style.position = 'absolute';
 				clone.style.width = `${rect.width}px`;
-				clone.style.height = `${rect.height}px`;
+				// clone.style.height = `${rect.height}px`;
 				clone.style.zIndex = DRAG_CONFIG.VISUAL.Z_INDEX;
 				clone.style.pointerEvents = 'none';
 				clone.style.opacity = '1';
 				clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
+				clone.style.boxShadow = "var(--box-shadow)";
 				clone.style.transition =
 					'box-shadow 0.2s ease, border 0.2s ease';
 				clone.setAttribute('aria-hidden', 'true');
 				clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
-				// document.body.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
 
 				clone.style.left = `${rect.left}px`;
 				clone.style.top = `${rect.top}px`;
@@ -619,14 +619,14 @@ export function useDragAndDrop({
 
 						if (isValid) {
 							dragElementRef.current.style.border =
-								'2px solid rgba(50, 205, 50, 0.8)';
+								'0.2rem solid rgba(50, 205, 50, 0.8)';
 							dragElementRef.current.style.boxShadow =
-								'0 0 8px rgba(50, 205, 50, 0.6)';
+								'0 0 0.8rem rgba(50, 205, 50, 0.6)';
 						} else {
 							dragElementRef.current.style.border =
-								'2px solid rgba(255, 99, 71, 0.8)';
+								'0.2rem solid rgba(255, 99, 71, 0.8)';
 							dragElementRef.current.style.boxShadow =
-								'0 0 8px rgba(255, 99, 71, 0.6)';
+								'0 0 0.8rem rgba(255, 99, 71, 0.6)';
 						}
 					} else {
 						// Reset card appearance when not over a valid target

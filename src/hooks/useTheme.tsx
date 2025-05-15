@@ -5,14 +5,12 @@ export type Theme = 'light' | 'dark';
 export function useTheme() {
 	const [theme, setThemeState] = useState<Theme>('dark');
 
-	// Get system theme preference
 	const getSystemTheme = (): Theme => {
 		return window.matchMedia('(prefers-color-scheme: dark)').matches
 			? 'dark'
 			: 'light';
 	};
 
-	// Initialize theme from localStorage or system preference on component mount
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('theme') as Theme;
 		const initialTheme = savedTheme || getSystemTheme();

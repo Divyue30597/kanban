@@ -1,7 +1,8 @@
 .section {
 	// width: 96.4rem;
 	// margin-top: 2.8rem;
-	padding: 2.4rem;
-	margin-inline: auto;
+	// padding-block: 2.4rem;
+	width: calc(100dvw * 0.85);
+	margin: 2.4rem auto;
 	background-color: var(--background-color);
 }
