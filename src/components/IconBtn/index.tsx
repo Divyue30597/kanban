@@ -4,10 +4,11 @@ interface IconBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 }
 
-function IconBtn({ children, className, ...rest }: IconBtnProps) {
+function IconBtn({ children, className, title, ...rest }: IconBtnProps) {
 	return (
 		<button
 			type="button"
+			title={title}
 			className={`${className} ${styles.iconBtn}`}
 			{...rest}
 		>

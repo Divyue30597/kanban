@@ -7,7 +7,7 @@ import Settings from './modules/Settings';
 import Profile from './modules/Profile';
 import Pomodoro from './modules/Pomodoro';
 import Notes from './modules/Notes';
-import Calendar from './modules/Calendar';
+import Calendar from './modules/CalendarPage';
 import Subscriptions from './modules/Subscriptions';
 import Help from './modules/Help';
 import { useCallback, useEffect } from 'react';

@@ -1,17 +1,30 @@
 .calendar {
     box-shadow: var(--box-shadow);
-    padding: 1.2rem;
+    // padding: 1.2rem;
+    // border: 0.1rem solid var(--border-color);
     border-radius: var(--border-radius);
     height: calc(100dvh - 11.8rem);
+
+    overflow-y: scroll;
 }
 
 .calendarHeader {
+    padding: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    position: sticky;
+    top: 0;
+    background-color: var(--secondary-background);
+}
+
+.calendarTitleContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 1.4rem;
-
 }
 
 .calendarButtons {
@@ -34,23 +47,19 @@
     text-align: center;
 }
 
-.calendarBody {
-    height: calc(100dvh - 18rem);
-    border: 0.1rem solid var(--border-color);
-    border-radius: var(--border-radius);   
-}
-
 .weekDays {
     display: flex;
     justify-content: space-between;
     
     text-align: center;
-    // margin-bottom: 1.4rem;
     
     background-color: var(--secondary-background);
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
+    border-top: 0.1rem solid var(--border-color);
     border-bottom: 0.1rem solid var(--border-color);
+
+    position: sticky;
+    top: 6.5rem;
+
 }
 
 .weekRow {
@@ -76,15 +85,14 @@
 }
 
 .emptyDay {
-    font-weight: 700;
-    color: var(--primary-text-color);
-    width: 100%;
+    color: var(--secondary-text-color);
     background-color: var(--secondary-background);
 }
 
 .emptyDay, .day {
     padding: 0.8rem;
     width: 100%;
+    font-weight: 700;
     &:not(:last-child) {
         border-right: 0.1rem solid var(--border-color);
     }
@@ -96,7 +104,6 @@
         font-size: 1.2rem;
         width: fit-content;
         text-align: right;
-        color: var(--secondary-text-color);
     }
 }
 

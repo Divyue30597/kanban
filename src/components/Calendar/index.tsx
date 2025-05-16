@@ -1,26 +1,20 @@
 import { SVG } from '../../SVG';
 import IconBtn from '../IconBtn';
 import styles from './calendar.module.scss';
+import { useCalendar, CalendarDay } from '../../hooks/useCalendar';
+import Button from '../Button';
 
 function Calendar() {
-	const date = new Date();
-	const today = date.getDate();
-	const month = date.toLocaleString('default', { month: 'long' });
-	const year = date.getFullYear();
-	const daysInMonth = new Date(year, date.getMonth() + 1, 0).getDate();
-	const firstDayOfMonth = new Date(year, date.getMonth(), 1).getDay();
-
-	const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-	const weeks = [];
-	for (let i = 0; i < days.length; i += 7) {
-		if (i == 0) {
-			weeks.push(days.slice(i, i + firstDayOfMonth - 1));
-		} else {
-			weeks.push(
-				days.slice(i - firstDayOfMonth, i + 7 - firstDayOfMonth)
-			);
-		}
-	}
+	const {
+		month,
+		year,
+		weeks,
+		nextMonth,
+		prevMonth,
+		nextYear,
+		prevYear,
+		handleClickOnToday,
+	} = useCalendar();
 
 	const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	const weekDaysRow = weekDays.map((day, index) => (
@@ -29,42 +23,55 @@ function Calendar() {
 		</div>
 	));
 
-	const emptyDays = Array.from({ length: firstDayOfMonth }, (_, i) => (
-		<div key={i} className={styles.emptyDay}></div>
-	));
+	const calendarRows = weeks.map((week: CalendarDay[], weekIndex: number) => (
+		<div key={weekIndex} className={styles.weekRow}>
+			{week.map((dayObject: CalendarDay) => {
+				const isToday = dayObject.isToday ? styles.today : '';
+				const isCurrentMonth = !dayObject.isCurrentMonth
+					? styles.emptyDay
+					: '';
 
-	const calendarRows = weeks.map((week, index) => (
-		<div key={index} className={styles.weekRow}>
-			{index === 0 && emptyDays}
-			{week.map((day) => (
-				<div key={day} className={styles.day}>
-					<p className={day === today ? ` ${styles.today}` : ''}>{day}</p>
-				</div>
-			))}
+				return (
+					<div
+						className={styles.day + ' ' + isCurrentMonth}
+						key={dayObject.fullDate.toISOString()}
+					>
+						<p className={isToday}>{dayObject.day}</p>
+					</div>
+				);
+			})}
 		</div>
 	));
 
 	return (
 		<div className={styles.calendar}>
 			<div className={styles.calendarHeader}>
-				<div className={styles.calendarButtons}>
-					<IconBtn>
-						<SVG.chevronLeftDouble />
-					</IconBtn>
-					<IconBtn>
-						<SVG.chevronLeft />
-					</IconBtn>
+				<div>
+					<Button onClick={handleClickOnToday}>Today</Button>
 				</div>
-				<h3 className={styles.calendarTitle}>
-					{month} {year}
-				</h3>
-				<div className={styles.calendarButtons}>
-					<IconBtn>
-						<SVG.chevronRight />
-					</IconBtn>
-					<IconBtn>
-						<SVG.chevronRightDouble />
-					</IconBtn>
+				<div className={styles.calendarTitleContainer}>
+					<div className={styles.calendarButtons}>
+						<IconBtn onClick={prevYear} title="Previous Year">
+							<SVG.chevronLeftDouble />
+						</IconBtn>
+						<IconBtn onClick={prevMonth} title="Previous Month">
+							<SVG.chevronLeft />
+						</IconBtn>
+					</div>
+					<h3 className={styles.calendarTitle}>
+						{month} {year}
+					</h3>
+					<div className={styles.calendarButtons}>
+						<IconBtn onClick={nextMonth} title="Next Month">
+							<SVG.chevronRight />
+						</IconBtn>
+						<IconBtn onClick={nextYear} title="Next Year">
+							<SVG.chevronRightDouble />
+						</IconBtn>
+					</div>
+				</div>
+				<div>
+					<Button onClick={handleClickOnToday}>Create Event</Button>
 				</div>
 			</div>
 			<div className={styles.calendarBody}>
