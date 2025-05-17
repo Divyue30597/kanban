@@ -5,6 +5,7 @@ export interface CalendarDay {
 	fullDate: Date;
 	isCurrentMonth: boolean;
 	isActiveWeek: boolean;
+	weekIndex: number;
 	isToday: boolean;
 }
 
@@ -55,6 +56,7 @@ export function useCalendar() {
 				fullDate,
 				isCurrentMonth: false,
 				isActiveWeek: false, // Initialize to false
+				weekIndex: Math.floor(i / 7),
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
@@ -66,6 +68,7 @@ export function useCalendar() {
 				fullDate,
 				isCurrentMonth: true,
 				isActiveWeek: false, // Initialize to false
+				weekIndex: Math.floor((i + firstDayOfMonth) / 7),
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
@@ -85,6 +88,9 @@ export function useCalendar() {
 				fullDate,
 				isCurrentMonth: false,
 				isActiveWeek: false, // Initialize to false
+				weekIndex: Math.floor(
+					(allCalendarDays.length + firstDayOfMonth) / 7
+				),
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
@@ -144,6 +150,22 @@ export function useCalendar() {
 		);
 	};
 
+	const nextWeek = () => {
+		setCurrentDate((prevDate) => {
+			const newDate = new Date(prevDate);
+			newDate.setDate(newDate.getDate() + 7);
+			return newDate;
+		});
+	};
+
+	const prevWeek = () => {
+		setCurrentDate((prevDate) => {
+			const newDate = new Date(prevDate);
+			newDate.setDate(newDate.getDate() - 7);
+			return newDate;
+		});
+	};
+
 	const handleClickOnToday = () => {
 		const now = new Date();
 		setCurrentDate(
@@ -161,6 +183,8 @@ export function useCalendar() {
 		prevMonth,
 		nextYear,
 		prevYear,
+		nextWeek,
+		prevWeek,
 		currentCalendarDate: currentDate,
 		handleClickOnToday,
 	};

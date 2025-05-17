@@ -15,6 +15,8 @@ function Calendar() {
 		prevMonth,
 		nextYear,
 		prevYear,
+		nextWeek,
+		prevWeek,
 		handleClickOnToday,
 	} = useCalendar();
 
@@ -23,7 +25,7 @@ function Calendar() {
 		{ id: 'week', title: 'Week' },
 	];
 
-	const [calendarMode, setCalendarMode] = useState(calendarModes[1]);
+	const [calendarMode, setCalendarMode] = useState(calendarModes[0]);
 
 	const activeWeek = weeks
 		.map((week) => {
@@ -65,15 +67,35 @@ function Calendar() {
 									<SVG.chevronLeftDouble />
 								</IconBtn>
 							)}
-							<IconBtn onClick={prevMonth} title="Previous Month">
+							<IconBtn
+								onClick={
+									calendarMode.id === 'month'
+										? prevMonth
+										: prevWeek
+								}
+								title="Previous Month"
+							>
 								<SVG.chevronLeft />
 							</IconBtn>
 						</div>
-						<h3 className={styles.calendarTitle}>
-							{month} {year}
-						</h3>
+						{calendarMode.id === 'month' ? (
+							<h3 className={styles.calendarTitle}>
+								{month} {year}
+							</h3>
+						) : (
+							<h3 className={styles.calendarTitle}>
+								Week {activeWeek[0].weekIndex + 1} of {month}
+							</h3>
+						)}
 						<div className={styles.calendarButtons}>
-							<IconBtn onClick={nextMonth} title="Next Month">
+							<IconBtn
+								onClick={
+									calendarMode.id === 'month'
+										? nextMonth
+										: nextWeek
+								}
+								title="Next Month"
+							>
 								<SVG.chevronRight />
 							</IconBtn>
 							{calendarMode.id === 'month' && (
@@ -112,7 +134,7 @@ function ActiveWeek({ activeWeek }: { activeWeek: CalendarDay[] }) {
 						className={styles.activeWeek}
 						key={day.fullDate.toISOString()}
 					>
-						<div>{day.day}</div>
+						<div>{day.fullDate.toISOString()}</div>
 					</div>
 				))}
 		</div>
