@@ -26,3 +26,8 @@ dist-ssr
 *.sw?
 
 .env
+
+*.css.map
+*.module.css
+*.module.css.map
+*.vscode

@@ -4,6 +4,7 @@ export interface CalendarDay {
 	day: number;
 	fullDate: Date;
 	isCurrentMonth: boolean;
+	isActiveWeek: boolean;
 	isToday: boolean;
 }
 
@@ -53,6 +54,7 @@ export function useCalendar() {
 				day,
 				fullDate,
 				isCurrentMonth: false,
+				isActiveWeek: false, // Initialize to false
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
@@ -63,27 +65,52 @@ export function useCalendar() {
 				day: i,
 				fullDate,
 				isCurrentMonth: true,
+				isActiveWeek: false, // Initialize to false
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
 
-		const nextMonth = new Date(year, currentDate.getMonth() + 1, 1);
+		const nextMonthDate = new Date(year, currentDate.getMonth() + 1, 1); // Renamed to avoid conflict
 		const totalCells = 42; // 6 weeks * 7 days
 		const numNextMonthDaysToShow = totalCells - allCalendarDays.length;
 
 		for (let i = 1; i <= numNextMonthDaysToShow; i++) {
 			const fullDate = new Date(
-				nextMonth.getFullYear(),
-				nextMonth.getMonth(),
+				nextMonthDate.getFullYear(),
+				nextMonthDate.getMonth(),
 				i
 			);
 			allCalendarDays.push({
 				day: i,
 				fullDate,
 				isCurrentMonth: false,
+				isActiveWeek: false, // Initialize to false
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
+
+		// Determine the active week
+		const currentDayInFocus = new Date(currentDate);
+		currentDayInFocus.setHours(0, 0, 0, 0); // Normalize current date
+
+		const startOfWeek = new Date(currentDayInFocus);
+		startOfWeek.setDate(
+			currentDayInFocus.getDate() - currentDayInFocus.getDay()
+		);
+
+		const endOfWeek = new Date(startOfWeek);
+		endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+		allCalendarDays.forEach((dayObj) => {
+			const dayObjFullDate = new Date(dayObj.fullDate);
+			dayObjFullDate.setHours(0, 0, 0, 0); // Normalize for comparison
+			if (
+				dayObjFullDate.getTime() >= startOfWeek.getTime() &&
+				dayObjFullDate.getTime() <= endOfWeek.getTime()
+			) {
+				dayObj.isActiveWeek = true;
+			}
+		});
 
 		const newWeeks: CalendarDay[][] = [];
 		for (let i = 0; i < allCalendarDays.length; i += 7) {

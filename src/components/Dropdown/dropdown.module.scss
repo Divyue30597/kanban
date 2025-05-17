@@ -12,7 +12,7 @@
 	position: absolute;
 	min-width: 16rem;
 	border-radius: var(--border-radius);
-	// padding: 0.8rem 0;
+	padding: 0.8rem;
 	box-shadow: var(--box-shadow);
 	z-index: 100;
 	overflow: hidden;
@@ -52,7 +52,8 @@
 	.item {
 		display: block;
 		font-family: var(--font-family);
-		padding: 0.8rem 1.6rem;
+		padding: 0.8rem;
+		border-radius: 0.4rem;
 		text-decoration: none;
 		color: var(--primary-text-color);
 		font-size: 1.4rem;

@@ -1,0 +1,41 @@
+.road {
+  --animation-duration: 1500s;
+  --progress: 0%;
+  background-color: #000;
+  width: 100%;
+  border-block: 0.4rem solid #fff;
+  position: relative;
+  height: 5rem;
+}
+.road .road__lines-container {
+  position: absolute;
+  display: flex;
+  width: 200%;
+  animation: lineMovement var(--animation-duration) linear infinite;
+  top: 40%;
+  left: 0;
+  z-index: 0;
+  will-change: transform;
+}
+.road .road__line {
+  flex: 0 0 4rem;
+  height: 0.4rem;
+  background-color: #fff;
+  margin-right: 12rem;
+}
+.road > img {
+  position: absolute;
+  top: -10rem;
+  left: var(--progress);
+  z-index: 2;
+  transform: scale(-1, 1);
+}
+
+@keyframes lineMovement {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}/*# sourceMappingURL=car.css.map */

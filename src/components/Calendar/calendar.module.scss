@@ -1,7 +1,5 @@
 .calendar {
     box-shadow: var(--box-shadow);
-    // padding: 1.2rem;
-    // border: 0.1rem solid var(--border-color);
     border-radius: var(--border-radius);
     height: calc(100dvh - 11.8rem);
 
@@ -9,14 +7,16 @@
 }
 
 .calendarHeader {
+    position: sticky;
+    top: 0;
+}
+
+.calendarHeaderBody {
     padding: 1.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-
-    position: sticky;
-    top: 0;
     background-color: var(--secondary-background);
 }
 
@@ -32,7 +32,7 @@
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    
+
     & > button > svg {
         width: 2rem;
         height: 2rem;
@@ -43,23 +43,19 @@
     font-size: 2rem;
     font-weight: 700;
     color: var(--primary-text-color);
-    
+
     text-align: center;
 }
 
 .weekDays {
     display: flex;
     justify-content: space-between;
-    
+
     text-align: center;
-    
+
     background-color: var(--secondary-background);
     border-top: 0.1rem solid var(--border-color);
     border-bottom: 0.1rem solid var(--border-color);
-
-    position: sticky;
-    top: 6.5rem;
-
 }
 
 .weekRow {
@@ -78,7 +74,7 @@
     color: var(--primary-text-color);
     width: 100%;
     padding: 0.8rem;
-    
+
     &:not(:last-child) {
         border-right: 0.1rem solid var(--border-color);
     }
@@ -89,7 +85,8 @@
     background-color: var(--secondary-background);
 }
 
-.emptyDay, .day {
+.emptyDay,
+.day {
     padding: 0.8rem;
     width: 100%;
     font-weight: 700;
@@ -109,7 +106,31 @@
 
 .today {
     background-color: var(--primary-color);
-    color: var(--text-color);
     border-radius: var(--border-radius);
-    color: var(--text-color) !important;
+    color: var(--text-color);
+}
+
+.activeWeeks {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.activeWeek {
+    width: 100%;
+    height: 100%;
+    padding: 0.8rem;
+
+    &:not(:last-child) {
+        border-right: 0.1rem solid var(--border-color);
+    }
+}
+
+.activeWeekDay {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    padding: 0 0.8rem;
+    border-radius: var(--border-radius);
 }

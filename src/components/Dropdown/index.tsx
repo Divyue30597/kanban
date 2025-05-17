@@ -28,15 +28,11 @@ const Dropdown: React.FC<DropdownProps> = ({
 		if (!closeOnOutsideClick) return;
 
 		const handleOutsideClick = (event: MouseEvent) => {
-			const modalOverlay = document.getElementById('modal-overlay');
-
 			if (
 				dropdownRef.current &&
 				triggerRef.current &&
 				!dropdownRef.current.contains(event.target as Node) &&
-				!triggerRef.current.contains(event.target as Node) &&
-				modalOverlay &&
-				!modalOverlay.contains(event.target as Node)
+				!triggerRef.current.contains(event.target as Node)
 			) {
 				setIsOpen(false);
 			}
@@ -55,7 +51,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 		? React.Children.map(children, (child) => {
 				if (React.isValidElement(child)) {
 					return React.cloneElement(child, {
-						...(child.props as any),
+						...child.props,
 						onClick: (e: React.MouseEvent<HTMLElement>) => {
 							if (child.props.onClick) {
 								child.props.onClick(e);

@@ -10,7 +10,7 @@ import { Column } from '../../store/types';
 interface ColumnDropDownProps {
 	boardId?: Board | string;
 	columnId?: Column | string;
-	setColumnId?: Dispatch<SetStateAction<string | Column>>;
+	setColumnId: Dispatch<SetStateAction<string | Column>>;
 }
 
 function ColumnDropDown(props: ColumnDropDownProps) {
@@ -43,7 +43,7 @@ function ColumnDropDown(props: ColumnDropDownProps) {
 					type="button"
 					key={boardCol.title}
 					onClick={() => {
-						setColumnId && setColumnId(boardCol as Column);
+						setColumnId(boardCol as Column);
 					}}
 				>
 					{boardCol.title}
