@@ -17,40 +17,23 @@ export function useCalendar() {
 		return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 	}, []);
 
-	const month = useMemo(
-		() => currentDate.toLocaleString('default', { month: 'short' }),
-		[currentDate]
-	);
+	const month = useMemo(() => currentDate.toLocaleString('default', { month: 'short' }), [currentDate]);
 	const year = useMemo(() => currentDate.getFullYear(), [currentDate]);
 
-	const daysInMonth = useMemo(
-		() => new Date(year, currentDate.getMonth() + 1, 0).getDate(),
-		[year, currentDate]
-	);
-	const firstDayOfMonth = useMemo(
-		() => new Date(year, currentDate.getMonth(), 1).getDay(),
-		[year, currentDate]
-	);
+	const daysInMonth = useMemo(() => new Date(year, currentDate.getMonth() + 1, 0).getDate(), [year, currentDate]);
+	const firstDayOfMonth = useMemo(() => new Date(year, currentDate.getMonth(), 1).getDay(), [year, currentDate]);
 
 	const weeks = useMemo(() => {
 		const allCalendarDays: CalendarDay[] = [];
 
 		const prevMonth = new Date(year, currentDate.getMonth() - 1, 1);
-		const daysInPrevMonth = new Date(
-			prevMonth.getFullYear(),
-			prevMonth.getMonth() + 1,
-			0
-		).getDate();
+		const daysInPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
 
 		const numPrevMonthDaysToShow = firstDayOfMonth;
 
 		for (let i = 0; i < numPrevMonthDaysToShow; i++) {
 			const day = daysInPrevMonth - numPrevMonthDaysToShow + 1 + i;
-			const fullDate = new Date(
-				prevMonth.getFullYear(),
-				prevMonth.getMonth(),
-				day
-			);
+			const fullDate = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), day);
 			allCalendarDays.push({
 				day,
 				fullDate,
@@ -78,19 +61,13 @@ export function useCalendar() {
 		const numNextMonthDaysToShow = totalCells - allCalendarDays.length;
 
 		for (let i = 1; i <= numNextMonthDaysToShow; i++) {
-			const fullDate = new Date(
-				nextMonthDate.getFullYear(),
-				nextMonthDate.getMonth(),
-				i
-			);
+			const fullDate = new Date(nextMonthDate.getFullYear(), nextMonthDate.getMonth(), i);
 			allCalendarDays.push({
 				day: i,
 				fullDate,
 				isCurrentMonth: false,
 				isActiveWeek: false, // Initialize to false
-				weekIndex: Math.floor(
-					(allCalendarDays.length + firstDayOfMonth) / 7
-				),
+				weekIndex: Math.floor((allCalendarDays.length + firstDayOfMonth) / 7),
 				isToday: fullDate.getTime() === todayFullDate.getTime(),
 			});
 		}
@@ -100,9 +77,7 @@ export function useCalendar() {
 		currentDayInFocus.setHours(0, 0, 0, 0); // Normalize current date
 
 		const startOfWeek = new Date(currentDayInFocus);
-		startOfWeek.setDate(
-			currentDayInFocus.getDate() - currentDayInFocus.getDay()
-		);
+		startOfWeek.setDate(currentDayInFocus.getDate() - currentDayInFocus.getDay());
 
 		const endOfWeek = new Date(startOfWeek);
 		endOfWeek.setDate(startOfWeek.getDate() + 6);
@@ -110,10 +85,7 @@ export function useCalendar() {
 		allCalendarDays.forEach((dayObj) => {
 			const dayObjFullDate = new Date(dayObj.fullDate);
 			dayObjFullDate.setHours(0, 0, 0, 0); // Normalize for comparison
-			if (
-				dayObjFullDate.getTime() >= startOfWeek.getTime() &&
-				dayObjFullDate.getTime() <= endOfWeek.getTime()
-			) {
+			if (dayObjFullDate.getTime() >= startOfWeek.getTime() && dayObjFullDate.getTime() <= endOfWeek.getTime()) {
 				dayObj.isActiveWeek = true;
 			}
 		});
@@ -126,28 +98,16 @@ export function useCalendar() {
 	}, [year, currentDate, daysInMonth, firstDayOfMonth, todayFullDate]);
 
 	const nextMonth = () => {
-		setCurrentDate(
-			(prevDate) =>
-				new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1)
-		);
+		setCurrentDate((prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1));
 	};
 	const prevMonth = () => {
-		setCurrentDate(
-			(prevDate) =>
-				new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1)
-		);
+		setCurrentDate((prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1));
 	};
 	const nextYear = () => {
-		setCurrentDate(
-			(prevDate) =>
-				new Date(prevDate.getFullYear() + 1, prevDate.getMonth(), 1)
-		);
+		setCurrentDate((prevDate) => new Date(prevDate.getFullYear() + 1, prevDate.getMonth(), 1));
 	};
 	const prevYear = () => {
-		setCurrentDate(
-			(prevDate) =>
-				new Date(prevDate.getFullYear() - 1, prevDate.getMonth(), 1)
-		);
+		setCurrentDate((prevDate) => new Date(prevDate.getFullYear() - 1, prevDate.getMonth(), 1));
 	};
 
 	const nextWeek = () => {
@@ -168,9 +128,7 @@ export function useCalendar() {
 
 	const handleClickOnToday = () => {
 		const now = new Date();
-		setCurrentDate(
-			new Date(now.getFullYear(), now.getMonth(), now.getDate())
-		);
+		setCurrentDate(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
 	};
 
 	return {

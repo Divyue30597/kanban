@@ -15,29 +15,29 @@ export const initializeLocalStorage = (): void => {
 		// Create initial state with sample data
 		const initialState = {
 			boards: {
-				boards: data.boards,
-				activeBoard: data.boards[0]?.id || null,
+				boards: data?.boards,
+				activeBoard: data?.boards?.[0]?.id || null,
 				loading: false,
 				error: null,
 			},
 			columns: {
-				columns: data.columns,
+				columns: data?.columns,
 				loading: false,
 				error: null,
 			},
 			cards: {
-				cards: data.cards,
+				cards: data?.cards,
 				loading: false,
 				error: null,
 			},
 		};
 
 		saveStateToLocalStorage(initialState as RootState);
-		console.log('Initialized localStorage with sample data');
 	}
 };
 
 // Load initial data from localStorage if it exists
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const loadStateFromLocalStorage = <T = any>(): T | undefined => {
 	try {
 		const serializedState = localStorage.getItem(STORAGE_KEY);
@@ -50,6 +50,7 @@ export const loadStateFromLocalStorage = <T = any>(): T | undefined => {
 };
 
 // Save current state to localStorage
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const saveStateToLocalStorage = <T = any>(state: T): void => {
 	try {
 		const serializedState = JSON.stringify(state);
@@ -60,9 +61,9 @@ export const saveStateToLocalStorage = <T = any>(state: T): void => {
 };
 
 // Create middleware that saves state to localStorage after every action
-export const localStorageMiddleware: Middleware<{}, RootState> =
-	(store) => (next) => (action) => {
-		const result = next(action);
-		saveStateToLocalStorage(store.getState());
-		return result;
-	};
+// eslint-disable-next-line
+export const localStorageMiddleware: Middleware<{}, RootState> = (store) => (next) => (action) => {
+	const result = next(action);
+	saveStateToLocalStorage(store.getState());
+	return result;
+};

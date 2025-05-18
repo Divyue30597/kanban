@@ -74,8 +74,7 @@ export function useDragAndDrop({
 			}
 
 			try {
-				const columnsElements =
-					document.querySelectorAll('[data-column-id]');
+				const columnsElements = document.querySelectorAll('[data-column-id]');
 				const columnIds: string[] = [];
 
 				columnsElements.forEach((col) => {
@@ -109,9 +108,7 @@ export function useDragAndDrop({
 				const centerX = elementRect.left + elementRect.width / 2;
 				const centerY = elementRect.top + elementRect.height / 2;
 
-				const columnContents = document.querySelectorAll(
-					columnContentSelector
-				);
+				const columnContents = document.querySelectorAll(columnContentSelector);
 				for (let i = 0; i < columnContents.length; i++) {
 					const content = columnContents[i];
 					const colRect = content.getBoundingClientRect();
@@ -123,9 +120,7 @@ export function useDragAndDrop({
 						centerY <= colRect.bottom
 					) {
 						// Get the parent column's ID
-						const column = content.closest(
-							'[data-column-id]'
-						) as HTMLElement;
+						const column = content.closest('[data-column-id]') as HTMLElement;
 						if (column) {
 							return column.getAttribute('data-column-id');
 						}
@@ -133,8 +128,7 @@ export function useDragAndDrop({
 				}
 
 				// Fallback to checking entire columns
-				const columnsElements =
-					document.querySelectorAll('[data-column-id]');
+				const columnsElements = document.querySelectorAll('[data-column-id]');
 				for (let i = 0; i < columnsElements.length; i++) {
 					const col = columnsElements[i];
 					const colRect = col.getBoundingClientRect();
@@ -173,46 +167,28 @@ export function useDragAndDrop({
 	const updateColumnHighlights = useCallback(
 		(targetColumnId: string | null, isSourceColumn = false) => {
 			try {
-				const columnsElements =
-					document.querySelectorAll('[data-column-id]');
+				const columnsElements = document.querySelectorAll('[data-column-id]');
 				columnsElements.forEach((col) => {
 					col.classList.remove(dropTargetClassName);
 					col.classList.remove(invalidDropTargetClassName);
 
-					const columnContent = col.querySelector(
-						columnContentSelector
-					);
+					const columnContent = col.querySelector(columnContentSelector);
 					if (columnContent) {
 						columnContent.classList.remove(dropTargetClassName);
-						columnContent.classList.remove(
-							invalidDropTargetClassName
-						);
+						columnContent.classList.remove(invalidDropTargetClassName);
 					}
 
 					col.setAttribute('aria-dropeffect', 'none');
 				});
 
-				if (
-					targetColumnId &&
-					!isSourceColumn &&
-					dragState.draggingCard
-				) {
-					const targetColumn = document.querySelector(
-						`[data-column-id="${targetColumnId}"]`
-					);
+				if (targetColumnId && !isSourceColumn && dragState.draggingCard) {
+					const targetColumn = document.querySelector(`[data-column-id="${targetColumnId}"]`);
 
 					if (targetColumn) {
-						const isValid = isValidDropTarget(
-							dragState.draggingCard.columnId,
-							targetColumnId
-						);
-						const classToAdd = isValid
-							? dropTargetClassName
-							: invalidDropTargetClassName;
+						const isValid = isValidDropTarget(dragState.draggingCard.columnId, targetColumnId);
+						const classToAdd = isValid ? dropTargetClassName : invalidDropTargetClassName;
 
-						const columnContent = targetColumn.querySelector(
-							columnContentSelector
-						);
+						const columnContent = targetColumn.querySelector(columnContentSelector);
 
 						if (columnContent) {
 							columnContent.classList.add(classToAdd);
@@ -220,23 +196,14 @@ export function useDragAndDrop({
 							targetColumn.classList.add(classToAdd);
 						}
 
-						targetColumn.setAttribute(
-							'aria-dropeffect',
-							isValid ? 'move' : 'none'
-						);
+						targetColumn.setAttribute('aria-dropeffect', isValid ? 'move' : 'none');
 					}
 				}
 			} catch (e) {
 				console.error('Error updating column highlights:', e);
 			}
 		},
-		[
-			dropTargetClassName,
-			invalidDropTargetClassName,
-			isValidDropTarget,
-			dragState.draggingCard,
-			columnContentSelector,
-		]
+		[dropTargetClassName, invalidDropTargetClassName, isValidDropTarget, dragState.draggingCard, columnContentSelector]
 	);
 
 	/**
@@ -249,42 +216,38 @@ export function useDragAndDrop({
 	 * The clone is absolutely positioned, has pointer events disabled, and includes
 	 * a subtle rotation to enhance the "picked up" effect.
 	 */
-	const createDragClone = useCallback(
-		(cardElement: HTMLElement, rect: DOMRect) => {
-			try {
-				const clone = cardElement.cloneNode(true) as HTMLDivElement;
+	const createDragClone = useCallback((cardElement: HTMLElement, rect: DOMRect) => {
+		try {
+			const clone = cardElement.cloneNode(true) as HTMLDivElement;
 
-				clone.style.position = 'absolute';
-				clone.style.width = `${rect.width}px`;
-				// clone.style.height = `${rect.height}px`;
-				clone.style.zIndex = DRAG_CONFIG.VISUAL.Z_INDEX;
-				clone.style.pointerEvents = 'none';
-				clone.style.opacity = '1';
-				clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
-				clone.style.boxShadow = "var(--box-shadow)";
-				clone.style.transition =
-					'box-shadow 0.2s ease, border 0.2s ease';
-				clone.setAttribute('aria-hidden', 'true');
-				clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
+			clone.style.position = 'absolute';
+			clone.style.width = `${rect.width}px`;
+			// clone.style.height = `${rect.height}px`;
+			clone.style.zIndex = DRAG_CONFIG.VISUAL.Z_INDEX;
+			clone.style.pointerEvents = 'none';
+			clone.style.opacity = '1';
+			clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
+			clone.style.boxShadow = 'var(--box-shadow)';
+			clone.style.transition = 'box-shadow 0.2s ease, border 0.2s ease';
+			clone.setAttribute('aria-hidden', 'true');
+			clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
 
-				clone.style.left = `${rect.left}px`;
-				clone.style.top = `${rect.top}px`;
+			clone.style.left = `${rect.left}px`;
+			clone.style.top = `${rect.top}px`;
 
-				document.body.appendChild(clone);
+			document.body.appendChild(clone);
 
-				cardElement.style.opacity = DRAG_CONFIG.VISUAL.OPACITY;
-				// cardElement.style.backgroundColor =
-				// 	DRAG_CONFIG.VISUAL.BACKGROUND;
-				cardElement.style.border = DRAG_CONFIG.VISUAL.BORDER;
+			cardElement.style.opacity = DRAG_CONFIG.VISUAL.OPACITY;
+			// cardElement.style.backgroundColor =
+			// 	DRAG_CONFIG.VISUAL.BACKGROUND;
+			cardElement.style.border = DRAG_CONFIG.VISUAL.BORDER;
 
-				return clone;
-			} catch (e) {
-				console.error('Error creating drag clone:', e);
-				return null;
-			}
-		},
-		[]
-	);
+			return clone;
+		} catch (e) {
+			console.error('Error creating drag clone:', e);
+			return null;
+		}
+	}, []);
 
 	/**
 	 * Implements automatic scrolling when dragging near container edges.
@@ -310,10 +273,7 @@ export function useDragAndDrop({
 			const speed = DRAG_CONFIG.SCROLL.SPEED;
 
 			// Vertical scrolling
-			if (
-				boundaryRef.current.scrollHeight >
-				boundaryRef.current.clientHeight
-			) {
+			if (boundaryRef.current.scrollHeight > boundaryRef.current.clientHeight) {
 				if (cardCenterY > boundary.bottom - margin) {
 					boundaryRef.current.scrollTop += speed;
 				}
@@ -324,10 +284,7 @@ export function useDragAndDrop({
 			}
 
 			// Horizontal scrolling
-			if (
-				boundaryRef.current.scrollWidth >
-				boundaryRef.current.clientWidth
-			) {
+			if (boundaryRef.current.scrollWidth > boundaryRef.current.clientWidth) {
 				if (cardCenterX > boundary.right - margin) {
 					boundaryRef.current.scrollLeft += speed;
 				}
@@ -384,8 +341,7 @@ export function useDragAndDrop({
 
 			if (hitBoundary) {
 				dragElementRef.current.style.boxShadow = '';
-				dragElementRef.current.style.border =
-					DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_BORDER;
+				dragElementRef.current.style.border = DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_BORDER;
 
 				if (isTouch.current && navigator.vibrate) {
 					navigator.vibrate(10);
@@ -435,9 +391,7 @@ export function useDragAndDrop({
 
 		try {
 			if (dragState.draggingCard) {
-				const originalCards = document.querySelectorAll(
-					`[${cardSelector}="${dragState.draggingCard.id}"]`
-				);
+				const originalCards = document.querySelectorAll(`[${cardSelector}="${dragState.draggingCard.id}"]`);
 				originalCards.forEach((card) => {
 					const cardElement = card as HTMLElement;
 					cardElement.style.opacity = '';
@@ -457,12 +411,7 @@ export function useDragAndDrop({
 		dragStartedRef.current = false;
 		currentTargetColumnRef.current = null;
 		setDragState({ draggingCard: null, isDragging: false });
-	}, [
-		dragState.draggingCard,
-		updateColumnHighlights,
-		createAccessibilityAnnouncement,
-		cardSelector,
-	]);
+	}, [dragState.draggingCard, updateColumnHighlights, createAccessibilityAnnouncement, cardSelector]);
 
 	/**
 	 * Initiates the card dragging process on pointer down.
@@ -477,27 +426,18 @@ export function useDragAndDrop({
 	 * a threshold distance, which helps distinguish between clicks and drags.
 	 */
 	const handleCardPointerDown = useCallback(
-		(
-			e: React.MouseEvent | React.TouchEvent,
-			cardId: string,
-			cardColId: string
-		) => {
+		(e: React.MouseEvent | React.TouchEvent, cardId: string, cardColId: string) => {
 			try {
 				isTouch.current = 'touches' in e;
 
-				if (!isTouch.current && (e as React.MouseEvent).button !== 0)
-					return;
+				if (!isTouch.current && (e as React.MouseEvent).button !== 0) return;
 
 				const cardElement = e.currentTarget as HTMLDivElement;
 				const rect = cardElement.getBoundingClientRect();
 
-				const clientX = isTouch.current
-					? (e as React.TouchEvent).touches[0].clientX
-					: (e as React.MouseEvent).clientX;
+				const clientX = isTouch.current ? (e as React.TouchEvent).touches[0].clientX : (e as React.MouseEvent).clientX;
 
-				const clientY = isTouch.current
-					? (e as React.TouchEvent).touches[0].clientY
-					: (e as React.MouseEvent).clientY;
+				const clientY = isTouch.current ? (e as React.TouchEvent).touches[0].clientY : (e as React.MouseEvent).clientY;
 
 				pointerPositionRef.current = { x: clientX, y: clientY };
 				dragStartedRef.current = false;
@@ -547,29 +487,20 @@ export function useDragAndDrop({
 			if (!draggingCard) return;
 
 			try {
-				const clientX =
-					'touches' in e
-						? e.touches[0].clientX
-						: (e as MouseEvent).clientX;
+				const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
 
-				const clientY =
-					'touches' in e
-						? e.touches[0].clientY
-						: (e as MouseEvent).clientY;
+				const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
 
 				const dx = Math.abs(clientX - pointerPositionRef.current.x);
 				const dy = Math.abs(clientY - pointerPositionRef.current.y);
 
-				const isDragging =
-					dx > DRAG_CONFIG.THRESHOLD || dy > DRAG_CONFIG.THRESHOLD;
+				const isDragging = dx > DRAG_CONFIG.THRESHOLD || dy > DRAG_CONFIG.THRESHOLD;
 
 				if (isDragging && !dragStartedRef.current) {
 					dragStartedRef.current = true;
 					setDragState((prev) => ({ ...prev, isDragging: true }));
 
-					const cardElement = document.querySelector(
-						`[${cardSelector}="${draggingCard.id}"]`
-					) as HTMLElement;
+					const cardElement = document.querySelector(`[${cardSelector}="${draggingCard.id}"]`) as HTMLElement;
 
 					if (!cardElement) {
 						console.error('Card element not found for dragging');
@@ -592,47 +523,33 @@ export function useDragAndDrop({
 					const newLeft = clientX - draggingCard.offsetX;
 					const newTop = clientY - draggingCard.offsetY;
 
-					const cardRect =
-						dragElementRef.current.getBoundingClientRect();
-					const constrainedPosition = applyBoundaryConstraints(
-						{ left: newLeft, top: newTop },
-						cardRect
-					);
+					const cardRect = dragElementRef.current.getBoundingClientRect();
+					const constrainedPosition = applyBoundaryConstraints({ left: newLeft, top: newTop }, cardRect);
 
 					dragElementRef.current.style.left = `${constrainedPosition.left}px`;
 					dragElementRef.current.style.top = `${constrainedPosition.top}px`;
 
-					const dragRect =
-						dragElementRef.current.getBoundingClientRect();
+					const dragRect = dragElementRef.current.getBoundingClientRect();
 					const targetColumnId = findTargetColumn(dragRect);
-					const isSourceColumn =
-						targetColumnId === draggingCard.columnId;
+					const isSourceColumn = targetColumnId === draggingCard.columnId;
 
 					currentTargetColumnRef.current = targetColumnId;
 					updateColumnHighlights(targetColumnId, isSourceColumn);
 
 					if (targetColumnId && !isSourceColumn) {
-						const isValid = isValidDropTarget(
-							draggingCard.columnId,
-							targetColumnId
-						);
+						const isValid = isValidDropTarget(draggingCard.columnId, targetColumnId);
 
 						if (isValid) {
-							dragElementRef.current.style.border =
-								'0.2rem solid rgba(50, 205, 50, 0.8)';
-							dragElementRef.current.style.boxShadow =
-								'0 0 0.8rem rgba(50, 205, 50, 0.6)';
+							dragElementRef.current.style.border = '0.2rem solid rgba(50, 205, 50, 0.8)';
+							dragElementRef.current.style.boxShadow = '0 0 0.8rem rgba(50, 205, 50, 0.6)';
 						} else {
-							dragElementRef.current.style.border =
-								'0.2rem solid rgba(255, 99, 71, 0.8)';
-							dragElementRef.current.style.boxShadow =
-								'0 0 0.8rem rgba(255, 99, 71, 0.6)';
+							dragElementRef.current.style.border = '0.2rem solid rgba(255, 99, 71, 0.8)';
+							dragElementRef.current.style.boxShadow = '0 0 0.8rem rgba(255, 99, 71, 0.6)';
 						}
 					} else {
 						// Reset card appearance when not over a valid target
 						dragElementRef.current.style.border = '1px solid #ccc';
-						dragElementRef.current.style.boxShadow =
-							'0 2px 4px rgba(0,0,0,0.1)';
+						dragElementRef.current.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
 					}
 				}
 			} catch (err) {
@@ -691,9 +608,7 @@ export function useDragAndDrop({
 					const sourceColumnId = draggingCard.columnId;
 
 					// Announce the drop for accessibility
-					createAccessibilityAnnouncement(
-						`Card moved to ${targetColumnId} column.`
-					);
+					createAccessibilityAnnouncement(`Card moved to ${targetColumnId} column.`);
 
 					onCardMove(cardId, sourceColumnId, targetColumnId);
 				}
@@ -708,13 +623,7 @@ export function useDragAndDrop({
 				cleanupDrag();
 			}
 		},
-		[
-			dragState,
-			onCardMove,
-			isValidDropTarget,
-			cleanupDrag,
-			createAccessibilityAnnouncement,
-		]
+		[dragState, onCardMove, isValidDropTarget, cleanupDrag, createAccessibilityAnnouncement]
 	);
 
 	/**
@@ -746,11 +655,7 @@ export function useDragAndDrop({
 						targetColumnId !== draggingCard.columnId &&
 						isValidDropTarget(draggingCard.columnId, targetColumnId)
 					) {
-						onCardMove(
-							draggingCard.id,
-							draggingCard.columnId,
-							targetColumnId
-						);
+						onCardMove(draggingCard.id, draggingCard.columnId, targetColumnId);
 					}
 
 					cleanupDrag();
@@ -780,27 +685,12 @@ export function useDragAndDrop({
 		const { draggingCard } = dragState;
 		if (draggingCard) {
 			if (isTouch.current) {
-				window.addEventListener(
-					'touchmove',
-					handlePointerMove as EventListener
-				);
-				window.addEventListener(
-					'touchend',
-					handlePointerUp as EventListener
-				);
-				window.addEventListener(
-					'touchcancel',
-					handlePointerUp as EventListener
-				);
+				window.addEventListener('touchmove', handlePointerMove as EventListener);
+				window.addEventListener('touchend', handlePointerUp as EventListener);
+				window.addEventListener('touchcancel', handlePointerUp as EventListener);
 			} else {
-				window.addEventListener(
-					'mousemove',
-					handlePointerMove as EventListener
-				);
-				window.addEventListener(
-					'mouseup',
-					handlePointerUp as EventListener
-				);
+				window.addEventListener('mousemove', handlePointerMove as EventListener);
+				window.addEventListener('mouseup', handlePointerUp as EventListener);
 			}
 
 			window.addEventListener('keydown', handleKeyDown);
@@ -808,26 +698,11 @@ export function useDragAndDrop({
 		}
 
 		return () => {
-			window.removeEventListener(
-				'mousemove',
-				handlePointerMove as EventListener
-			);
-			window.removeEventListener(
-				'mouseup',
-				handlePointerUp as EventListener
-			);
-			window.removeEventListener(
-				'touchmove',
-				handlePointerMove as EventListener
-			);
-			window.removeEventListener(
-				'touchend',
-				handlePointerUp as EventListener
-			);
-			window.removeEventListener(
-				'touchcancel',
-				handlePointerUp as EventListener
-			);
+			window.removeEventListener('mousemove', handlePointerMove as EventListener);
+			window.removeEventListener('mouseup', handlePointerUp as EventListener);
+			window.removeEventListener('touchmove', handlePointerMove as EventListener);
+			window.removeEventListener('touchend', handlePointerUp as EventListener);
+			window.removeEventListener('touchcancel', handlePointerUp as EventListener);
 			window.removeEventListener('keydown', handleKeyDown);
 			window.removeEventListener('blur', cleanupDrag);
 
@@ -836,13 +711,7 @@ export function useDragAndDrop({
 				scrollIntervalRef.current = null;
 			}
 		};
-	}, [
-		dragState,
-		handlePointerMove,
-		handlePointerUp,
-		handleKeyDown,
-		cleanupDrag,
-	]);
+	}, [dragState, handlePointerMove, handlePointerUp, handleKeyDown, cleanupDrag]);
 
 	/**
 	 * Sets up accessibility support by creating an announcement element.
@@ -875,10 +744,7 @@ export function useDragAndDrop({
 
 		return () => {
 			const announceElement = document.getElementById('drag-announce');
-			if (
-				announceElement &&
-				!document.querySelector("[aria-grabbed='true']")
-			) {
+			if (announceElement && !document.querySelector("[aria-grabbed='true']")) {
 				announceElement.remove();
 			}
 		};

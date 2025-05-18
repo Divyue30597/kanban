@@ -10,11 +10,7 @@ export interface DragCard {
 }
 
 export interface UseDragAndDropProps {
-	onCardMove: (
-		cardId: string,
-		sourceColumnId: string,
-		targetColumnId: string
-	) => void;
+	onCardMove: (cardId: string, sourceColumnId: string, targetColumnId: string) => void;
 	dropTargetClassName: string;
 	invalidDropTargetClassName: string;
 	boundaryRef?: React.RefObject<HTMLElement>;

@@ -75,10 +75,7 @@ export default function Pomodoro() {
 					const timerType = tab as activeTabType;
 					if (isRunning[timerType] && updatedTime[timerType] > 0) {
 						updatedTime[timerType] = updatedTime[timerType] - 1;
-					} else if (
-						isRunning[timerType] &&
-						updatedTime[timerType] <= 0
-					) {
+					} else if (isRunning[timerType] && updatedTime[timerType] <= 0) {
 						setIsRunning((prev) => ({
 							...prev,
 							[timerType]: false,
@@ -97,29 +94,17 @@ export default function Pomodoro() {
 		{
 			id: 'pomodoro',
 			label: <h2 className={styles.tabTitles}>Pomodoro</h2>,
-			children: (
-				<p className={styles.time}>
-					{timeFormatting(timeLeft.pomodoro)}
-				</p>
-			),
+			children: <p className={styles.time}>{timeFormatting(timeLeft.pomodoro)}</p>,
 		},
 		{
 			id: 'shortBreak',
 			label: <h2 className={styles.tabTitles}>Short Break</h2>,
-			children: (
-				<p className={styles.time}>
-					{timeFormatting(timeLeft.shortBreak)}
-				</p>
-			),
+			children: <p className={styles.time}>{timeFormatting(timeLeft.shortBreak)}</p>,
 		},
 		{
 			id: 'longBreak',
 			label: <h2 className={styles.tabTitles}>Long Break</h2>,
-			children: (
-				<p className={styles.time}>
-					{timeFormatting(timeLeft.longBreak)}
-				</p>
-			),
+			children: <p className={styles.time}>{timeFormatting(timeLeft.longBreak)}</p>,
 		},
 	];
 
@@ -149,11 +134,7 @@ export default function Pomodoro() {
 						})
 					}
 				>
-					{!isRunning[activeTab] ? (
-						<SVG.playButton />
-					) : (
-						<SVG.pauseButton />
-					)}
+					{!isRunning[activeTab] ? <SVG.playButton /> : <SVG.pauseButton />}
 				</button>
 			</div>
 		</div>

@@ -74,12 +74,12 @@ $color: #f4eddb;
 		background-color: transparent !important;
 		border-bottom: 0.4rem solid $color !important;
 
-		&[aria-selected="false"] {
+		&[aria-selected='false'] {
 			border: 0.2rem solid $color !important;
 			outline: 0.1rem solid $color;
 		}
 
-		&[aria-selected="true"] {
+		&[aria-selected='true'] {
 			font-weight: 800 !important;
 			background-color: transparent !important;
 			color: $color;

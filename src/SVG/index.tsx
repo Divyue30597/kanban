@@ -1,12 +1,6 @@
 export const SVG = {
 	link: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M9.99999 13C10.4294 13.5741 10.9773 14.0491 11.6065 14.3929C12.2357 14.7367 12.9315 14.9411 13.6466 14.9923C14.3618 15.0435 15.0796 14.9403 15.7513 14.6897C16.4231 14.4392 17.0331 14.047 17.54 13.54L20.54 10.54C21.4508 9.59695 21.9547 8.33394 21.9434 7.02296C21.932 5.71198 21.4061 4.45791 20.4791 3.53087C19.552 2.60383 18.298 2.07799 16.987 2.0666C15.676 2.0552 14.413 2.55918 13.47 3.46997L11.75 5.17997M14 11C13.5705 10.4258 13.0226 9.95078 12.3934 9.60703C11.7642 9.26327 11.0685 9.05885 10.3533 9.00763C9.63819 8.95641 8.9204 9.0596 8.24864 9.31018C7.57688 9.56077 6.96687 9.9529 6.45999 10.46L3.45999 13.46C2.5492 14.403 2.04522 15.666 2.05662 16.977C2.06801 18.288 2.59385 19.542 3.52089 20.4691C4.44793 21.3961 5.702 21.9219 7.01298 21.9333C8.32396 21.9447 9.58697 21.4408 10.53 20.53L12.24 18.82"
 				stroke="currentColor"
@@ -17,13 +11,7 @@ export const SVG = {
 		</svg>
 	),
 	home: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M3 10.5651C3 9.9907 3 9.70352 3.07403 9.43905C3.1396 9.20478 3.24737 8.98444 3.39203 8.78886C3.55534 8.56806 3.78202 8.39175 4.23539 8.03912L11.0177 2.764C11.369 2.49075 11.5447 2.35412 11.7387 2.3016C11.9098 2.25526 12.0902 2.25526 12.2613 2.3016C12.4553 2.35412 12.631 2.49075 12.9823 2.764L19.7646 8.03913C20.218 8.39175 20.4447 8.56806 20.608 8.78886C20.7526 8.98444 20.8604 9.20478 20.926 9.43905C21 9.70352 21 9.9907 21 10.5651V17.8C21 18.9201 21 19.4801 20.782 19.908C20.5903 20.2843 20.2843 20.5903 19.908 20.782C19.4802 21 18.9201 21 17.8 21H6.2C5.07989 21 4.51984 21 4.09202 20.782C3.71569 20.5903 3.40973 20.2843 3.21799 19.908C3 19.4801 3 18.9201 3 17.8V10.5651Z"
 				stroke="currentColor"
@@ -34,30 +22,12 @@ export const SVG = {
 		</svg>
 	),
 	chevronDown: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M6 9L12 15L18 9"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 		</svg>
 	),
 	notes: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 20H21M3.00003 20H4.67457C5.16376 20 5.40835 20 5.63852 19.9447C5.84259 19.8957 6.03768 19.8149 6.21663 19.7053C6.41846 19.5816 6.59141 19.4086 6.93732 19.0627L19.5001 6.49998C20.3285 5.67156 20.3285 4.32841 19.5001 3.49998C18.6716 2.67156 17.3285 2.67156 16.5001 3.49998L3.93729 16.0627C3.59139 16.4086 3.41843 16.5816 3.29475 16.7834C3.18509 16.9624 3.10428 17.1574 3.05529 17.3615C3.00003 17.5917 3.00003 17.8363 3.00003 18.3255V20Z"
 				stroke="currentColor"
@@ -68,13 +38,7 @@ export const SVG = {
 		</svg>
 	),
 	pomodoro: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 12L7.72711 8.43926C7.09226 7.91022 6.77484 7.6457 6.54664 7.32144C6.34444 7.03413 6.19429 6.71354 6.10301 6.37428C6 5.99139 6 5.57819 6 4.7518V2M12 12L16.2729 8.43926C16.9077 7.91022 17.2252 7.6457 17.4534 7.32144C17.6556 7.03413 17.8057 6.71354 17.897 6.37428C18 5.99139 18 5.57819 18 4.7518V2M12 12L7.72711 15.5607C7.09226 16.0898 6.77484 16.3543 6.54664 16.6786C6.34444 16.9659 6.19429 17.2865 6.10301 17.6257C6 18.0086 6 18.4218 6 19.2482V22M12 12L16.2729 15.5607C16.9077 16.0898 17.2252 16.3543 17.4534 16.6786C17.6556 16.9659 17.8057 17.2865 17.897 17.6257C18 18.0086 18 18.4218 18 19.2482V22M4 2H20M4 22H20"
 				stroke="currentColor"
@@ -85,13 +49,7 @@ export const SVG = {
 		</svg>
 	),
 	help: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13M12 17H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
 				stroke="currentColor"
@@ -102,13 +60,7 @@ export const SVG = {
 		</svg>
 	),
 	logout: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M18 8L22 12M22 12L18 16M22 12H9M15 4.20404C13.7252 3.43827 12.2452 3 10.6667 3C5.8802 3 2 7.02944 2 12C2 16.9706 5.8802 21 10.6667 21C12.2452 21 13.7252 20.5617 15 19.796"
 				stroke="currentColor"
@@ -127,23 +79,11 @@ export const SVG = {
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path
-				d="M9 18L15 12L9 6"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
+			<path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 		</svg>
 	),
 	cross: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M18 6L6 18M6 6L18 18"
 				stroke="currentColor"
@@ -154,13 +94,7 @@ export const SVG = {
 		</svg>
 	),
 	calendar: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M21 10H3M16 2V6M8 2V6M7.8 22H16.2C17.8802 22 18.7202 22 19.362 21.673C19.9265 21.3854 20.3854 20.9265 20.673 20.362C21 19.7202 21 18.8802 21 17.2V8.8C21 7.11984 21 6.27976 20.673 5.63803C20.3854 5.07354 19.9265 4.6146 19.362 4.32698C18.7202 4 17.8802 4 16.2 4H7.8C6.11984 4 5.27976 4 4.63803 4.32698C4.07354 4.6146 3.6146 5.07354 3.32698 5.63803C3 6.27976 3 7.11984 3 8.8V17.2C3 18.8802 3 19.7202 3.32698 20.362C3.6146 20.9265 4.07354 21.3854 4.63803 21.673C5.27976 22 6.11984 22 7.8 22Z"
 				stroke="currentColor"
@@ -171,13 +105,7 @@ export const SVG = {
 		</svg>
 	),
 	settings: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
 				stroke="currentColor"
@@ -195,13 +123,7 @@ export const SVG = {
 		</svg>
 	),
 	profile: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M4.00002 21.8174C4.6026 22 5.41649 22 6.8 22H17.2C18.5835 22 19.3974 22 20 21.8174M4.00002 21.8174C3.87082 21.7783 3.75133 21.7308 3.63803 21.673C3.07354 21.3854 2.6146 20.9265 2.32698 20.362C2 19.7202 2 18.8802 2 17.2V6.8C2 5.11984 2 4.27976 2.32698 3.63803C2.6146 3.07354 3.07354 2.6146 3.63803 2.32698C4.27976 2 5.11984 2 6.8 2H17.2C18.8802 2 19.7202 2 20.362 2.32698C20.9265 2.6146 21.3854 3.07354 21.673 3.63803C22 4.27976 22 5.11984 22 6.8V17.2C22 18.8802 22 19.7202 21.673 20.362C21.3854 20.9265 20.9265 21.3854 20.362 21.673C20.2487 21.7308 20.1292 21.7783 20 21.8174M4.00002 21.8174C4.00035 21.0081 4.00521 20.5799 4.07686 20.2196C4.39249 18.6329 5.63288 17.3925 7.21964 17.0769C7.60603 17 8.07069 17 9 17H15C15.9293 17 16.394 17 16.7804 17.0769C18.3671 17.3925 19.6075 18.6329 19.9231 20.2196C19.9948 20.5799 19.9996 21.0081 20 21.8174M16 9.5C16 11.7091 14.2091 13.5 12 13.5C9.79086 13.5 8 11.7091 8 9.5C8 7.29086 9.79086 5.5 12 5.5C14.2091 5.5 16 7.29086 16 9.5Z"
 				stroke="currentColor"
@@ -212,13 +134,7 @@ export const SVG = {
 		</svg>
 	),
 	subscriptions: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M2 10H22V8.2C22 7.0799 22 6.51984 21.782 6.09202C21.5903 5.7157 21.2843 5.40974 20.908 5.21799C20.4802 5 19.9201 5 18.8 5H5.2C4.0799 5 3.51984 5 3.09202 5.21799C2.7157 5.40973 2.40973 5.71569 2.21799 6.09202C2 6.51984 2 7.0799 2 8.2V15.8C2 16.9201 2 17.4802 2.21799 17.908C2.40973 18.2843 2.71569 18.5903 3.09202 18.782C3.51984 19 4.0799 19 5.2 19H11M14.5 21L16.525 20.595C16.7015 20.5597 16.7898 20.542 16.8721 20.5097C16.9452 20.4811 17.0147 20.4439 17.079 20.399C17.1516 20.3484 17.2152 20.2848 17.3426 20.1574L21.5 16C22.0523 15.4477 22.0523 14.5523 21.5 14C20.9477 13.4477 20.0523 13.4477 19.5 14L15.3426 18.1574C15.2152 18.2848 15.1516 18.3484 15.101 18.421C15.0561 18.4853 15.0189 18.5548 14.9903 18.6279C14.958 18.7102 14.9403 18.7985 14.905 18.975L14.5 21Z"
 				stroke="currentColor"
@@ -229,13 +145,7 @@ export const SVG = {
 		</svg>
 	),
 	todo: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M21 12L9 12M21 6L9 6M21 18L9 18M5 12C5 12.5523 4.55228 13 4 13C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11C4.55228 11 5 11.4477 5 12ZM5 6C5 6.55228 4.55228 7 4 7C3.44772 7 3 6.55228 3 6C3 5.44772 3.44772 5 4 5C4.55228 5 5 5.44772 5 6ZM5 18C5 18.5523 4.55228 19 4 19C3.44772 19 3 18.5523 3 18C3 17.4477 3.44772 17 4 17C4.55228 17 5 17.4477 5 18Z"
 				stroke="currentColor"
@@ -246,42 +156,16 @@ export const SVG = {
 		</svg>
 	),
 	pomodoroClock: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 32 38"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<rect
-				x="2.91992"
-				y="11"
-				width="25"
-				height="25"
-				rx="4"
-				stroke="currentColor"
-				strokeWidth="4"
-			/>
+		<svg width="100%" height="100%" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="2.91992" y="11" width="25" height="25" rx="4" stroke="currentColor" strokeWidth="4" />
 			<path d="M14.9199 16H18.9199V26H14.9199V16Z" fill="currentColor" />
-			<path
-				d="M10.9199 2L10.9199 6L0.919922 6L0.919922 2L10.9199 2Z"
-				fill="currentColor"
-			/>
-			<path
-				d="M31.5803 5L29.5803 8.4641L20.9201 3.4641L22.9201 -5.96046e-07L31.5803 5Z"
-				fill="currentColor"
-			/>
+			<path d="M10.9199 2L10.9199 6L0.919922 6L0.919922 2L10.9199 2Z" fill="currentColor" />
+			<path d="M31.5803 5L29.5803 8.4641L20.9201 3.4641L22.9201 -5.96046e-07L31.5803 5Z" fill="currentColor" />
 			<path d="M18.9199 22H22.9199V26H18.9199V22Z" fill="currentColor" />
 		</svg>
 	),
 	playButton: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
 				stroke="currentColor"
@@ -299,13 +183,7 @@ export const SVG = {
 		</svg>
 	),
 	pauseButton: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M9.5 15V9M14.5 15V9M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
 				stroke="currentColor"
@@ -316,13 +194,7 @@ export const SVG = {
 		</svg>
 	),
 	alert: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
 				stroke="currentColor"
@@ -333,13 +205,7 @@ export const SVG = {
 		</svg>
 	),
 	sun: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 2V4M12 20V22M4 12H2M6.31412 6.31412L4.8999 4.8999M17.6859 6.31412L19.1001 4.8999M6.31412 17.69L4.8999 19.1042M17.6859 17.69L19.1001 19.1042M22 12H20M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"
 				stroke="currentColor"
@@ -350,13 +216,7 @@ export const SVG = {
 		</svg>
 	),
 	moon: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M18 2L18.6178 3.23558C18.8833 3.76656 19.016 4.03205 19.1934 4.26211C19.3507 4.46626 19.5337 4.64927 19.7379 4.80664C19.9679 4.98397 20.2334 5.11672 20.7644 5.38221L22 6L20.7644 6.61779C20.2334 6.88328 19.9679 7.01603 19.7379 7.19336C19.5337 7.35073 19.3507 7.53374 19.1934 7.73789C19.016 7.96795 18.8833 8.23344 18.6178 8.76442L18 10L17.3822 8.76442C17.1167 8.23344 16.984 7.96795 16.8066 7.73789C16.6493 7.53374 16.4663 7.35073 16.2621 7.19336C16.0321 7.01603 15.7666 6.88328 15.2356 6.61779L14 6L15.2356 5.38221C15.7666 5.11672 16.0321 4.98397 16.2621 4.80664C16.4663 4.64927 16.6493 4.46626 16.8066 4.26211C16.984 4.03205 17.1167 3.76656 17.3822 3.23558L18 2Z"
 				stroke="currentColor"
@@ -374,13 +234,7 @@ export const SVG = {
 		</svg>
 	),
 	system: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M15 17V21H9V17M5.2 17H18.8C19.9201 17 20.4802 17 20.908 16.782C21.2843 16.5903 21.5903 16.2843 21.782 15.908C22 15.4802 22 14.9201 22 13.8V6.2C22 5.0799 22 4.51984 21.782 4.09202C21.5903 3.71569 21.2843 3.40973 20.908 3.21799C20.4802 3 19.9201 3 18.8 3H5.2C4.07989 3 3.51984 3 3.09202 3.21799C2.71569 3.40973 2.40973 3.71569 2.21799 4.09202C2 4.51984 2 5.07989 2 6.2V13.8C2 14.9201 2 15.4802 2.21799 15.908C2.40973 16.2843 2.71569 16.5903 3.09202 16.782C3.51984 17 4.0799 17 5.2 17Z"
 				stroke="currentColor"
@@ -391,13 +245,7 @@ export const SVG = {
 		</svg>
 	),
 	palette: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M2 12C2 17.5228 6.47715 22 12 22C13.6569 22 15 20.6569 15 19V18.5C15 18.0356 15 17.8034 15.0257 17.6084C15.2029 16.2622 16.2622 15.2029 17.6084 15.0257C17.8034 15 18.0356 15 18.5 15H19C20.6569 15 22 13.6569 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12Z"
 				stroke="currentColor"
@@ -429,13 +277,7 @@ export const SVG = {
 		</svg>
 	),
 	loading: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12 2V6M12 18V22M6 12H2M22 12H18M19.0784 19.0784L16.25 16.25M19.0784 4.99994L16.25 7.82837M4.92157 19.0784L7.75 16.25M4.92157 4.99994L7.75 7.82837"
 				stroke="currentColor"
@@ -446,30 +288,12 @@ export const SVG = {
 		</svg>
 	),
 	chevronLeft: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M15 18L9 12L15 6"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 		</svg>
 	),
 	chevronLeftDouble: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M18 17L13 12L18 7M11 17L6 12L11 7"
 				stroke="currentColor"
@@ -480,15 +304,29 @@ export const SVG = {
 		</svg>
 	),
 	chevronRightDouble: () => (
-		<svg
-			width="100%"
-			height="100%"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M6 17L11 12L6 7M13 17L18 12L13 7"
+				stroke="currentColor"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	),
+	timeline: () => (
+		<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+			<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+			<g id="SVGRepo_iconCarrier">
+				<path d="M3,23a1,1,0,0,1-1-1V2A1,1,0,0,1,4,2V3H8A1,1,0,0,1,8,5H4v6h8a1,1,0,0,1,0,2H4v6H6a1,1,0,0,1,0,2H4v1A1,1,0,0,1,3,23ZM21,3H13V2a1,1,0,0,0-2,0V4h0V6a1,1,0,0,0,2,0V5h8a1,1,0,0,0,0-2Zm0,8H17V10a1,1,0,0,0-2,0v2h0v2a1,1,0,0,0,2,0V13h4a1,1,0,0,0,0-2Zm0,8H11V18a1,1,0,0,0-2,0v2H9v2a1,1,0,0,0,2,0V21H21a1,1,0,0,0,0-2Z"></path>
+			</g>
+		</svg>
+	),
+	backlog: () => (
+		<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M2 12.0001L11.6422 16.8212C11.7734 16.8868 11.839 16.9196 11.9078 16.9325C11.9687 16.9439 12.0313 16.9439 12.0922 16.9325C12.161 16.9196 12.2266 16.8868 12.3578 16.8212L22 12.0001M2 17.0001L11.6422 21.8212C11.7734 21.8868 11.839 21.9196 11.9078 21.9325C11.9687 21.9439 12.0313 21.9439 12.0922 21.9325C12.161 21.9196 12.2266 21.8868 12.3578 21.8212L22 17.0001M2 7.00006L11.6422 2.17895C11.7734 2.11336 11.839 2.08056 11.9078 2.06766C11.9687 2.05622 12.0313 2.05622 12.0922 2.06766C12.161 2.08056 12.2266 2.11336 12.3578 2.17895L22 7.00006L12.3578 11.8212C12.2266 11.8868 12.161 11.9196 12.0922 11.9325C12.0313 11.9439 11.9687 11.9439 11.9078 11.9325C11.839 11.9196 11.7734 11.8868 11.6422 11.8212L2 7.00006Z"
 				stroke="currentColor"
 				strokeWidth="2"
 				strokeLinecap="round"

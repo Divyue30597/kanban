@@ -7,18 +7,8 @@ import { useState } from 'react';
 import CalendarDropDown from '../CalendarDropDown';
 
 function Calendar() {
-	const {
-		month,
-		year,
-		weeks,
-		nextMonth,
-		prevMonth,
-		nextYear,
-		prevYear,
-		nextWeek,
-		prevWeek,
-		handleClickOnToday,
-	} = useCalendar();
+	const { month, year, weeks, nextMonth, prevMonth, nextYear, prevYear, nextWeek, prevWeek, handleClickOnToday } =
+		useCalendar();
 
 	const calendarModes = [
 		{ id: 'month', title: 'Month' },
@@ -39,11 +29,7 @@ function Calendar() {
 			{calendarMode.id === 'month' ? (
 				<p>{day}</p>
 			) : (
-				<p
-					className={
-						activeWeek[index].isToday ? styles.activeWeekDay : ''
-					}
-				>
+				<p className={activeWeek[index].isToday ? styles.activeWeekDay : ''}>
 					{day} {activeWeek[index].day}
 				</p>
 			)}
@@ -60,21 +46,11 @@ function Calendar() {
 					<div className={styles.calendarTitleContainer}>
 						<div className={styles.calendarButtons}>
 							{calendarMode.id === 'month' && (
-								<IconBtn
-									onClick={prevYear}
-									title="Previous Year"
-								>
+								<IconBtn onClick={prevYear} title="Previous Year">
 									<SVG.chevronLeftDouble />
 								</IconBtn>
 							)}
-							<IconBtn
-								onClick={
-									calendarMode.id === 'month'
-										? prevMonth
-										: prevWeek
-								}
-								title="Previous Month"
-							>
+							<IconBtn onClick={calendarMode.id === 'month' ? prevMonth : prevWeek} title="Previous Month">
 								<SVG.chevronLeft />
 							</IconBtn>
 						</div>
@@ -88,14 +64,7 @@ function Calendar() {
 							</h3>
 						)}
 						<div className={styles.calendarButtons}>
-							<IconBtn
-								onClick={
-									calendarMode.id === 'month'
-										? nextMonth
-										: nextWeek
-								}
-								title="Next Month"
-							>
+							<IconBtn onClick={calendarMode.id === 'month' ? nextMonth : nextWeek} title="Next Month">
 								<SVG.chevronRight />
 							</IconBtn>
 							{calendarMode.id === 'month' && (
@@ -118,9 +87,7 @@ function Calendar() {
 
 			{calendarMode.id === 'month' && <ActiveMonth weeks={weeks} />}
 
-			{calendarMode.id === 'week' && (
-				<ActiveWeek activeWeek={activeWeek} />
-			)}
+			{calendarMode.id === 'week' && <ActiveWeek activeWeek={activeWeek} />}
 		</div>
 	);
 }
@@ -130,10 +97,7 @@ function ActiveWeek({ activeWeek }: { activeWeek: CalendarDay[] }) {
 		<div className={styles.activeWeeks}>
 			{activeWeek.length > 0 &&
 				activeWeek.map((day) => (
-					<div
-						className={styles.activeWeek}
-						key={day.fullDate.toISOString()}
-					>
+					<div className={styles.activeWeek} key={day.fullDate.toISOString()}>
 						<div>{day.fullDate.toISOString()}</div>
 					</div>
 				))}
@@ -148,20 +112,11 @@ function ActiveMonth({ weeks }: { weeks: CalendarDay[][] }) {
 				{weeks.map((week: CalendarDay[], weekIndex: number) => (
 					<div key={weekIndex} className={styles.weekRow}>
 						{week.map((dayObject: CalendarDay) => {
-							const isToday = dayObject.isToday
-								? styles.today
-								: '';
-							const isCurrentMonth = !dayObject.isCurrentMonth
-								? styles.emptyDay
-								: '';
+							const isToday = dayObject.isToday ? styles.today : '';
+							const isCurrentMonth = !dayObject.isCurrentMonth ? styles.emptyDay : '';
 
 							return (
-								<div
-									className={
-										styles.day + ' ' + isCurrentMonth
-									}
-									key={dayObject.fullDate.toISOString()}
-								>
+								<div className={styles.day + ' ' + isCurrentMonth} key={dayObject.fullDate.toISOString()}>
 									<p className={isToday}>{dayObject.day}</p>
 								</div>
 							);

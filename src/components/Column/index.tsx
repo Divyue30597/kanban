@@ -11,15 +11,7 @@ interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 function Column(props: ColumnProps) {
-	const {
-		colName,
-		colId,
-		children,
-		className,
-		numOfCards,
-		onCardDrop,
-		...rest
-	} = props;
+	const { colName, colId, children, className, numOfCards, onCardDrop, ...rest } = props;
 	const [isDragOver, setIsDragOver] = useState(false);
 
 	const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -57,31 +49,17 @@ function Column(props: ColumnProps) {
 			<h2>
 				{colName} <span>{numOfCards}</span>
 			</h2>
-			<div
-				className={styles.cards + ' column-content'}
-				data-column-id={colId}
-			>
+			<div className={styles.cards + ' column-content'} data-column-id={colId}>
 				{React.Children.map(children, (child) => {
-					if (
-						React.isValidElement(child) &&
-						typeof child.type !== 'string'
-					) {
-						return React.cloneElement(
-							child as React.ReactElement<any>,
-							{
-								onDragStart: (
-									e: React.DragEvent<HTMLDivElement>
-								) => {
-									e.dataTransfer.setData(
-										'sourceColumnId',
-										colId
-									);
-									if (child.props.onDragStart) {
-										child.props.onDragStart(e);
-									}
-								},
-							}
-						);
+					if (React.isValidElement(child) && typeof child.type !== 'string') {
+						return React.cloneElement(child as React.ReactElement, {
+							onDragStart: (e: React.DragEvent<HTMLDivElement>) => {
+								e.dataTransfer.setData('sourceColumnId', colId);
+								if (child.props.onDragStart) {
+									child.props.onDragStart(e);
+								}
+							},
+						});
 					}
 					return child;
 				})}

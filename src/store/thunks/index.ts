@@ -1,9 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '../index';
-import {
-	deleteBoard,
-	removeColumnIdFromBoard,
-} from '../features/boards/boardSlice';
+import { deleteBoard, removeColumnIdFromBoard } from '../features/boards/boardSlice';
 import {
 	deleteColumn,
 	deleteColumnsForBoard,
@@ -15,44 +12,33 @@ import { createCard, deleteCardsByIds } from '../features/cards/cardSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { Card } from '../types';
 
-export const deleteBoardWithRelated = createAsyncThunk<
-	string,
-	string,
-	{ dispatch: AppDispatch; state: RootState }
->('boards/deleteBoardWithRelated', async (boardId, { dispatch, getState }) => {
-	const state = getState();
+export const deleteBoardWithRelated = createAsyncThunk<string, string, { dispatch: AppDispatch; state: RootState }>(
+	'boards/deleteBoardWithRelated',
+	async (boardId, { dispatch, getState }) => {
+		const state = getState();
 
-	const columnsToDelete = state.columns.columns.filter(
-		(col: { boardId: string }) => col.boardId === boardId
-	);
+		const columnsToDelete = state.columns.columns.filter((col: { boardId: string }) => col.boardId === boardId);
 
-	const cardIdsToDelete = columnsToDelete.flatMap(
-		(col: { cardIds: string[] }) => col.cardIds
-	);
+		const cardIdsToDelete = columnsToDelete.flatMap((col: { cardIds: string[] }) => col.cardIds);
 
-	if (cardIdsToDelete.length > 0) {
-		dispatch(deleteCardsByIds(cardIdsToDelete));
+		if (cardIdsToDelete.length > 0) {
+			dispatch(deleteCardsByIds(cardIdsToDelete));
+		}
+
+		dispatch(deleteColumnsForBoard(boardId));
+		dispatch(deleteBoard(boardId));
+
+		return boardId;
 	}
-
-	dispatch(deleteColumnsForBoard(boardId));
-	dispatch(deleteBoard(boardId));
-
-	return boardId;
-});
+);
 
 // Delete a column and all its cards
-export const deleteColumnWithRelated = createAsyncThunk<
-	string,
-	string,
-	{ dispatch: AppDispatch; state: RootState }
->(
+export const deleteColumnWithRelated = createAsyncThunk<string, string, { dispatch: AppDispatch; state: RootState }>(
 	'columns/deleteColumnWithRelated',
 	async (columnId, { dispatch, getState }) => {
 		const state = getState();
 
-		const column = state.columns.columns.find(
-			(col: { id: string }) => col.id === columnId
-		);
+		const column = state.columns.columns.find((col: { id: string }) => col.id === columnId);
 		if (!column) {
 			throw new Error(`Column with ID ${columnId} not found`);
 		}
@@ -105,11 +91,7 @@ export const createCardInColumn = createAsyncThunk<
 								resolve(reader.result as string);
 							};
 							reader.onerror = () => {
-								reject(
-									new Error(
-										`Failed to read file: ${file.name}`
-									)
-								);
+								reject(new Error(`Failed to read file: ${file.name}`));
 							};
 							reader.readAsDataURL(file);
 						})
@@ -117,9 +99,7 @@ export const createCardInColumn = createAsyncThunk<
 			);
 		} catch (error) {
 			console.error('Failed to process images:', error);
-			imageData = images.map((file) =>
-				typeof file === 'string' ? file : file.name
-			);
+			imageData = images.map((file) => (typeof file === 'string' ? file : file.name));
 		}
 	}
 
@@ -127,8 +107,8 @@ export const createCardInColumn = createAsyncThunk<
 		createCard({
 			...cardDetails,
 			id: cardId,
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
+			createdTimeStamp: new Date().toISOString(),
+			updatedTimeStamp: new Date().toISOString(),
 			images: imageData,
 		})
 	);
@@ -154,8 +134,7 @@ export const moveCardBetweenColumns = createAsyncThunk<
 	{ dispatch: AppDispatch }
 >('cards/moveCardBetweenColumns', async (moveData, { dispatch, getState }) => {
 	const state = getState() as RootState;
-	const { cardId, sourceColumnId, destinationColumnId, destinationIndex } =
-		moveData;
+	const { cardId, sourceColumnId, destinationColumnId, destinationIndex } = moveData;
 
 	dispatch(
 		removeCardIdFromColumn({
@@ -166,10 +145,8 @@ export const moveCardBetweenColumns = createAsyncThunk<
 
 	if (destinationIndex !== undefined) {
 		const destinationColumnCardIds: string[] =
-			state.columns.columns.find(
-				(col: { id: string; cardIds: string[] }) =>
-					col.id === destinationColumnId
-			)?.cardIds || [];
+			state.columns.columns.find((col: { id: string; cardIds: string[] }) => col.id === destinationColumnId)?.cardIds ||
+			[];
 
 		dispatch(
 			reorderColumnCards({

@@ -1,6 +1,5 @@
 import { data } from '../../../data/sample';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import { Column } from '../../types';
 
 interface ColumnState {
@@ -19,27 +18,26 @@ const columnSlice = createSlice({
 	name: 'columns',
 	initialState,
 	reducers: {
-		// Create a new column in a board
-		createColumn: (
-			state,
-			action: PayloadAction<{ title: string; boardId: string }>
-		) => {
-			const { title, boardId } = action.payload;
+		createColumn: (state, action: PayloadAction<{ title: string; boardId: string; id: string }>) => {
+			const { title, id, boardId } = action.payload;
 			const newColumn: Column = {
-				id: uuidv4(),
+				id,
 				title,
 				boardId,
-				cardIds: [],
-				createdAt: new Date().toISOString(),
-				updatedAt: new Date().toISOString(),
+				createdBy: 'user',
+				columnsList: [
+					...state.columns[0].columnsList.map((col) => ({
+						...col,
+						cardIds: [],
+					})),
+				],
+				createdTimeStamp: new Date().toISOString(),
+				updatedTimeStamp: new Date().toISOString(),
 			};
 			state.columns.push(newColumn);
 		},
 
-		updateColumn: (
-			state,
-			action: PayloadAction<Partial<Column> & { id: string }>
-		) => {
+		updateColumn: (state, action: PayloadAction<Partial<Column> & { id: string }>) => {
 			const { id, ...changes } = action.payload;
 			const column = state.columns.find((col) => col.id === id);
 
@@ -50,22 +48,15 @@ const columnSlice = createSlice({
 
 		deleteColumn: (state, action: PayloadAction<string>) => {
 			const columnId = action.payload;
-			state.columns = state.columns.filter(
-				(column) => column.id !== columnId
-			);
+			state.columns = state.columns.filter((column) => column.id !== columnId);
 		},
 
 		deleteColumnsForBoard: (state, action: PayloadAction<string>) => {
 			const boardId = action.payload;
-			state.columns = state.columns.filter(
-				(column) => column.boardId !== boardId
-			);
+			state.columns = state.columns.filter((column) => column.boardId !== boardId);
 		},
 
-		addCardIdToColumn: (
-			state,
-			action: PayloadAction<{ columnId: string; cardId: string }>
-		) => {
+		addCardIdToColumn: (state, action: PayloadAction<{ columnId: string; cardId: string }>) => {
 			const { columnId, cardId } = action.payload;
 			const column = state.columns.find((col) => col.id === columnId);
 
@@ -74,10 +65,7 @@ const columnSlice = createSlice({
 			}
 		},
 
-		removeCardIdFromColumn: (
-			state,
-			action: PayloadAction<{ columnId: string; cardId: string }>
-		) => {
+		removeCardIdFromColumn: (state, action: PayloadAction<{ columnId: string; cardId: string }>) => {
 			const { columnId, cardId } = action.payload;
 			const column = state.columns.find((col) => col.id === columnId);
 
@@ -86,18 +74,13 @@ const columnSlice = createSlice({
 			}
 		},
 
-		reorderColumnCards: (
-			state,
-			action: PayloadAction<{ columnId: string; cardIds: string[] }>
-		) => {
+		reorderColumnCards: (state, action: PayloadAction<{ columnId: string; cardIds: string[] }>) => {
 			const { columnId, cardIds } = action.payload;
 			const column = state.columns.find((col) => col.id === columnId);
 
 			if (column) {
 				// Verify that we're only reordering existing cards
-				const validCardIds = cardIds.filter((id) =>
-					column.cardIds.includes(id)
-				);
+				const validCardIds = cardIds.filter((id) => column.cardIds.includes(id));
 				if (validCardIds.length === column.cardIds.length) {
 					column.cardIds = validCardIds;
 				}

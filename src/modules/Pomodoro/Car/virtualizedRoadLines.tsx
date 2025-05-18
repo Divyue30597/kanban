@@ -38,10 +38,7 @@ const VirtualizedRoadLines = memo(function VirtualizedRoadLines({
 
 		requestAnimationFrame(() => {
 			if (roadRef.current) {
-				roadRef.current.style.setProperty(
-					'--pattern-offset',
-					`-${patternOffset}px`
-				);
+				roadRef.current.style.setProperty('--pattern-offset', `-${patternOffset}px`);
 			}
 		});
 	}, [elapsedSeconds, lineTotal, animationSpeed]);

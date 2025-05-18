@@ -80,43 +80,25 @@ function FormInput(props: FormInputProps) {
 		<div className={styles.input}>
 			<label htmlFor={id}>{label}</label>
 			{renderInput()}
-			{infoMessage && (
-				<span className={styles.infoMessage}>{infoMessage}</span>
-			)}
-			{errorMessage && (
-				<span className={styles.error}>{errorMessage}</span>
-			)}
+			{infoMessage && <span className={styles.infoMessage}>{infoMessage}</span>}
+			{errorMessage && <span className={styles.error}>{errorMessage}</span>}
 		</div>
 	);
 }
 
-function Input() {
+function Input() {}
 
-}
+function TextArea() {}
 
-function TextArea() {
+function Checkbox() {}
 
-}
+function Radio() {}
 
-function Checkbox() {
+function Select() {}
 
-}
+function FileInput() {}
 
-function Radio() {
-
-}
-
-function Select() {
-
-}
-
-function FileInput() {
-
-}
-
-function DateInput() {
-
-}
+function DateInput() {}
 
 FormInput.Input = Input;
 FormInput.TextArea = TextArea;

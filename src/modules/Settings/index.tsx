@@ -10,10 +10,7 @@ export default function Settings() {
 			<h1>Settings</h1>
 			<div className={styles.settings}>
 				{SETTINGS.map((setting) => (
-					<Link
-						to={`/settings/${setting.name.toLowerCase()}`}
-						key={setting.name}
-					>
+					<Link to={`/settings/${setting.name.toLowerCase()}`} key={setting.name}>
 						<Box className={styles.setting} key={setting.name}>
 							<div className={styles.icon}>{setting.icon}</div>
 							<h3>{setting.name}</h3>

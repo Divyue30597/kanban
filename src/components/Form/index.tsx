@@ -28,8 +28,7 @@ const formInputs: FormInputProps[] = [
 		minLength: 10,
 		maxLength: 200,
 		required: true,
-		placeholder:
-			"e.g. Create wireframes and high-fidelity designs for the app's main screens.",
+		placeholder: "e.g. Create wireframes and high-fidelity designs for the app's main screens.",
 		name: 'description',
 		errorMessage: 'Description is required.',
 		value: '',
@@ -108,9 +107,7 @@ function Form() {
 		columnId: '',
 	});
 
-	const handleChange = (
-		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => {
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value, type } = event.target;
 
 		const isFileInput = type === 'file';
@@ -126,9 +123,7 @@ function Form() {
 			return;
 		}
 		if (name === 'subTasks') {
-			const subtaskTitles = value
-				? value.split(',').map((title) => title.trim())
-				: [];
+			const subtaskTitles = value ? value.split(',').map((title) => title.trim()) : [];
 			const subtasks = subtaskTitles.map((title) => ({
 				title,
 				done: false,
@@ -194,17 +189,7 @@ function Form() {
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
 			{formInputs.map((input) => {
-				const {
-					id,
-					label,
-					type,
-					required,
-					placeholder,
-					name,
-					errorMessage,
-					value: inputValue,
-					...rest
-				} = input;
+				const { id, label, type, required, placeholder, name, errorMessage, value: inputValue, ...rest } = input;
 
 				let displayValue = formState[name as keyof FormState];
 				if (name === 'subTasks' && Array.isArray(displayValue)) {

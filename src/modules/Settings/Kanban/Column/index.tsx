@@ -1,4 +1,5 @@
 import styles from './columnSettings.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 import FormInput from '../../../../components/FormInput';
 import { useEffect, useState } from 'react';
 import BoardDropDown from '../../../../components/BoardDropDown';
@@ -8,10 +9,8 @@ import { Board, Column } from '../../../../store/types';
 import { SVG } from '../../../../SVG';
 import { useAppDispatch } from '../../../../store/hooks';
 import { deleteColumnWithRelated } from '../../../../store/thunks';
-import {
-	createColumn,
-	updateColumn,
-} from '../../../../store/features/column/columnSlice';
+import { createColumn, updateColumn } from '../../../../store/features/column/columnSlice';
+import { addColumnIdToBoard } from '../../../../store/features/boards/boardSlice';
 
 const COLUMN_INPUT = [
 	{
@@ -40,19 +39,14 @@ function UpdateForm({ isUpdating = false }) {
 	const dispatch = useAppDispatch();
 
 	const [formState, setFormState] = useState({
+		id: '',
 		title: '',
 	});
 
-	const [board, setBoard] = useState<Board | string>(
-		isUpdating ? 'Pick a board' : 'Board'
-	);
-	const [columnId, setColumnId] = useState<Column | string>(
-		isUpdating ? 'update a column' : 'Column'
-	);
+	const [board, setBoard] = useState<Board | string>(isUpdating ? 'Pick a board' : 'Board');
+	const [columnId, setColumnId] = useState<Column | string>(isUpdating ? 'update a column' : 'Column');
 
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setFormState((prev) => ({
 			...prev,
@@ -73,11 +67,25 @@ function UpdateForm({ isUpdating = false }) {
 		e.preventDefault();
 		if (updating) {
 			dispatch(
-				updateColumn({ ...formState, id: (columnId as Column).id })
+				updateColumn({
+					...formState,
+					id: (columnId as Column).id,
+					boardId: (board as Board).id,
+				})
+			);
+			dispatch(
+				addColumnIdToBoard({
+					boardId: (board as Board).id,
+					columnId: (columnId as Column).id,
+				})
 			);
 		} else {
+			dispatch(createColumn({ ...formState, boardId: (board as Board).id }));
 			dispatch(
-				createColumn({ ...formState, boardId: (board as Board).id })
+				addColumnIdToBoard({
+					boardId: (board as Board).id,
+					columnId: formState.id,
+				})
 			);
 		}
 	};
@@ -85,10 +93,12 @@ function UpdateForm({ isUpdating = false }) {
 	useEffect(() => {
 		if (updating) {
 			setFormState({
+				id: (columnId as Column).id,
 				title: updating ? (columnId as Column).title : '',
 			});
 		} else {
 			setFormState({
+				id: uuidv4(),
 				title: '',
 			});
 		}
@@ -99,39 +109,20 @@ function UpdateForm({ isUpdating = false }) {
 			<div className={styles.formHeader}>
 				{isUpdating ? (
 					<>
-						<BoardDropDown
-							activeBoard={board}
-							setActiveBoard={setBoard}
-						/>
+						<BoardDropDown activeBoard={board} setActiveBoard={setBoard} />
 						<h3>to</h3>
-						<ColumnDropDown
-							boardId={board && (board as Board).id}
-							columnId={columnId}
-							setColumnId={setColumnId}
-						/>
+						<ColumnDropDown boardId={board && (board as Board).id} columnId={columnId} setColumnId={setColumnId} />
 					</>
 				) : (
 					<>
 						<h3>Add Column to</h3>
-						<BoardDropDown
-							activeBoard={board}
-							setActiveBoard={setBoard}
-						/>
+						<BoardDropDown activeBoard={board} setActiveBoard={setBoard} />
 					</>
 				)}
 			</div>
 			<div className={styles.formBody}>
 				{COLUMN_INPUT.map((input) => {
-					const {
-						id,
-						name,
-						label,
-						type,
-						required,
-						pattern,
-						placeholder,
-						errorMessage,
-					} = input;
+					const { id, name, label, type, required, pattern, placeholder, errorMessage } = input;
 					return (
 						<FormInput
 							label={label}
@@ -151,7 +142,7 @@ function UpdateForm({ isUpdating = false }) {
 			<Button
 				type="submit"
 				className={isUpdating ? styles.updateSubmitBtn : ''}
-				disabled={!updating}
+				disabled={(!updating && (board === 'Pick a board' || board === 'Board')) || columnId === 'update a column'}
 			>
 				{!isUpdating ? 'Submit' : 'Update'}
 			</Button>
@@ -160,9 +151,7 @@ function UpdateForm({ isUpdating = false }) {
 }
 
 function DeleteColumn() {
-	const [deleteBoard, setDeleteBoard] = useState<Board | string>(
-		'Pick a board'
-	);
+	const [deleteBoard, setDeleteBoard] = useState<Board | string>('Pick a board');
 
 	const [deleteColumn, setDeleteColumn] = useState<Column | string>('column');
 
@@ -177,10 +166,7 @@ function DeleteColumn() {
 	return (
 		<div className={styles.deleteCol}>
 			<div className={styles.deleteColBody}>
-				<BoardDropDown
-					activeBoard={deleteBoard}
-					setActiveBoard={setDeleteBoard}
-				/>
+				<BoardDropDown activeBoard={deleteBoard} setActiveBoard={setDeleteBoard} />
 				<h3>to delete a</h3>
 				<ColumnDropDown
 					boardId={deleteBoard && (deleteBoard as Board).id}
@@ -189,16 +175,13 @@ function DeleteColumn() {
 				/>
 			</div>
 			<p className={styles.deleteAlert}>
-				<SVG.alert /> Deleting a column will delete all it's cards.{' '}
-				<br />
+				<SVG.alert /> Deleting a column will delete all it's cards. <br />
 				This action is not reversible. Proceed with caution.
 			</p>
 			<Button
 				type="button"
 				onClick={handleDelete}
-				disabled={
-					deleteBoard === 'Pick a board' || deleteColumn === 'column'
-				}
+				disabled={deleteBoard === 'Pick a board' || deleteColumn === 'column'}
 				className={styles.deleteBtn}
 			>
 				Delete

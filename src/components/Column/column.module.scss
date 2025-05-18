@@ -6,11 +6,11 @@
 		// background-color: var(--tertiary-background);
 		text-transform: uppercase;
 		width: fit-content;
-		
+
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
-		
+
 		& > span {
 			background-color: #777777;
 			color: var(--text-color);
@@ -18,7 +18,7 @@
 			font-size: 1.2rem;
 			border-radius: calc(var(--border-radius) / 2);
 		}
-		
+
 		background-color: var(--tertiary-background);
 		padding: 0.6rem 1.2rem;
 		margin-inline: 1.4rem;

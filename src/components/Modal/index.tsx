@@ -1,10 +1,4 @@
-import React, {
-	createContext,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.scss';
 import { SVG } from '../../SVG';
@@ -41,10 +35,7 @@ const ModalComponent = ({ isOpen, onClose, children }: ModalProps) => {
 
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent) => {
-			if (
-				modalRef.current &&
-				!modalRef.current.contains(event.target as Node)
-			) {
+			if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
 				onClose();
 			}
 		};
@@ -81,21 +72,9 @@ const ModalComponent = ({ isOpen, onClose, children }: ModalProps) => {
 	if (!shouldRender) return null;
 
 	return ReactDOM.createPortal(
-		<div
-			className={`${styles.modalOverlay} ${
-				isAnimating ? styles.visible : styles.hidden
-			}`}
-			id='modal-overlay'
-		>
-			<div
-				className={`${styles.modalContainer} ${
-					isAnimating ? styles.visible : styles.hidden
-				}`}
-				ref={modalRef}
-			>
-				<ModalContext.Provider value={{ isOpen, close: onClose }}>
-					{children}
-				</ModalContext.Provider>
+		<div className={`${styles.modalOverlay} ${isAnimating ? styles.visible : styles.hidden}`} id="modal-overlay">
+			<div className={`${styles.modalContainer} ${isAnimating ? styles.visible : styles.hidden}`} ref={modalRef}>
+				<ModalContext.Provider value={{ isOpen, close: onClose }}>{children}</ModalContext.Provider>
 			</div>
 		</div>,
 		document.body
@@ -107,21 +86,14 @@ interface ModalHeaderProps {
 	showCloseButton?: boolean;
 }
 
-const ModalHeader = ({
-	children,
-	showCloseButton = true,
-}: ModalHeaderProps) => {
+const ModalHeader = ({ children, showCloseButton = true }: ModalHeaderProps) => {
 	const { close } = useContext(ModalContext);
 
 	return (
 		<div className={styles.modalHeader}>
 			<div className={styles.modalTitle}>{children}</div>
 			{showCloseButton && (
-				<button
-					className={styles.closeButton}
-					onClick={close}
-					aria-label="Close modal"
-				>
+				<button className={styles.closeButton} onClick={close} aria-label="Close modal">
 					<SVG.cross />
 				</button>
 			)}
@@ -133,17 +105,13 @@ interface ModalBodyProps {
 	children: React.ReactNode;
 }
 
-const ModalBody = ({ children }: ModalBodyProps) => (
-	<div className={styles.modalBody}>{children}</div>
-);
+const ModalBody = ({ children }: ModalBodyProps) => <div className={styles.modalBody}>{children}</div>;
 
 interface ModalFooterProps {
 	children: React.ReactNode;
 }
 
-const ModalFooter = ({ children }: ModalFooterProps) => (
-	<div className={styles.modalFooter}>{children}</div>
-);
+const ModalFooter = ({ children }: ModalFooterProps) => <div className={styles.modalFooter}>{children}</div>;
 
 type ModalType = React.FC<ModalProps> & {
 	Header: React.FC<ModalHeaderProps>;

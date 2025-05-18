@@ -17,18 +17,8 @@ export default function CheckboxWithText(props: CheckboxWithTextProps) {
 	};
 
 	return (
-		<div
-			className={
-				styles.checkboxWithText + (className ? ` ${className}` : '')
-			}
-		>
-			<input
-				{...rest}
-				type="checkbox"
-				checked={checked}
-				id={id}
-				onChange={handleChange}
-			/>
+		<div className={styles.checkboxWithText + (className ? ` ${className}` : '')}>
+			<input {...rest} type="checkbox" checked={checked} id={id} onChange={handleChange} />
 			<label htmlFor={id}>{label}</label>
 		</div>
 	);

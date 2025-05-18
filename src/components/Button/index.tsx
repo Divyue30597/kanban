@@ -10,12 +10,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 	const { children, icon, className, type, ...rest } = props;
 
 	return (
-		<button
-			ref={ref}
-			type={type || 'button'}
-			className={`${styles.button} ${className || ''}`.trim()}
-			{...rest}
-		>
+		<button ref={ref} type={type || 'button'} className={`${styles.button} ${className || ''}`.trim()} {...rest}>
 			{children}
 			{icon && <span className={styles.icon}>{icon}</span>}
 		</button>

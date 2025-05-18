@@ -19,16 +19,15 @@ import { useDragAndDrop } from './hooks/useDragAndDrop';
 import styles from './styles.module.scss';
 
 function Board() {
-	const { handleCardMouseDown, handleCardTouchStart, isDragging } =
-		useDragAndDrop({
-			onCardMove: (cardId, sourceColumnId, targetColumnId) => {
-				// Handle card movement logic here
-			},
-			dropTargetClassName: styles.validDropTarget,
-			invalidDropTargetClassName: styles.invalidDropTarget,
-			boundaryRef: boardContentRef,
-			allowBackwardMovement: false, // Only allow cards to move forward
-		});
+	const { handleCardMouseDown, handleCardTouchStart, isDragging } = useDragAndDrop({
+		onCardMove: (cardId, sourceColumnId, targetColumnId) => {
+			// Handle card movement logic here
+		},
+		dropTargetClassName: styles.validDropTarget,
+		invalidDropTargetClassName: styles.invalidDropTarget,
+		boundaryRef: boardContentRef,
+		allowBackwardMovement: false, // Only allow cards to move forward
+	});
 
 	return (
 		<div ref={boardContentRef}>
@@ -40,12 +39,8 @@ function Board() {
 							<div
 								key={card.id}
 								data-card-id={card.id}
-								onMouseDown={(e) =>
-									handleCardMouseDown(e, card)
-								}
-								onTouchStart={(e) =>
-									handleCardTouchStart(e, card)
-								}
+								onMouseDown={(e) => handleCardMouseDown(e, card)}
+								onTouchStart={(e) => handleCardTouchStart(e, card)}
 							>
 								{card.title}
 							</div>

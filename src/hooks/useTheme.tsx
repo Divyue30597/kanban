@@ -6,9 +6,7 @@ export function useTheme() {
 	const [theme, setThemeState] = useState<Theme>('dark');
 
 	const getSystemTheme = (): Theme => {
-		return window.matchMedia('(prefers-color-scheme: dark)').matches
-			? 'dark'
-			: 'light';
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 	};
 
 	useEffect(() => {
@@ -47,9 +45,7 @@ export function useTheme() {
 		localStorage.setItem('theme', newTheme);
 
 		// Update meta color-scheme
-		const metaColorScheme = document.querySelector(
-			'meta[name="color-scheme"]'
-		);
+		const metaColorScheme = document.querySelector('meta[name="color-scheme"]');
 		if (metaColorScheme) {
 			metaColorScheme.setAttribute('content', newTheme);
 		}

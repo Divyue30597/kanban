@@ -10,12 +10,12 @@
 	.road__lines-container {
 		position: absolute;
 		display: flex;
-		width: 200%; 
+		width: 200%;
 		animation: lineMovement var(--animation-duration) linear infinite;
 		top: calc(100% / 2.5);
 		left: 0;
 		z-index: 0;
-		will-change: transform; 
+		will-change: transform;
 	}
 
 	.road__line {
@@ -30,10 +30,7 @@
 		top: -10rem;
 		left: var(--progress);
 		z-index: 2;
-		transform: scale(
-			-1,
-			1
-		);
+		transform: scale(-1, 1);
 	}
 }
 

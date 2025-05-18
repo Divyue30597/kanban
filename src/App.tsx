@@ -22,7 +22,6 @@ function App() {
 	const navigate = useNavigate();
 
 	const { data } = useAppSelector((state) => state.themeGenerator);
-	console.log('Theme data:', data);
 	useEffect(() => {
 		if (data !== null && data !== undefined) {
 			const cssBlock = data?.data
@@ -37,8 +36,7 @@ function App() {
 			const fontFamilyMatch = cssBlock.match(/--font-family:\s*([^;]+);/);
 			if (fontFamilyMatch && fontFamilyMatch[1]) {
 				const fontFamily = fontFamilyMatch[1].trim();
-				const firstFont =
-					fontFamily.match(/['"]?([^,'"]+)['"]?/)?.[1] || '';
+				const firstFont = fontFamily.match(/['"]?([^,'"]+)['"]?/)?.[1] || '';
 				const link = document.createElement('link');
 				link.rel = 'stylesheet';
 				link.href = `https://fonts.googleapis.com/css?family=${encodeURIComponent(firstFont)}:400,700&display=swap`;
@@ -99,26 +97,11 @@ function App() {
 					<Route path="/calendar" element={<Calendar />} />
 					<Route path="/subscriptions" element={<Subscriptions />} />
 					<Route path="/settings" element={<Settings />}>
-						<Route
-							path="/settings/kanban"
-							element={<KanbanSettings />}
-						/>
-						<Route
-							path="/settings/notes"
-							element={<NotesSettings />}
-						/>
-						<Route
-							path="/settings/calendar"
-							element={<CalendarSettings />}
-						/>
-						<Route
-							path="/settings/pomodoro"
-							element={<PomodoroSettings />}
-						/>
-						<Route
-							path="/settings/subscriptions"
-							element={<SubscriptionsSettings />}
-						/>
+						<Route path="/settings/kanban" element={<KanbanSettings />} />
+						<Route path="/settings/notes" element={<NotesSettings />} />
+						<Route path="/settings/calendar" element={<CalendarSettings />} />
+						<Route path="/settings/pomodoro" element={<PomodoroSettings />} />
+						<Route path="/settings/subscriptions" element={<SubscriptionsSettings />} />
 					</Route>
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/help" element={<Help />} />

@@ -9,7 +9,7 @@
 
 .topNavContent {
 	width: calc(100dvw * 0.85);
- 	display: flex;
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 
@@ -34,8 +34,6 @@
 	padding: 0.6rem;
 }
 
-
-
 .themeBtn {
 	background: transparent;
 	color: var(--primary-text-color);
@@ -52,10 +50,10 @@
 		color: var(--primary-text-color);
 		border-color: var(--border-color);
 	}
-	
+
 	&:active {
 		outline: 0.1rem solid var(--border-color);
-	} 
+	}
 }
 
 .themeBtnDropdown {

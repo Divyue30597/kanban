@@ -1,32 +1,31 @@
 .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100dvh;
-    width: 100dvw;
-    background-color: #f0f0f020;
-    backdrop-filter: blur(1.2rem);
-    top: 0;
-    left: 0;
-    position: fixed;
-    z-index: 9999999;
-    font-size: 1.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100dvh;
+	width: 100dvw;
+	background-color: #f0f0f020;
+	backdrop-filter: blur(1.2rem);
+	top: 0;
+	left: 0;
+	position: fixed;
+	z-index: 9999999;
+	font-size: 1.6rem;
 
-    & > svg {
-        width: 2.4rem;
-        height: 2.4rem;
-        margin-right: 0.6rem;
+	& > svg {
+		width: 2.4rem;
+		height: 2.4rem;
+		margin-right: 0.6rem;
 
-        animation: rotate 1.5s linear infinite;
-    }
+		animation: rotate 1.5s linear infinite;
+	}
 }
 
 @keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
-

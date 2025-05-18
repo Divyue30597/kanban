@@ -44,10 +44,7 @@ const Car = memo(function Car({ timer = 25, isRunning }: CarProps) {
 				elapsedRef.current += delta;
 
 				// Calculate and set progress percentage
-				const newProgress = Math.min(
-					(elapsedRef.current / initialTime) * 100,
-					100
-				);
+				const newProgress = Math.min((elapsedRef.current / initialTime) * 100, 100);
 				setProgress(newProgress);
 			}
 
@@ -70,10 +67,7 @@ const Car = memo(function Car({ timer = 25, isRunning }: CarProps) {
 	}, [timer, isRunning?.pomodoro]);
 
 	return (
-		<div
-			className="road"
-			style={{ '--progress': `${progress}%` } as React.CSSProperties}
-		>
+		<div className="road" style={{ '--progress': `${progress}%` } as React.CSSProperties}>
 			<img
 				src={isRunning?.pomodoro ? car_driving : car_stopped}
 				alt="a car running"

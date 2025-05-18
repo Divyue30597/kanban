@@ -1,136 +1,136 @@
 .calendar {
-    box-shadow: var(--box-shadow);
-    border-radius: var(--border-radius);
-    height: calc(100dvh - 11.8rem);
+	box-shadow: var(--box-shadow);
+	border-radius: var(--border-radius);
+	height: calc(100dvh - 11.8rem);
 
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 .calendarHeader {
-    position: sticky;
-    top: 0;
+	position: sticky;
+	top: 0;
 }
 
 .calendarHeaderBody {
-    padding: 1.4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    background-color: var(--secondary-background);
+	padding: 1.4rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2rem;
+	background-color: var(--secondary-background);
 }
 
 .calendarTitleContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
 }
 
 .calendarButtons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
 
-    & > button > svg {
-        width: 2rem;
-        height: 2rem;
-    }
+	& > button > svg {
+		width: 2rem;
+		height: 2rem;
+	}
 }
 
 .calendarTitle {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-text-color);
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--primary-text-color);
 
-    text-align: center;
+	text-align: center;
 }
 
 .weekDays {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 
-    text-align: center;
+	text-align: center;
 
-    background-color: var(--secondary-background);
-    border-top: 0.1rem solid var(--border-color);
-    border-bottom: 0.1rem solid var(--border-color);
+	background-color: var(--secondary-background);
+	border-top: 0.1rem solid var(--border-color);
+	border-bottom: 0.1rem solid var(--border-color);
 }
 
 .weekRow {
-    display: flex;
-    justify-content: space-between;
-    height: calc((100dvh - 21.5rem) / 5);
+	display: flex;
+	justify-content: space-between;
+	height: calc((100dvh - 21.5rem) / 5);
 
-    &:not(:last-child) {
-        border-bottom: 0.1rem solid var(--border-color);
-    }
+	&:not(:last-child) {
+		border-bottom: 0.1rem solid var(--border-color);
+	}
 }
 
 .weekDay {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary-text-color);
-    width: 100%;
-    padding: 0.8rem;
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: var(--primary-text-color);
+	width: 100%;
+	padding: 0.8rem;
 
-    &:not(:last-child) {
-        border-right: 0.1rem solid var(--border-color);
-    }
+	&:not(:last-child) {
+		border-right: 0.1rem solid var(--border-color);
+	}
 }
 
 .emptyDay {
-    color: var(--secondary-text-color);
-    background-color: var(--secondary-background);
+	color: var(--secondary-text-color);
+	background-color: var(--secondary-background);
 }
 
 .emptyDay,
 .day {
-    padding: 0.8rem;
-    width: 100%;
-    font-weight: 700;
-    &:not(:last-child) {
-        border-right: 0.1rem solid var(--border-color);
-    }
+	padding: 0.8rem;
+	width: 100%;
+	font-weight: 700;
+	&:not(:last-child) {
+		border-right: 0.1rem solid var(--border-color);
+	}
 }
 
 .day {
-    & > p {
-        padding: 0.4rem;
-        font-size: 1.2rem;
-        width: fit-content;
-        text-align: right;
-    }
+	& > p {
+		padding: 0.4rem;
+		font-size: 1.2rem;
+		width: fit-content;
+		text-align: right;
+	}
 }
 
 .today {
-    background-color: var(--primary-color);
-    border-radius: var(--border-radius);
-    color: var(--text-color);
+	background-color: var(--primary-color);
+	border-radius: var(--border-radius);
+	color: var(--text-color);
 }
 
 .activeWeeks {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
+	display: flex;
+	justify-content: space-between;
+	height: 100%;
 }
 
 .activeWeek {
-    width: 100%;
-    height: 100%;
-    padding: 0.8rem;
+	width: 100%;
+	height: 100%;
+	padding: 0.8rem;
 
-    &:not(:last-child) {
-        border-right: 0.1rem solid var(--border-color);
-    }
+	&:not(:last-child) {
+		border-right: 0.1rem solid var(--border-color);
+	}
 }
 
 .activeWeekDay {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text-color);
-    background-color: var(--primary-color);
-    padding: 0 0.8rem;
-    border-radius: var(--border-radius);
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: var(--text-color);
+	background-color: var(--primary-color);
+	padding: 0 0.8rem;
+	border-radius: var(--border-radius);
 }

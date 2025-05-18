@@ -21,30 +21,32 @@ function LeftNav() {
 			icon: <SVG.subscriptions />,
 			path: '/subscriptions',
 		},
-		{ title: 'Settings', icon: <SVG.settings />, path: '/settings' },
+		{ title: 'Timeline', icon: <SVG.timeline />, path: '/timeline' },
+		{ title: 'Backlog', icon: <SVG.backlog />, path: '/backlog' },
 	];
 
 	const bottomItems = [
-		{ title: 'Profile', icon: <SVG.profile />, path: '/profile' },
+		{ title: 'Settings', icon: <SVG.settings />, path: '/settings' },
 		{ title: 'Help', icon: <SVG.help />, path: '/help' },
 		{ title: 'Logout', icon: <SVG.logout />, path: '/' },
 	];
 
-	const handleKeyDown = useCallback((event: KeyboardEvent) => {
-		if (
-			event.target instanceof HTMLElement &&
-			(event.target.tagName === 'INPUT' ||
-				event.target.tagName === 'TEXTAREA' ||
-				event.target.isContentEditable)
-		) {
-			return;
-		}
+	const handleKeyDown = useCallback(
+		(event: KeyboardEvent) => {
+			if (
+				event.target instanceof HTMLElement &&
+				(event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.isContentEditable)
+			) {
+				return;
+			}
 
-		if (event.key === ' ' || event.code === 'Space') {
-			event.preventDefault();
-			toggleExpand();
-		}
-	}, [toggleExpand]);
+			if (event.key === ' ' || event.code === 'Space') {
+				event.preventDefault();
+				toggleExpand();
+			}
+		},
+		[toggleExpand]
+	);
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -54,22 +56,9 @@ function LeftNav() {
 	}, [expanded, handleKeyDown]);
 
 	return (
-		<nav
-			className={
-				styles.leftNav +
-				(expanded ? ` ${styles.expanded}` : ` ${styles.collapse}`)
-			}
-		>
-			<button
-				type="button"
-				className={styles.toggle_button}
-				onClick={toggleExpand}
-			>
-				<SVG.chevronRight
-					className={
-						expanded ? styles.chevronLeft : styles.chevronRight
-					}
-				/>
+		<nav className={styles.leftNav + (expanded ? ` ${styles.expanded}` : ` ${styles.collapse}`)}>
+			<button type="button" className={styles.toggle_button} onClick={toggleExpand}>
+				<SVG.chevronRight className={expanded ? styles.chevronLeft : styles.chevronRight} />
 			</button>
 			<div className={styles.logo}>
 				<span>KN</span>
@@ -79,18 +68,12 @@ function LeftNav() {
 				<div>
 					<ul className={styles.leftNavListGroup}>
 						{menuItems.map((item, index) => (
-							<ListItem
-								key={index}
-								item={item}
-								expanded={expanded}
-							/>
+							<ListItem key={index} item={item} expanded={expanded} />
 						))}
 					</ul>
 				</div>
 				<ul className={styles.leftNavListGroup}>
-					{bottomItems?.map((item, index) => (
-						<ListItem key={index} item={item} expanded={expanded} />
-					))}
+					{bottomItems?.map((item, index) => <ListItem key={index} item={item} expanded={expanded} />)}
 				</ul>
 			</div>
 		</nav>

@@ -3,10 +3,7 @@ import boardReducer from './features/boards/boardSlice';
 import columnReducer from './features/column/columnSlice';
 import cardReducer from './features/cards/cardSlice';
 import themeGeneratorReducer from './features/themeGenerator/themeGeneratorSlice';
-import {
-	localStorageMiddleware,
-	loadStateFromLocalStorage,
-} from './middleware/localStorageMiddleware';
+import { localStorageMiddleware, loadStateFromLocalStorage } from './middleware/localStorageMiddleware';
 
 const preloadedState = loadStateFromLocalStorage();
 
@@ -20,8 +17,7 @@ const rootReducer = combineReducers({
 const store = configureStore({
 	reducer: rootReducer,
 	preloadedState,
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(localStorageMiddleware),
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

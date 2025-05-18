@@ -2,9 +2,7 @@ export function getTagColors(tag: string): {
 	backgroundColor: string;
 	color: string;
 } {
-	const hash = tag
-		.split('')
-		.reduce((acc, char) => acc + char.charCodeAt(0), 0);
+	const hash = tag.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
 
 	const hue = hash % 360;
 	const saturation = 70; // Pastel-ish

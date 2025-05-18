@@ -70,11 +70,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 	return (
 		<div className={`${styles.dropdownWrapper} ${className}`}>
-			<div
-				ref={triggerRef}
-				className={styles.trigger}
-				onClick={toggleDropdown}
-			>
+			<div ref={triggerRef} className={styles.trigger} onClick={toggleDropdown}>
 				{trigger}
 			</div>
 

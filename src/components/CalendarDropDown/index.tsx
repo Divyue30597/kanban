@@ -16,9 +16,7 @@ function CalendarDropDown(props: CalendarDropDownProps) {
 		<Dropdown
 			className={styles.dropdownBtn}
 			placement="bottom-right"
-			trigger={
-				<Button icon={<SVG.chevronDown />}>{calendarMode.title}</Button>
-			}
+			trigger={<Button icon={<SVG.chevronDown />}>{calendarMode.title}</Button>}
 		>
 			{calendarModes?.map((mode) => (
 				<button

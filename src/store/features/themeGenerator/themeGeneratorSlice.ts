@@ -4,14 +4,11 @@ export const generateTheme = createAsyncThunk(
 	'themeGenerator/generateTheme',
 	async (prompt: string, { rejectWithValue }) => {
 		try {
-			const response = await fetch(
-				`${import.meta.env.VITE_BACKEND_URL}/generate-theme`,
-				{
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ prompt }),
-				}
-			);
+			const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/generate-theme`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ prompt }),
+			});
 			if (!response.ok) throw new Error('Failed to generate theme');
 			return await response.json();
 		} catch (err: Error | unknown | any) {

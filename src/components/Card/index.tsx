@@ -20,8 +20,7 @@ export default function Card(props: CardType) {
 
 	const cardData = useAppSelector((state) => selectCardById(state, id));
 
-	const { title, description, subTasks, tags, links, images } =
-		cardData || {};
+	const { title, description, subTasks, tags, links, images } = cardData || {};
 
 	const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
 		e.dataTransfer.setData('cardId', id);
@@ -69,12 +68,7 @@ function renderSubTasks(props: { subTasks?: Subtask[]; cardId: string }) {
 			{subTasks?.map((subTask, index) => {
 				return (
 					<div className={styles.subTask} key={index}>
-						<CheckboxWithText
-							label={subTask.title}
-							checked={subTask.done}
-							cardId={cardId}
-							index={index}
-						/>
+						<CheckboxWithText label={subTask.title} checked={subTask.done} cardId={cardId} index={index} />
 					</div>
 				);
 			})}

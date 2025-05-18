@@ -82,10 +82,7 @@ function TopNav() {
 							<Dropdown
 								placement="bottom-right"
 								trigger={
-									<Button
-										className={styles.dropdownBtn}
-										icon={<SVG.chevronDown />}
-									>
+									<Button className={styles.dropdownBtn} icon={<SVG.chevronDown />}>
 										{title || 'Pick a board'}
 									</Button>
 								}

@@ -21,10 +21,7 @@ const boardSlice = createSlice({
 	name: 'boards',
 	initialState,
 	reducers: {
-		createBoard: (
-			state,
-			action: PayloadAction<Omit<Board, 'id' | 'columnIds'>>
-		) => {
+		createBoard: (state, action: PayloadAction<Omit<Board, 'id' | 'columnIds'>>) => {
 			const newBoard: Board = {
 				id: uuidv4(),
 				...action.payload,
@@ -36,10 +33,7 @@ const boardSlice = createSlice({
 			state?.boards?.push(newBoard);
 		},
 
-		updateBoard: (
-			state,
-			action: PayloadAction<Partial<Board> & { id: string }>
-		) => {
+		updateBoard: (state, action: PayloadAction<Partial<Board> & { id: string }>) => {
 			const { id, ...changes } = action.payload;
 			const board = state.boards.find((board) => board.id === id);
 
@@ -65,10 +59,7 @@ const boardSlice = createSlice({
 			}
 		},
 
-		addColumnIdToBoard: (
-			state,
-			action: PayloadAction<{ boardId: string; columnId: string }>
-		) => {
+		addColumnIdToBoard: (state, action: PayloadAction<{ boardId: string; columnId: string }>) => {
 			const { boardId, columnId } = action.payload;
 			const board = state.boards.find((board) => board.id === boardId);
 
@@ -77,17 +68,12 @@ const boardSlice = createSlice({
 			}
 		},
 
-		removeColumnIdFromBoard: (
-			state,
-			action: PayloadAction<{ boardId: string; columnId: string }>
-		) => {
+		removeColumnIdFromBoard: (state, action: PayloadAction<{ boardId: string; columnId: string }>) => {
 			const { boardId, columnId } = action.payload;
 			const board = state.boards.find((board) => board.id === boardId);
 
 			if (board) {
-				board.columnIds = board.columnIds.filter(
-					(id) => id !== columnId
-				);
+				board.columnIds = board.columnIds.filter((id) => id !== columnId);
 			}
 		},
 

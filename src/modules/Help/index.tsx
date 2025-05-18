@@ -62,20 +62,14 @@ function Help() {
 			<h1>Help</h1>
 			<div className={styles.helpContent}>
 				{SHORTCUTS.map((shortcut) => (
-					<Box
-						className={styles.helpBox}
-						key={shortcut.featureName.toLowerCase()}
-					>
+					<Box className={styles.helpBox} key={shortcut.featureName.toLowerCase()}>
 						<h3>{shortcut.featureName}</h3>
 						{shortcut.shortcuts.map((item) => (
 							<div className={styles.table} key={item.id}>
 								<kbd key={item.id} className={styles.key}>
 									{item.key.map((k: string, index) => (
 										<span>
-											{k}{' '}
-											{item.key.length > 0 &&
-												index !== item.key.length - 1 &&
-												'+ '}
+											{k} {item.key.length > 0 && index !== item.key.length - 1 && '+ '}
 										</span>
 									))}
 								</kbd>

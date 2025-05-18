@@ -22,10 +22,7 @@ const cardSlice = createSlice({
 			state.cards.push(action.payload);
 		},
 
-		updateCard: (
-			state,
-			action: PayloadAction<Partial<Card> & { id: string }>
-		) => {
+		updateCard: (state, action: PayloadAction<Partial<Card> & { id: string }>) => {
 			const { id, ...changes } = action.payload;
 			const card = state.cards.find((card) => card.id === id);
 
@@ -39,28 +36,18 @@ const cardSlice = createSlice({
 			state.cards = state.cards.filter((card) => card.id !== cardId);
 		},
 
-		toggleSubtaskDone: (
-			state,
-			action: PayloadAction<{ cardId: string; index: number }>
-		) => {
+		toggleSubtaskDone: (state, action: PayloadAction<{ cardId: string; index: number }>) => {
 			const { cardId, index } = action.payload;
 			const card = state.cards.find((card) => card.id === cardId);
 
-			if (
-				card &&
-				card.subTasks &&
-				index >= 0 &&
-				index < card.subTasks.length
-			) {
+			if (card && card.subTasks && index >= 0 && index < card.subTasks.length) {
 				card.subTasks[index].done = !card.subTasks[index].done;
 			}
 		},
 
 		deleteCardsByIds: (state, action: PayloadAction<string[]>) => {
 			const cardIds = action.payload;
-			state.cards = state.cards.filter(
-				(card) => !cardIds.includes(card.id)
-			);
+			state.cards = state.cards.filter((card) => !cardIds.includes(card.id));
 		},
 
 		setCardsLoading: (state, action: PayloadAction<boolean>) => {

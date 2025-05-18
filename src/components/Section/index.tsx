@@ -9,11 +9,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 const Section = forwardRef<HTMLElement, SectionProps>((props, ref) => {
 	const { className, children, ...rest } = props;
 	return (
-		<section
-			ref={ref}
-			className={styles.section + (className ? ` ${className}` : '')}
-			{...rest}
-		>
+		<section ref={ref} className={styles.section + (className ? ` ${className}` : '')} {...rest}>
 			{children}
 		</section>
 	);

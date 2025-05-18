@@ -19,15 +19,15 @@
 	background-color: inherit;
 	text-align: center;
 	font-weight: 700;
-	
-	&[aria-selected="true"] {
+
+	&[aria-selected='true'] {
 		pointer-events: none;
 		color: var(--text-color);
 		background-color: inherit;
 		border-bottom: 0.2rem solid var(--text) !important;
 	}
-	
-	&[aria-selected="false"] {
+
+	&[aria-selected='false'] {
 		background-color: var(--primary-color);
 		border-bottom-color: var(--text-color);
 	}

@@ -46,31 +46,14 @@ function ListItem(props: ListItemProps) {
 
 	return (
 		<>
-			<li
-				title={item.title}
-				onMouseOver={handleMouseOver}
-				onMouseLeave={handleMouseLeave}
-			>
-				<NavLink
-					to={item.path}
-					className={({ isActive }) =>
-						`${isActive ? styles.active : ''}`
-					}
-				>
+			<li title={item.title} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+				<NavLink to={item.path} className={({ isActive }) => `${isActive ? styles.active : ''}`}>
 					{item.icon}
 					{shouldRender && (
-						<span
-							className={`${styles.title} ${
-								shouldShow ? styles.expanded : styles.collapsed
-							}`}
-						>
-							{item.title}
-						</span>
+						<span className={`${styles.title} ${shouldShow ? styles.expanded : styles.collapsed}`}>{item.title}</span>
 					)}
 				</NavLink>
-				{onMouseOver && !expanded && (
-					<span className={styles.tooltip}>{item.title}</span>
-				)}
+				{onMouseOver && !expanded && <span className={styles.tooltip}>{item.title}</span>}
 			</li>
 		</>
 	);

@@ -18,23 +18,13 @@ function ColumnDropDown(props: ColumnDropDownProps) {
 	const columns = useAppSelector((state) => state.columns.columns);
 	const boardColumns = columns.filter((column) => column.boardId === boardId);
 
-	console.log(boardColumns, 'boardColumns');
-	console.log(boardId, 'boardId');
-
 	return (
 		<Dropdown
 			className={styles.dropdownBtn}
 			placement="bottom-left"
 			trigger={
-				<Button
-					icon={<SVG.chevronDown />}
-					disabled={boardId === 'Pick a board' || !boardId}
-				>
-					{!columnId
-						? 'Pick a column'
-						: typeof columnId !== 'string'
-							? columnId.title
-							: columnId}
+				<Button icon={<SVG.chevronDown />} disabled={boardId === 'Pick a board' || !boardId}>
+					{!columnId ? 'Pick a column' : typeof columnId !== 'string' ? columnId.title : columnId}
 				</Button>
 			}
 		>

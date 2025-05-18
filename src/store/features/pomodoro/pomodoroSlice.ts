@@ -48,7 +48,7 @@ const pomodoroSlice = createSlice({
 		},
 		toggleActiveTimer: (state, action: PayloadAction<ActiveTabType>) => {
 			state.isRunning[action.payload] = !state.isRunning[action.payload];
-		}
+		},
 	},
 });
 

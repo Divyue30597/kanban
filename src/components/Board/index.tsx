@@ -11,6 +11,7 @@ import { selectActiveBoard, selectBoardColumns } from '../../store/selectors';
 import { setActiveBoard } from '../../store/features/boards/boardSlice';
 import { moveCardBetweenColumns } from '../../store/thunks';
 import Section from '../Section';
+import Accordion from '../Accordion';
 
 function Board(props: HTMLProps<HTMLDivElement>) {
 	const { ...rest } = props;
@@ -20,15 +21,10 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 	const columns = useAppSelector(selectBoardColumns);
 	const boards = useAppSelector((state) => state.boards.boards);
 
-	const boardRef = useRef<HTMLDivElement | null>(null);
 	const boardContentRef = useRef<HTMLDivElement>(null);
 	const isTouchDevice = useRef(false);
 
-	const handleCardMove = (
-		cardId: string,
-		sourceColumnId: string,
-		targetColumnId: string
-	) => {
+	const handleCardMove = (cardId: string, sourceColumnId: string, targetColumnId: string) => {
 		dispatch(
 			moveCardBetweenColumns({
 				cardId,
@@ -38,13 +34,12 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 		);
 	};
 
-	const { handleCardMouseDown, handleCardTouchStart, isDragging } =
-		useDragAndDrop({
-			onCardMove: handleCardMove,
-			dropTargetClassName: columnStyles.validDropTarget,
-			invalidDropTargetClassName: columnStyles.invalidDropTarget,
-			boundaryRef: boardContentRef,
-		});
+	const { handleCardMouseDown, handleCardTouchStart, isDragging } = useDragAndDrop({
+		onCardMove: handleCardMove,
+		dropTargetClassName: columnStyles.validDropTarget,
+		invalidDropTargetClassName: columnStyles.invalidDropTarget,
+		boundaryRef: boardContentRef,
+	});
 
 	useEffect(() => {
 		if (!activeBoard && boards.length > 0) {
@@ -54,9 +49,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 
 	useEffect(() => {
 		isTouchDevice.current =
-			'ontouchstart' in window ||
-			navigator.maxTouchPoints > 0 ||
-			(navigator as any).msMaxTouchPoints > 0;
+			'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator as any).msMaxTouchPoints > 0;
 
 		if (isTouchDevice.current) {
 			document.body.classList.add('touch-device');
@@ -93,7 +86,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 
 	const handleCardDrop = (cardId: string, targetColumnId: string) => {
 		const sourceColumnId = columns.find((col) =>
-			col?.cardIds?.includes(cardId)
+			col?.columnsList.find((colList) => colList.cardIds?.includes(cardId))
 		)?.id;
 
 		if (sourceColumnId && sourceColumnId !== targetColumnId) {
@@ -102,7 +95,7 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 	};
 
 	return (
-		<Section ref={boardRef}  {...rest}>
+		<Section {...rest}>
 			<div className={styles.boardHeader}>
 				<div className={styles.boardHeaderContent}>
 					<h1>{activeBoard?.title}</h1>
@@ -112,57 +105,53 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 					<AddTaskModal />
 				</div>
 			</div>
-			<div ref={boardContentRef} className={styles.boardContent}>
-				<Container
-					{...rest}
-					style={{
-						gridTemplateColumns: `repeat(${
-							columns?.length || 3
-						}, minmax(28rem, 1fr))`,
-					}}
-				>
-					{columns &&
-						columns?.map(
-							(column) =>
-								column && (
-									<Column
-										key={column?.id}
-										className={styles.column}
-										colId={column?.id}
-										colName={column?.title}
-										numOfCards={
-											column?.cardIds?.length || 0
-										}
-										onCardDrop={handleCardDrop}
-									>
-										{column?.cardIds?.map((cardId) => {
-											return (
-												<Card
-													key={cardId}
-													id={cardId}
-													columnId={column.id}
-													boardId={column.boardId}
-													onMouseDown={(e) =>
-														handleCardMouseDown(
-															e,
-															cardId,
-															column.id
+			<div ref={boardContentRef}>
+				{columns &&
+					columns?.map(
+						(column) =>
+							column && (
+								<div key={column?.id} className={styles.columnContainer}>
+									<Accordion>
+										<Accordion.Header headingText={column?.title} />
+										<Accordion.Body>
+											<Container
+												style={{
+													gridTemplateColumns: `repeat(${column?.columnsList.filter((colList) => colList.isSelected)?.length || 3}, minmax(28rem, 1fr))`,
+												}}
+												className={styles.boardContent}
+											>
+												{column?.columnsList?.map(
+													(col) =>
+														col.isSelected && (
+															<Column
+																key={col?.id}
+																className={styles.column}
+																colId={col?.id}
+																colName={col?.title}
+																numOfCards={col?.cardIds?.length || 0}
+																onCardDrop={handleCardDrop}
+															>
+																{col?.cardIds?.map((cardId) => {
+																	return (
+																		<Card
+																			key={cardId}
+																			id={cardId}
+																			columnId={col.id}
+																			boardId={column.boardId}
+																			onMouseDown={(e) => handleCardMouseDown(e, cardId, col.id)}
+																			onTouchStart={(e) => handleCardTouchStart(e, cardId, col.id)}
+																		/>
+																	);
+																})}
+															</Column>
 														)
-													}
-													onTouchStart={(e) =>
-														handleCardTouchStart(
-															e,
-															cardId,
-															column.id
-														)
-													}
-												/>
-											);
-										})}
-									</Column>
-								)
-						)}
-				</Container>
+												)}
+											</Container>
+										</Accordion.Body>
+									</Accordion>
+								</div>
+							)
+					)}
 			</div>
 		</Section>
 	);
