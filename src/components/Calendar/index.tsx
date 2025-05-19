@@ -5,6 +5,7 @@ import { useCalendar, CalendarDay } from '../../hooks/useCalendar';
 import Button from '../Button';
 import { useState } from 'react';
 import CalendarDropDown from '../CalendarDropDown';
+import CalendarCard from '../CalendarCard';
 
 function Calendar() {
 	const { month, year, weeks, nextMonth, prevMonth, nextYear, prevYear, nextWeek, prevWeek, handleClickOnToday } =
@@ -118,6 +119,9 @@ function ActiveMonth({ weeks }: { weeks: CalendarDay[][] }) {
 							return (
 								<div className={styles.day + ' ' + isCurrentMonth} key={dayObject.fullDate.toISOString()}>
 									<p className={isToday}>{dayObject.day}</p>
+									<div className={styles.dayContent}>
+										<CalendarCard />
+									</div>
 								</div>
 							);
 						})}
