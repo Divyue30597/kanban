@@ -1,11 +1,13 @@
-import { HTMLProps } from 'react';
 import styles from './container.module.scss';
+import { HTMLProps, forwardRef } from 'react';
 
-export default function Container(props: HTMLProps<HTMLDivElement>) {
+const Container = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>((props, ref) => {
 	const { children, className, ...rest } = props;
 	return (
-		<div {...rest} className={(className ? `${className} ` : '') + styles.container}>
+		<div ref={ref} {...rest} className={(className ? `${className} ` : '') + styles.container}>
 			{children}
 		</div>
 	);
-}
+});
+
+export default Container;

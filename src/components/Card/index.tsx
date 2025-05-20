@@ -5,7 +5,7 @@ import { getTagColors } from '../../utils/utils';
 import CheckboxWithText from '../CheckboxWithText';
 import { useAppSelector } from '../../store/hooks';
 import { selectCardById } from '../../store/selectors';
-import { Subtask } from '../../store/types';
+import { ISubtask } from '../../store/types';
 
 export interface CardType extends React.HTMLAttributes<HTMLDivElement> {
 	id: string;
@@ -60,7 +60,7 @@ export default function Card(props: CardType) {
 	);
 }
 
-function renderSubTasks(props: { subTasks?: Subtask[]; cardId: string }) {
+function renderSubTasks(props: { subTasks?: ISubtask[]; cardId: string }) {
 	const { subTasks, cardId } = props;
 	return (
 		<div className={styles.subTasks}>

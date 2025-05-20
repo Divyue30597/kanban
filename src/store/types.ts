@@ -12,18 +12,18 @@ export type ColumnStatus =
 
 export type Priority = 'low' | 'medium' | 'high' | 'urgent' | string;
 
-interface CommonProps {
+interface ICommonProps {
 	createdBy: string;
 	createdTimeStamp?: string;
 	updatedTimeStamp?: string;
 }
 
-export interface Subtask {
+export interface ISubtask {
 	title: string;
 	done: boolean;
 }
 
-export interface Card extends CommonProps {
+export interface ICard extends ICommonProps {
 	id: string;
 	title: string;
 	description: string;
@@ -33,12 +33,12 @@ export interface Card extends CommonProps {
 	expectedCompletionDate: string;
 	tags: string[];
 	dueDate?: string;
-	subTasks?: Subtask[];
+	subTasks?: ISubtask[];
 	images?: (File | string)[];
 	links?: string[];
 }
 
-export interface Column extends CommonProps {
+export interface IColumn extends ICommonProps {
 	id: string;
 	title: string;
 	boardId: string;
@@ -50,15 +50,15 @@ export interface Column extends CommonProps {
 	}[];
 }
 
-export interface Board extends CommonProps {
+export interface IBoard extends ICommonProps {
 	id: string;
 	title: string;
 	description: string;
 	columnIds: string[];
 }
 
-export interface SampleData {
-	boards?: Board[];
-	columns?: Column[];
-	cards?: Card[];
+export interface ISampleData {
+	boards?: IBoard[];
+	columns?: IColumn[];
+	cards?: ICard[];
 }

@@ -8,10 +8,11 @@ interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
 	children: React.ReactNode;
 	numOfCards: number;
 	onCardDrop?: (cardId: string, targetColumnId: string) => void;
+	'data-board-id'?: string;
 }
 
 function Column(props: ColumnProps) {
-	const { colName, colId, children, className, numOfCards, onCardDrop, ...rest } = props;
+	const { colName, colId, children, className, numOfCards, onCardDrop, 'data-board-id': boardId, ...rest } = props;
 	const [isDragOver, setIsDragOver] = useState(false);
 
 	const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -44,12 +45,13 @@ function Column(props: ColumnProps) {
 			onDragOver={handleDragOver}
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
+			data-column-id={colId}
 			{...rest}
 		>
 			<h2>
 				{colName} <span>{numOfCards}</span>
 			</h2>
-			<div className={styles.cards + ' column-content'} data-column-id={colId}>
+			<div className={styles.cards + ' column-content'} data-column-id={colId} data-board-id={boardId}>
 				{React.Children.map(children, (child) => {
 					if (React.isValidElement(child) && typeof child.type !== 'string') {
 						return React.cloneElement(child as React.ReactElement, {

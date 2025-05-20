@@ -40,6 +40,10 @@ export function useDragAndDrop({
 	const scrollIntervalRef = useRef<number | null>(null);
 	const isTouch = useRef(false);
 
+	// Add these scroll position refs
+	const prevScrollTopRef = useRef(0);
+	const prevScrollLeftRef = useRef(0);
+
 	/**
 	 * Creates an accessible announcement for screen readers.
 	 *
@@ -54,16 +58,16 @@ export function useDragAndDrop({
 		}
 	}, []);
 
+	// Add a ref to store the last highlight update timestamp for debouncing
+	const lastHighlightUpdateRef = useRef(0);
+	// Cache column data to prevent excessive DOM queries
+	const columnCacheRef = useRef<{ boardId: string | null; columns: { id: string; rect: DOMRect }[] }>({
+		boardId: null,
+		columns: [],
+	});
+
 	/**
 	 * Validates drop targets based on configured movement constraints.
-	 *
-	 * This implements the business logic of card movement restrictions:
-	 * - When allowBackwardMovement is false (default): Cards can only move to columns
-	 *   with a higher index (to the right), mimicking a workflow progression
-	 * - When allowBackwardMovement is true: Cards can move in any direction
-	 *
-	 * The function works by comparing the DOM positions of columns to determine
-	 * their logical sequence.
 	 */
 	const isValidDropTarget = useCallback(
 		(sourceColumnId: string, targetColumnId: string): boolean => {
@@ -74,16 +78,43 @@ export function useDragAndDrop({
 			}
 
 			try {
-				const columnsElements = document.querySelectorAll('[data-column-id]');
-				const columnIds: string[] = [];
+				// Use cached column order when possible to prevent DOM thrashing
+				const boardId = boardContextId.current;
+				let columnIds: string[] = [];
 
-				columnsElements.forEach((col) => {
-					const colId = col.getAttribute('data-column-id');
-					if (colId) columnIds.push(colId);
-				});
+				// Only rebuild the cache if the board ID has changed
+				if (columnCacheRef.current.boardId !== boardId) {
+					const columnsElements = document.querySelectorAll(
+						`[data-column-id][data-board-id="${boardId}"]:not([aria-hidden="true"])`
+					);
+
+					columnsElements.forEach((col) => {
+						// Only include columns that are actually visible
+						if (isElementVisible(col as HTMLElement)) {
+							const colId = col.getAttribute('data-column-id');
+							if (colId) columnIds.push(colId);
+						}
+					});
+
+					// Update cache
+					columnCacheRef.current = {
+						boardId,
+						columns: columnIds.map((id) => ({
+							id,
+							rect: document.querySelector(`[data-column-id="${id}"]`)?.getBoundingClientRect() || new DOMRect(),
+						})),
+					};
+				} else {
+					// Use cached column IDs
+					columnIds = columnCacheRef.current.columns.map((col) => col.id);
+				}
 
 				const sourceIndex = columnIds.indexOf(sourceColumnId);
 				const targetIndex = columnIds.indexOf(targetColumnId);
+
+				// If we can't find one of the columns in the visible set,
+				// the validation should fail
+				if (sourceIndex === -1 || targetIndex === -1) return false;
 
 				return targetIndex > sourceIndex;
 			} catch (e) {
@@ -94,13 +125,44 @@ export function useDragAndDrop({
 		[allowBackwardMovement]
 	);
 
+	// Helper function to check if an element is actually visible
+	const isElementVisible = (element: HTMLElement): boolean => {
+		if (!element) return false;
+
+		try {
+			// Check if element or any parent is hidden
+			let currentElement: HTMLElement | null = element;
+			while (currentElement) {
+				// Check various visibility conditions
+				const styles = window.getComputedStyle(currentElement);
+				if (
+					styles.display === 'none' ||
+					styles.visibility === 'hidden' ||
+					parseFloat(styles.opacity) < 0.1 ||
+					currentElement.getAttribute('aria-hidden') === 'true'
+				) {
+					return false;
+				}
+
+				// Check if element has zero dimensions (often means it's collapsed)
+				if (currentElement.offsetWidth < 5 || currentElement.offsetHeight < 5) {
+					return false;
+				}
+
+				currentElement = currentElement.parentElement;
+			}
+
+			// Additional check: is the element in the viewport?
+			const rect = element.getBoundingClientRect();
+			return rect.width > 0 && rect.height > 0;
+		} catch (e) {
+			console.error('Error checking element visibility:', e);
+			return false;
+		}
+	};
+
 	/**
 	 * Performs hit testing to determine which column the card is currently over.
-	 *
-	 * Uses the center point of the card for more intuitive intersection detection.
-	 * This is crucial for determining the visual feedback and eventual drop target.
-	 * The algorithm uses bounding rectangle intersection testing to find which column
-	 * contains the center point of the dragged card.
 	 */
 	const findTargetColumn = useCallback(
 		(elementRect: DOMRect): string | null => {
@@ -108,41 +170,68 @@ export function useDragAndDrop({
 				const centerX = elementRect.left + elementRect.width / 2;
 				const centerY = elementRect.top + elementRect.height / 2;
 
-				const columnContents = document.querySelectorAll(columnContentSelector);
+				// Only check visible columns within the same board
+				const boardId = boardContextId.current;
+				const columnContents = document.querySelectorAll(`${columnContentSelector}[data-board-id="${boardId}"]`);
+
+				// Debug column detection
+				console.log(`Finding target column for board ${boardId}. Found ${columnContents.length} columns.`);
+
+				// Check all column contents first with a slightly expanded hit area
 				for (let i = 0; i < columnContents.length; i++) {
-					const content = columnContents[i];
+					const content = columnContents[i] as HTMLElement;
+
+					// Skip hidden columns
+					if (!isElementVisible(content)) continue;
+
 					const colRect = content.getBoundingClientRect();
 
+					// Add a small buffer (5px) to improve detection at edges
 					if (
-						centerX >= colRect.left &&
-						centerX <= colRect.right &&
-						centerY >= colRect.top &&
-						centerY <= colRect.bottom
+						centerX >= colRect.left - 5 &&
+						centerX <= colRect.right + 5 &&
+						centerY >= colRect.top - 5 &&
+						centerY <= colRect.bottom + 5
 					) {
 						// Get the parent column's ID
 						const column = content.closest('[data-column-id]') as HTMLElement;
 						if (column) {
-							return column.getAttribute('data-column-id');
+							const colId = column.getAttribute('data-column-id');
+							console.log(`Found target column: ${colId} at index ${i}`);
+							return colId;
 						}
 					}
 				}
 
-				// Fallback to checking entire columns
-				const columnsElements = document.querySelectorAll('[data-column-id]');
-				for (let i = 0; i < columnsElements.length; i++) {
-					const col = columnsElements[i];
-					const colRect = col.getBoundingClientRect();
+				// Fallback with more detailed logging
+				console.log('No column found using primary method, trying fallback...');
+				const columnsElements = document.querySelectorAll(`[data-column-id][data-board-id="${boardId}"]`);
+				console.log(`Fallback found ${columnsElements.length} column elements`);
 
+				for (let i = 0; i < columnsElements.length; i++) {
+					const col = columnsElements[i] as HTMLElement;
+					if (!isElementVisible(col)) {
+						console.log(`Column at index ${i} is not visible, skipping`);
+						continue;
+					}
+
+					const colRect = col.getBoundingClientRect();
+					console.log(`Column ${i} rect:`, `left: ${colRect.left}`, `right: ${colRect.right}`, `center X: ${centerX}`);
+
+					// Also use expanded hit area here
 					if (
-						centerX >= colRect.left &&
-						centerX <= colRect.right &&
-						centerY >= colRect.top &&
-						centerY <= colRect.bottom
+						centerX >= colRect.left - 5 &&
+						centerX <= colRect.right + 5 &&
+						centerY >= colRect.top - 5 &&
+						centerY <= colRect.bottom + 5
 					) {
-						return col.getAttribute('data-column-id');
+						const colId = col.getAttribute('data-column-id');
+						console.log(`Found target column with fallback: ${colId}`);
+						return colId;
 					}
 				}
 
+				console.log('No column found, pointer position:', centerX, centerY);
 				return null;
 			} catch (e) {
 				console.error('Error finding target column:', e);
@@ -167,8 +256,18 @@ export function useDragAndDrop({
 	const updateColumnHighlights = useCallback(
 		(targetColumnId: string | null, isSourceColumn = false) => {
 			try {
-				const columnsElements = document.querySelectorAll('[data-column-id]');
-				columnsElements.forEach((col) => {
+				// Debounce highlight updates to prevent flashing
+				const now = Date.now();
+				if (now - lastHighlightUpdateRef.current < 50) {
+					return;
+				}
+				lastHighlightUpdateRef.current = now;
+
+				// Get only columns from the current board context
+
+				// First, reset any previous highlighting from all columns
+				const allColumns = document.querySelectorAll('[data-column-id]');
+				allColumns.forEach((col) => {
 					col.classList.remove(dropTargetClassName);
 					col.classList.remove(invalidDropTargetClassName);
 
@@ -181,23 +280,33 @@ export function useDragAndDrop({
 					col.setAttribute('aria-dropeffect', 'none');
 				});
 
-				if (targetColumnId && !isSourceColumn && dragState.draggingCard) {
-					const targetColumn = document.querySelector(`[data-column-id="${targetColumnId}"]`);
+				// Only proceed with highlighting if we have a target
+				if (!targetColumnId || isSourceColumn || !dragState.draggingCard) return;
 
-					if (targetColumn) {
-						const isValid = isValidDropTarget(dragState.draggingCard.columnId, targetColumnId);
-						const classToAdd = isValid ? dropTargetClassName : invalidDropTargetClassName;
+				// Try to find the target column directly
+				const targetColumn = document.querySelector(`[data-column-id="${targetColumnId}"]`);
 
-						const columnContent = targetColumn.querySelector(columnContentSelector);
+				if (!targetColumn) {
+					console.warn(`Target column ${targetColumnId} not found for highlighting`);
+					return;
+				}
 
-						if (columnContent) {
-							columnContent.classList.add(classToAdd);
-						} else {
-							targetColumn.classList.add(classToAdd);
-						}
+				// Verify it's visible before highlighting
+				if (isElementVisible(targetColumn as HTMLElement)) {
+					const isValid = isValidDropTarget(dragState.draggingCard.columnId, targetColumnId);
+					const classToAdd = isValid ? dropTargetClassName : invalidDropTargetClassName;
 
-						targetColumn.setAttribute('aria-dropeffect', isValid ? 'move' : 'none');
+					console.log(`Highlighting column ${targetColumnId} as ${isValid ? 'valid' : 'invalid'} target`);
+
+					// Add highlight to either content or the column itself
+					const columnContent = targetColumn.querySelector(columnContentSelector);
+					if (columnContent) {
+						columnContent.classList.add(classToAdd);
+					} else {
+						targetColumn.classList.add(classToAdd);
 					}
+
+					targetColumn.setAttribute('aria-dropeffect', isValid ? 'move' : 'none');
 				}
 			} catch (e) {
 				console.error('Error updating column highlights:', e);
@@ -216,142 +325,51 @@ export function useDragAndDrop({
 	 * The clone is absolutely positioned, has pointer events disabled, and includes
 	 * a subtle rotation to enhance the "picked up" effect.
 	 */
-	const createDragClone = useCallback((cardElement: HTMLElement, rect: DOMRect) => {
-		try {
-			const clone = cardElement.cloneNode(true) as HTMLDivElement;
+	const createDragClone = useCallback(
+		(cardElement: HTMLElement, rect: DOMRect) => {
+			try {
+				const clone = cardElement.cloneNode(true) as HTMLDivElement;
 
-			clone.style.position = 'absolute';
-			clone.style.width = `${rect.width}px`;
-			// clone.style.height = `${rect.height}px`;
-			clone.style.zIndex = DRAG_CONFIG.VISUAL.Z_INDEX;
-			clone.style.pointerEvents = 'none';
-			clone.style.opacity = '1';
-			clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
-			clone.style.boxShadow = 'var(--box-shadow)';
-			clone.style.transition = 'box-shadow 0.2s ease, border 0.2s ease';
-			clone.setAttribute('aria-hidden', 'true');
-			clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
+				clone.style.position = 'absolute';
+				clone.style.width = `${rect.width}px`;
+				// clone.style.height = `${rect.height}px`;
+				clone.style.zIndex = DRAG_CONFIG.VISUAL.Z_INDEX;
+				clone.style.pointerEvents = 'none';
+				clone.style.opacity = '1';
+				clone.style.transform = DRAG_CONFIG.VISUAL.ROTATION;
+				clone.style.boxShadow = 'var(--box-shadow)';
+				clone.style.transition = 'box-shadow 0.2s ease, border 0.2s ease';
+				clone.setAttribute('aria-hidden', 'true');
+				clone.style.cursor = DRAG_CONFIG.VISUAL.CURSOR;
 
-			clone.style.left = `${rect.left}px`;
-			clone.style.top = `${rect.top}px`;
+				// Position relative to the container instead of the viewport
+				if (boundaryRef?.current) {
+					const boundaryRect = boundaryRef.current.getBoundingClientRect();
+					clone.style.left = `${rect.left - boundaryRect.left + boundaryRef.current.scrollLeft}px`;
+					clone.style.top = `${rect.top - boundaryRect.top + boundaryRef.current.scrollTop}px`;
 
-			document.body.appendChild(clone);
-
-			cardElement.style.opacity = DRAG_CONFIG.VISUAL.OPACITY;
-			// cardElement.style.backgroundColor =
-			// 	DRAG_CONFIG.VISUAL.BACKGROUND;
-			cardElement.style.border = DRAG_CONFIG.VISUAL.BORDER;
-
-			return clone;
-		} catch (e) {
-			console.error('Error creating drag clone:', e);
-			return null;
-		}
-	}, []);
-
-	/**
-	 * Implements automatic scrolling when dragging near container edges.
-	 *
-	 * This creates a smooth scrolling experience when dragging cards beyond
-	 * the visible area. When the card approaches any edge of the container,
-	 * the container scrolls in that direction at a steady rate, allowing
-	 * users to drag cards to areas that were initially off-screen.
-	 *
-	 * Uses intervals rather than per-frame updates for better performance.
-	 */
-	const setupAutoScrolling = useCallback(() => {
-		if (!boundaryRef?.current || scrollIntervalRef.current !== null) return;
-
-		scrollIntervalRef.current = window.setInterval(() => {
-			if (!boundaryRef?.current || !dragElementRef.current) return;
-
-			const boundary = boundaryRef.current.getBoundingClientRect();
-			const cardRect = dragElementRef.current.getBoundingClientRect();
-			const cardCenterY = cardRect.top + cardRect.height / 2;
-			const cardCenterX = cardRect.left + cardRect.width / 2;
-			const margin = DRAG_CONFIG.SCROLL.MARGIN;
-			const speed = DRAG_CONFIG.SCROLL.SPEED;
-
-			// Vertical scrolling
-			if (boundaryRef.current.scrollHeight > boundaryRef.current.clientHeight) {
-				if (cardCenterY > boundary.bottom - margin) {
-					boundaryRef.current.scrollTop += speed;
+					// Critical change: Append to boundary element instead of document.body
+					boundaryRef.current.appendChild(clone);
+				} else {
+					clone.style.left = `${rect.left}px`;
+					clone.style.top = `${rect.top}px`;
+					document.body.appendChild(clone);
 				}
 
-				if (cardCenterY < boundary.top + margin) {
-					boundaryRef.current.scrollTop -= speed;
-				}
+				cardElement.style.opacity = DRAG_CONFIG.VISUAL.OPACITY;
+				cardElement.style.border = DRAG_CONFIG.VISUAL.BORDER;
+
+				return clone;
+			} catch (e) {
+				console.error('Error creating drag clone:', e);
+				return null;
 			}
-
-			// Horizontal scrolling
-			if (boundaryRef.current.scrollWidth > boundaryRef.current.clientWidth) {
-				if (cardCenterX > boundary.right - margin) {
-					boundaryRef.current.scrollLeft += speed;
-				}
-
-				if (cardCenterX < boundary.left + margin) {
-					boundaryRef.current.scrollLeft -= speed;
-				}
-			}
-		}, DRAG_CONFIG.SCROLL.INTERVAL);
-	}, [boundaryRef]);
-
-	/**
-	 * Enforces boundary constraints and provides boundary feedback.
-	 *
-	 * This prevents cards from being dragged outside the container boundaries.
-	 * When a card hits a boundary:
-	 * 1. The position is constrained to stay within the boundary
-	 * 2. Visual feedback (glowing border) is applied to indicate the constraint
-	 * 3. On touch devices, haptic feedback (vibration) is triggered
-	 *
-	 * These feedback mechanisms ensure users understand why card movement is limited.
-	 */
-	const applyBoundaryConstraints = useCallback(
-		(position: { left: number; top: number }, cardRect: DOMRect) => {
-			if (!boundaryRef?.current || !dragElementRef.current) {
-				return position;
-			}
-
-			const boundary = boundaryRef.current.getBoundingClientRect();
-			let { left, top } = position;
-			let hitBoundary = false;
-
-			dragElementRef.current.style.boxShadow = '';
-
-			if (left < boundary.left) {
-				left = boundary.left;
-				hitBoundary = true;
-			}
-
-			if (left + cardRect.width > boundary.right) {
-				left = boundary.right - cardRect.width;
-				hitBoundary = true;
-			}
-
-			if (top < boundary.top) {
-				top = boundary.top;
-				hitBoundary = true;
-			}
-
-			if (top + cardRect.height > boundary.bottom) {
-				top = boundary.bottom - cardRect.height;
-				hitBoundary = true;
-			}
-
-			if (hitBoundary) {
-				dragElementRef.current.style.boxShadow = '';
-				dragElementRef.current.style.border = DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_BORDER;
-
-				if (isTouch.current && navigator.vibrate) {
-					navigator.vibrate(10);
-				}
-			}
-
-			return { left, top };
 		},
 		[boundaryRef]
 	);
+
+	// Add a board context ID to track which board is active for this drag
+	const boardContextId = useRef<string | null>(null);
 
 	/**
 	 * Comprehensive cleanup function that resets all drag state.
@@ -382,7 +400,11 @@ export function useDragAndDrop({
 				dragElementRef.current.style.border = '';
 				dragElementRef.current.style.boxShadow = '';
 
-				document.body.removeChild(dragElementRef.current);
+				// Remove from parent instead of assuming document.body
+				const parent = dragElementRef.current.parentNode;
+				if (parent) {
+					parent.removeChild(dragElementRef.current);
+				}
 			} catch (e) {
 				console.error('Error removing drag element:', e);
 			}
@@ -410,6 +432,7 @@ export function useDragAndDrop({
 
 		dragStartedRef.current = false;
 		currentTargetColumnRef.current = null;
+		boardContextId.current = null;
 		setDragState({ draggingCard: null, isDragging: false });
 	}, [dragState.draggingCard, updateColumnHighlights, createAccessibilityAnnouncement, cardSelector]);
 
@@ -458,12 +481,83 @@ export function useDragAndDrop({
 					isDragging: false,
 				});
 
+				// Reset column cache to ensure fresh column detection
+				columnCacheRef.current = {
+					boardId: null,
+					columns: [],
+				};
+
+				// Set the board context based on the card's data attribute
+				const boardId = cardElement.getAttribute('data-board-id');
+				boardContextId.current = boardId;
+
 				e.preventDefault();
 			} catch (e) {
 				console.error('Error in pointer down handler:', e);
 			}
 		},
 		[updateColumnHighlights]
+	);
+
+	/**
+	 * Enforces boundary constraints and provides boundary feedback.
+	 *
+	 * This prevents cards from being dragged outside the container boundaries.
+	 * When a card hits a boundary:
+	 * 1. The position is constrained to stay within the boundary
+	 * 2. Visual feedback (glowing border) is applied to indicate the constraint
+	 * 3. On touch devices, haptic feedback (vibration) is triggered
+	 *
+	 * These feedback mechanisms ensure users understand why card movement is limited.
+	 */
+	const applyBoundaryConstraints = useCallback(
+		(position: { left: number; top: number }, cardRect: DOMRect) => {
+			if (!boundaryRef?.current || !dragElementRef.current) {
+				return position;
+			}
+
+			// Use clientWidth/Height instead of boundingRect width/height to account for scrolling
+			const boundaryWidth = boundaryRef.current.clientWidth;
+			const boundaryHeight = boundaryRef.current.clientHeight;
+
+			let { left, top } = position;
+			let hitBoundary = false;
+
+			dragElementRef.current.style.boxShadow = '';
+
+			// Constrain within the scroll container, not just the visible area
+			if (left < 0) {
+				left = 0;
+				hitBoundary = true;
+			}
+
+			if (left + cardRect.width > boundaryWidth) {
+				left = boundaryWidth - cardRect.width;
+				hitBoundary = true;
+			}
+
+			if (top < 0) {
+				top = 0;
+				hitBoundary = true;
+			}
+
+			if (top + cardRect.height > boundaryHeight) {
+				top = boundaryHeight - cardRect.height;
+				hitBoundary = true;
+			}
+
+			if (hitBoundary) {
+				dragElementRef.current.style.boxShadow = '';
+				dragElementRef.current.style.border = DRAG_CONFIG.VISUAL.BOUNDARY_FEEDBACK_BORDER;
+
+				if (isTouch.current && navigator.vibrate) {
+					navigator.vibrate(10);
+				}
+			}
+
+			return { left, top };
+		},
+		[boundaryRef]
 	);
 
 	/**
@@ -484,7 +578,7 @@ export function useDragAndDrop({
 	const handlePointerMove = useCallback(
 		(e: MouseEvent | TouchEvent) => {
 			const { draggingCard } = dragState;
-			if (!draggingCard) return;
+			if (!draggingCard || !boundaryRef?.current) return;
 
 			try {
 				const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
@@ -494,16 +588,34 @@ export function useDragAndDrop({
 				const dx = Math.abs(clientX - pointerPositionRef.current.x);
 				const dy = Math.abs(clientY - pointerPositionRef.current.y);
 
+				console.log(clientX, clientY, dx, dy, 'dx, dy');
+
 				const isDragging = dx > DRAG_CONFIG.THRESHOLD || dy > DRAG_CONFIG.THRESHOLD;
 
 				if (isDragging && !dragStartedRef.current) {
+					// Check if boundary element is actually visible
+					if (!isElementVisible(boundaryRef.current)) {
+						console.warn('Boundary element is not visible, canceling drag');
+						cleanupDrag();
+						return;
+					}
+
 					dragStartedRef.current = true;
 					setDragState((prev) => ({ ...prev, isDragging: true }));
 
-					const cardElement = document.querySelector(`[${cardSelector}="${draggingCard.id}"]`) as HTMLElement;
+					// Initialize scroll position tracking
+					if (boundaryRef?.current) {
+						prevScrollTopRef.current = boundaryRef.current.scrollTop;
+						prevScrollLeftRef.current = boundaryRef.current.scrollLeft;
+					}
 
-					if (!cardElement) {
-						console.error('Card element not found for dragging');
+					const cardElement = document.querySelector(
+						`[${cardSelector}="${draggingCard.id}"][data-board-id="${boardContextId.current}"]:not([aria-hidden="true"])`
+					) as HTMLElement;
+
+					if (!cardElement || !isElementVisible(cardElement)) {
+						console.error('Card element not found or not visible for dragging');
+						cleanupDrag();
 						return;
 					}
 
@@ -512,16 +624,18 @@ export function useDragAndDrop({
 					if (!clone) return;
 
 					dragElementRef.current = clone;
-					setupAutoScrolling();
 
 					createAccessibilityAnnouncement(
 						`Card "${draggingCard.id}" is being dragged. Press Escape to cancel, Enter to drop.`
 					);
 				}
 
-				if (dragStartedRef.current && dragElementRef.current) {
-					const newLeft = clientX - draggingCard.offsetX;
-					const newTop = clientY - draggingCard.offsetY;
+				if (dragStartedRef.current && dragElementRef.current && boundaryRef.current) {
+					const boundaryRect = boundaryRef.current.getBoundingClientRect();
+
+					// Calculate position relative to the boundary element
+					const newLeft = clientX - boundaryRect.left - draggingCard.offsetX + boundaryRef.current.scrollLeft;
+					const newTop = clientY - boundaryRect.top - draggingCard.offsetY + boundaryRef.current.scrollTop;
 
 					const cardRect = dragElementRef.current.getBoundingClientRect();
 					const constrainedPosition = applyBoundaryConstraints({ left: newLeft, top: newTop }, cardRect);
@@ -533,8 +647,11 @@ export function useDragAndDrop({
 					const targetColumnId = findTargetColumn(dragRect);
 					const isSourceColumn = targetColumnId === draggingCard.columnId;
 
-					currentTargetColumnRef.current = targetColumnId;
-					updateColumnHighlights(targetColumnId, isSourceColumn);
+					// Only update if the target column has changed to reduce flashing
+					if (targetColumnId !== currentTargetColumnRef.current) {
+						currentTargetColumnRef.current = targetColumnId;
+						updateColumnHighlights(targetColumnId, isSourceColumn);
+					}
 
 					if (targetColumnId && !isSourceColumn) {
 						const isValid = isValidDropTarget(draggingCard.columnId, targetColumnId);
@@ -546,10 +663,6 @@ export function useDragAndDrop({
 							dragElementRef.current.style.border = '0.2rem solid rgba(255, 99, 71, 0.8)';
 							dragElementRef.current.style.boxShadow = '0 0 0.8rem rgba(255, 99, 71, 0.6)';
 						}
-					} else {
-						// Reset card appearance when not over a valid target
-						dragElementRef.current.style.border = '1px solid #ccc';
-						dragElementRef.current.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
 					}
 				}
 			} catch (err) {
@@ -565,9 +678,9 @@ export function useDragAndDrop({
 			applyBoundaryConstraints,
 			cleanupDrag,
 			createDragClone,
-			setupAutoScrolling,
 			createAccessibilityAnnouncement,
 			isValidDropTarget,
+			boundaryRef,
 		]
 	);
 
@@ -749,6 +862,8 @@ export function useDragAndDrop({
 			}
 		};
 	}, []);
+
+	console.log(dragState, 'dragState');
 
 	return {
 		handleCardMouseDown: handleCardPointerDown,
