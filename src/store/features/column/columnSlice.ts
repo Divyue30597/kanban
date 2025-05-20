@@ -1,15 +1,15 @@
 import { data } from '../../../data/sample';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Column } from '../../types';
+import { IColumn } from '../../types';
 
 interface ColumnState {
-	columns: Column[];
+	columns: IColumn[];
 	loading: boolean;
 	error: string | null;
 }
 
 const initialState: ColumnState = {
-	columns: data.columns as Column[],
+	columns: data.columns as IColumn[],
 	loading: false,
 	error: null,
 };
@@ -20,7 +20,7 @@ const columnSlice = createSlice({
 	reducers: {
 		createColumn: (state, action: PayloadAction<{ title: string; boardId: string; id: string }>) => {
 			const { title, id, boardId } = action.payload;
-			const newColumn: Column = {
+			const newColumn: IColumn = {
 				id,
 				title,
 				boardId,
@@ -37,7 +37,7 @@ const columnSlice = createSlice({
 			state.columns.push(newColumn);
 		},
 
-		updateColumn: (state, action: PayloadAction<Partial<Column> & { id: string }>) => {
+		updateColumn: (state, action: PayloadAction<Partial<IColumn> & { id: string }>) => {
 			const { id, ...changes } = action.payload;
 			const column = state.columns.find((col) => col.id === id);
 
@@ -58,19 +58,31 @@ const columnSlice = createSlice({
 
 		addCardIdToColumn: (state, action: PayloadAction<{ columnId: string; cardId: string }>) => {
 			const { columnId, cardId } = action.payload;
-			const column = state.columns.find((col) => col.id === columnId);
-
-			if (column && !column.cardIds.includes(cardId)) {
-				column.cardIds.push(cardId);
+			const columnListId = columnId.split('@')[0];
+			const colId = columnId.split('@')[1];
+			const column = state.columns.find((col) => col.id === colId);
+			const columnList = column?.columnsList.find((colList) => colList.id === columnListId);
+			if (columnList) {
+				if (!columnList.cardIds.includes(cardId)) {
+					columnList.cardIds.push(cardId);
+				}
+				const updatedCardIds = columnList.cardIds.filter((id) => id !== cardId);
+				columnList.cardIds = [...updatedCardIds, cardId];
 			}
 		},
 
 		removeCardIdFromColumn: (state, action: PayloadAction<{ columnId: string; cardId: string }>) => {
 			const { columnId, cardId } = action.payload;
-			const column = state.columns.find((col) => col.id === columnId);
-
-			if (column) {
-				column.cardIds = column.cardIds.filter((id) => id !== cardId);
+			const columnListId = columnId.split('@')[0];
+			const colId = columnId.split('@')[1];
+			const column = state.columns.find((col) => col.id === colId);
+			const columnList = column?.columnsList.find((colList) => colList.id === columnListId);
+			if (columnList) {
+				if (columnList.cardIds.includes(cardId)) {
+					columnList.cardIds = columnList.cardIds.filter((id) => id !== cardId);
+				}
+				const updatedCardIds = columnList.cardIds.filter((id) => id !== cardId);
+				columnList.cardIds = updatedCardIds;
 			}
 		},
 

@@ -174,9 +174,6 @@ export function useDragAndDrop({
 				const boardId = boardContextId.current;
 				const columnContents = document.querySelectorAll(`${columnContentSelector}[data-board-id="${boardId}"]`);
 
-				// Debug column detection
-				console.log(`Finding target column for board ${boardId}. Found ${columnContents.length} columns.`);
-
 				// Check all column contents first with a slightly expanded hit area
 				for (let i = 0; i < columnContents.length; i++) {
 					const content = columnContents[i] as HTMLElement;
@@ -197,26 +194,19 @@ export function useDragAndDrop({
 						const column = content.closest('[data-column-id]') as HTMLElement;
 						if (column) {
 							const colId = column.getAttribute('data-column-id');
-							console.log(`Found target column: ${colId} at index ${i}`);
 							return colId;
 						}
 					}
 				}
 
-				// Fallback with more detailed logging
-				console.log('No column found using primary method, trying fallback...');
+				// Fallback to checking entire columns
 				const columnsElements = document.querySelectorAll(`[data-column-id][data-board-id="${boardId}"]`);
-				console.log(`Fallback found ${columnsElements.length} column elements`);
 
 				for (let i = 0; i < columnsElements.length; i++) {
 					const col = columnsElements[i] as HTMLElement;
-					if (!isElementVisible(col)) {
-						console.log(`Column at index ${i} is not visible, skipping`);
-						continue;
-					}
+					if (!isElementVisible(col)) continue;
 
 					const colRect = col.getBoundingClientRect();
-					console.log(`Column ${i} rect:`, `left: ${colRect.left}`, `right: ${colRect.right}`, `center X: ${centerX}`);
 
 					// Also use expanded hit area here
 					if (
@@ -226,12 +216,10 @@ export function useDragAndDrop({
 						centerY <= colRect.bottom + 5
 					) {
 						const colId = col.getAttribute('data-column-id');
-						console.log(`Found target column with fallback: ${colId}`);
 						return colId;
 					}
 				}
 
-				console.log('No column found, pointer position:', centerX, centerY);
 				return null;
 			} catch (e) {
 				console.error('Error finding target column:', e);
@@ -295,8 +283,6 @@ export function useDragAndDrop({
 				if (isElementVisible(targetColumn as HTMLElement)) {
 					const isValid = isValidDropTarget(dragState.draggingCard.columnId, targetColumnId);
 					const classToAdd = isValid ? dropTargetClassName : invalidDropTargetClassName;
-
-					console.log(`Highlighting column ${targetColumnId} as ${isValid ? 'valid' : 'invalid'} target`);
 
 					// Add highlight to either content or the column itself
 					const columnContent = targetColumn.querySelector(columnContentSelector);
@@ -588,8 +574,6 @@ export function useDragAndDrop({
 				const dx = Math.abs(clientX - pointerPositionRef.current.x);
 				const dy = Math.abs(clientY - pointerPositionRef.current.y);
 
-				console.log(clientX, clientY, dx, dy, 'dx, dy');
-
 				const isDragging = dx > DRAG_CONFIG.THRESHOLD || dy > DRAG_CONFIG.THRESHOLD;
 
 				if (isDragging && !dragStartedRef.current) {
@@ -862,8 +846,6 @@ export function useDragAndDrop({
 			}
 		};
 	}, []);
-
-	console.log(dragState, 'dragState');
 
 	return {
 		handleCardMouseDown: handleCardPointerDown,

@@ -46,6 +46,7 @@ function Column(props: ColumnProps) {
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
 			data-column-id={colId}
+			data-board-id={boardId}
 			{...rest}
 		>
 			<h2>

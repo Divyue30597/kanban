@@ -18,7 +18,6 @@ function BoardContent({ column }: BoardContentProps) {
 	const boardContentRef = useRef<HTMLDivElement>(null);
 
 	const handleCardMove = (cardId: string, sourceColumnId: string, targetColumnId: string) => {
-		console.log(`Moving card ${cardId} from column ${sourceColumnId} to column ${targetColumnId}`);
 		dispatch(
 			moveCardBetweenColumns({
 				cardId,
@@ -33,7 +32,6 @@ function BoardContent({ column }: BoardContentProps) {
 		dropTargetClassName: columnStyles.validDropTarget,
 		invalidDropTargetClassName: columnStyles.invalidDropTarget,
 		boundaryRef: boardContentRef,
-		// Adding data attribute to identify this board's columns
 		columnContentSelector: `.column-content[data-board-id="${column.boardId}"]`,
 	});
 
@@ -79,18 +77,13 @@ function BoardContent({ column }: BoardContentProps) {
 		}
 	};
 
-	// Add explicit styles to ensure proper drag behavior
 	return (
 		<Container
 			style={{
 				gridTemplateColumns: `repeat(${column?.columnsList.filter((colList) => colList.isSelected)?.length || 3}, minmax(28rem, 1fr))`,
-				overflow: 'auto', // Ensure scrolling is possible
+				overflow: 'auto',
 				position: 'relative',
-				height: '100%',
-				minHeight: '300px', // Ensure there's enough height to scroll
-				width: '100%',
-				// Ensure the container has a fixed size that can overflow
-				maxWidth: '100%',
+				height: '100%', // Ensure container takes full height to allow scrolling
 			}}
 			className={styles.boardContent}
 			ref={boardContentRef}
@@ -100,9 +93,9 @@ function BoardContent({ column }: BoardContentProps) {
 				(col) =>
 					col.isSelected && (
 						<Column
-							key={col?.id + '-' + column?.id}
+							key={col?.id + '@' + column?.id}
 							className={styles.column}
-							colId={col?.id + '-' + column?.id}
+							colId={col?.id + '@' + column?.id}
 							colName={col?.title}
 							numOfCards={col?.cardIds?.length || 0}
 							onCardDrop={handleCardDrop}
@@ -113,10 +106,10 @@ function BoardContent({ column }: BoardContentProps) {
 									<Card
 										key={cardId}
 										id={cardId}
-										columnId={col?.id + '-' + column?.id}
+										columnId={col?.id + '@' + column?.id}
 										boardId={column.boardId}
-										onMouseDown={(e) => handleCardMouseDown(e, cardId, col.id + '-' + column?.id)}
-										onTouchStart={(e) => handleCardTouchStart(e, cardId, col.id + '-' + column?.id)}
+										onMouseDown={(e) => handleCardMouseDown(e, cardId, col.id + '@' + column?.id)}
+										onTouchStart={(e) => handleCardTouchStart(e, cardId, col.id + '@' + column?.id)}
 									/>
 								);
 							})}

@@ -10,7 +10,7 @@ import {
 } from '../features/column/columnSlice';
 import { createCard, deleteCardsByIds } from '../features/cards/cardSlice';
 import { v4 as uuidv4 } from 'uuid';
-import { Card } from '../types';
+import { ICard } from '../types';
 
 export const deleteBoardWithRelated = createAsyncThunk<string, string, { dispatch: AppDispatch; state: RootState }>(
 	'boards/deleteBoardWithRelated',
@@ -61,7 +61,7 @@ export const deleteColumnWithRelated = createAsyncThunk<string, string, { dispat
 // Create a new card and add it to a column
 export const createCardInColumn = createAsyncThunk<
 	string,
-	Card & { columnId: string; images?: (File | string)[] },
+	ICard & { columnId: string; images?: (File | string)[] },
 	{ dispatch: AppDispatch }
 >('cards/createCardInColumn', async (cardData, { dispatch }) => {
 	const { columnId, images, ...cardDetails } = cardData;
@@ -135,7 +135,7 @@ export const moveCardBetweenColumns = createAsyncThunk<
 >('cards/moveCardBetweenColumns', async (moveData, { dispatch, getState }) => {
 	const state = getState() as RootState;
 	const { cardId, sourceColumnId, destinationColumnId, destinationIndex } = moveData;
-
+	console.log('Moving card:', cardId, 'from', sourceColumnId, 'to', destinationColumnId);
 	dispatch(
 		removeCardIdFromColumn({
 			columnId: sourceColumnId,
