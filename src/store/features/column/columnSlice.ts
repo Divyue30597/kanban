@@ -18,7 +18,14 @@ const columnSlice = createSlice({
 	name: 'columns',
 	initialState,
 	reducers: {
-		createColumn: (state, action: PayloadAction<{ title: string; boardId: string; id: string }>) => {
+		createColumn: (
+			state,
+			action: PayloadAction<{
+				title: string;
+				boardId: string;
+				id: string;
+			}>
+		) => {
 			const { title, id, boardId } = action.payload;
 			const newColumn: IColumn = {
 				id,

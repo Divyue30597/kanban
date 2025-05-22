@@ -1,53 +1,59 @@
 li {
 	margin: 0.5rem;
 	position: relative;
+}
 
-	a {
-		display: flex;
-		align-items: center;
-		font-size: 1.4rem;
-		text-decoration: none;
-		color: var(--primary-text-color);
-		width: 100%;
-		padding: 0.5rem 1rem;
-		// margin: 0.8rem;
-		transition:
-			background-color 0.3s ease,
-			color 0.3s ease;
-		border-radius: var(--border-radius);
+svg {
+	width: 2rem;
+	height: 2rem;
+	flex-shrink: 0;
+	font-size: 0;
+	margin: 0.4rem;
+}
 
-		&:hover {
-			background-color: var(--tertiary-background);
-		}
+.expanded {
+	opacity: 1;
+	transform: translateX(0);
+	visibility: visible;
+}
 
-		svg {
-			width: 2rem;
-			height: 2rem;
-			flex-shrink: 0;
-			margin: 0.4rem;
-		}
+.collapsed {
+	opacity: 0;
+	transform: translateX(10px);
+	visibility: hidden;
+}
 
-		.title {
-			margin-left: 1rem;
-			white-space: nowrap;
-			transition:
-				opacity 0.3s ease,
-				transform 0.3s ease;
-			display: inline-block;
-			color: var(--primary-text-color);
-		}
+.title {
+	margin-left: 1rem;
+	white-space: nowrap;
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+	display: inline-block;
+	width: 100%;
+	text-align: left;
+	color: var(--primary-text-color);
+}
 
-		.expanded {
-			opacity: 1;
-			transform: translateX(0);
-			visibility: visible;
-		}
+.btn {
+	text-decoration: none;
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: var(--primary-text-color);
+	width: 100%;
+	padding: 0.5rem 1rem;
+	background-color: transparent;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
+	border-radius: var(--border-radius);
+	border: none;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
 
-		.collapsed {
-			opacity: 0;
-			transform: translateX(10px);
-			visibility: hidden;
-		}
+	&:hover {
+		background-color: var(--tertiary-background);
 	}
 }
 
@@ -55,6 +61,7 @@ li {
 	position: absolute;
 	left: 6rem;
 	top: 1rem;
+	width: max-content;
 	background-color: var(--tertiary-background);
 	color: var(--primary-text-color);
 	padding: 0.4rem;
@@ -66,4 +73,60 @@ li {
 .active {
 	background-color: var(--tertiary-background);
 	color: var(--primary-text-color);
+}
+
+.titleContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.dropdown {
+	color: var(--primary-color);
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	font-size: 0;
+
+	& > svg {
+		width: 2rem;
+		height: 2rem;
+		margin: 0;
+		transition:
+			color 0.3s ease-in-out,
+			rotate 0.3s ease-in-out;
+	}
+
+	&:hover {
+		color: var(--primary-hover);
+	}
+
+	&:active {
+		color: var(--primary-outline);
+	}
+}
+
+.titleWrapper {
+	width: 8rem;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.title_p {
+	display: inline-block;
+	padding-inline: 0.4rem;
+	animation: move 10s linear infinite;
+}
+
+@keyframes move {
+	0% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(-60%, 0);
+	}
+	100% {
+		transform: translate(0, 0);
+	}
 }

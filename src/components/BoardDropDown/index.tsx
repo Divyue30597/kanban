@@ -21,7 +21,9 @@ function BoardDropDown(props: BoardDropDownProps) {
 			className={styles.dropdownBtn}
 			placement="bottom-left"
 			trigger={
-				<Button icon={<SVG.chevronDown />}>{typeof activeBoard === 'string' ? activeBoard : activeBoard?.title}</Button>
+				<Button icon={<SVG.chevronDown />}>
+					{typeof activeBoard === 'string' ? activeBoard : activeBoard?.title}
+				</Button>
 			}
 		>
 			{boards?.map((board) => (

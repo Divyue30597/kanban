@@ -67,7 +67,7 @@ export const data: SampleData = {
 	boards: [
 		{
 			id: 'board-go',
-			title: 'Learning Go Programming',
+			title: 'Learn  Go',
 			description: 'A comprehensive board to master Go over 3 months.',
 			createdTimeStamp: '2023-01-01',
 			updatedTimeStamp: '2023-01-15',

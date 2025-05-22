@@ -189,7 +189,17 @@ function Form() {
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
 			{formInputs.map((input) => {
-				const { id, label, type, required, placeholder, name, errorMessage, value: inputValue, ...rest } = input;
+				const {
+					id,
+					label,
+					type,
+					required,
+					placeholder,
+					name,
+					errorMessage,
+					value: inputValue,
+					...rest
+				} = input;
 
 				let displayValue = formState[name as keyof FormState];
 				if (name === 'subTasks' && Array.isArray(displayValue)) {

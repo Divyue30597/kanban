@@ -16,27 +16,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: calc(100dvh - 6.6rem);
+	height: 100dvh;
 	border-right: 0.1rem solid var(--border-color);
 	list-style: none;
-}
 
-.logo {
-	font-size: 1.8rem;
-	font-weight: 900;
-	line-height: 0.8;
-	text-align: center;
-	padding: 0.75rem 0.5rem;
-	margin-block: 0.6rem;
-	color: var(--primary-text-color);
-	background-color: var(--background-color);
-	height: 5.4rem;
-
-	& > span {
-		display: block;
-		&:first-child {
-			margin-top: 0.8rem;
-		}
+	&:last-child {
+		margin-bottom: 2rem;
 	}
 }
 
@@ -48,23 +33,16 @@ hr {
 .leftNavListGroup {
 	display: flex;
 	flex-direction: column;
-
-	&:last-child {
-		margin-bottom: 2rem;
-	}
 }
 
 .toggle_button {
-	position: absolute;
-	top: calc(100dvh / 2);
-	right: -1.2rem;
-	width: 2.4rem;
-	height: 2.4rem;
-	background-color: var(--background-color);
-	color: var(--primary-text-color);
-	border-radius: 50%;
-	border: 0.15rem solid var(--primary-text-color);
-	cursor: pointer;
+	padding: 0.5rem 1rem;
+	font-size: 0;
+	& > button {
+		background-color: var(--background-color);
+		color: var(--primary-text-color);
+		cursor: pointer;
+	}
 
 	& > svg {
 		width: 2rem;

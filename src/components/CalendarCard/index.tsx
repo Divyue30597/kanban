@@ -3,19 +3,36 @@ import { getTagColors } from '../../utils/utils';
 
 interface CalendarCardProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-function CalendarCard(props: CalendarCardProps) {
-	const { className, ...rest } = props;
+const CalendarCard = (props: CalendarCardProps) => {
+	const { children, className, ...rest } = props;
 
 	const { backgroundColor, color } = getTagColors('');
 	return (
 		<div
-			className={`${styles.card} ${className}`}
-			style={{ backgroundColor, borderLeft: `0.2rem solid ${color}`, color: color }}
+			className={`${styles.card} ${className ?? ''}`}
+			style={{
+				backgroundColor,
+				borderLeft: `0.2rem solid ${color}`,
+				color,
+			}}
 			{...rest}
 		>
-			Calendar Card
+			{children}
 		</div>
 	);
-}
+};
+
+CalendarCard.Month = function CalendarCardMonth(props: CalendarCardProps) {
+	const { children, className, ...rest } = props;
+	return (
+		<CalendarCard className={className} {...rest}>
+			{children || 'Calendar Card Month'}
+		</CalendarCard>
+	);
+};
+
+CalendarCard.Week = function CalendarCardWeek(props: CalendarCardProps) {
+	return <CalendarCard {...props}>{props.children || 'Calendar Card Week'}</CalendarCard>;
+};
 
 export default CalendarCard;

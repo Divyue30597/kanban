@@ -145,8 +145,8 @@ export const moveCardBetweenColumns = createAsyncThunk<
 
 	if (destinationIndex !== undefined) {
 		const destinationColumnCardIds: string[] =
-			state.columns.columns.find((col: { id: string; cardIds: string[] }) => col.id === destinationColumnId)?.cardIds ||
-			[];
+			state.columns.columns.find((col: { id: string; cardIds: string[] }) => col.id === destinationColumnId)
+				?.cardIds || [];
 
 		dispatch(
 			reorderColumnCards({

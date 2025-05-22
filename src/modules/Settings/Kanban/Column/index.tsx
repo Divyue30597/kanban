@@ -111,7 +111,11 @@ function UpdateForm({ isUpdating = false }) {
 					<>
 						<BoardDropDown activeBoard={board} setActiveBoard={setBoard} />
 						<h3>to</h3>
-						<ColumnDropDown boardId={board && (board as Board).id} columnId={columnId} setColumnId={setColumnId} />
+						<ColumnDropDown
+							boardId={board && (board as Board).id}
+							columnId={columnId}
+							setColumnId={setColumnId}
+						/>
 					</>
 				) : (
 					<>
@@ -142,7 +146,9 @@ function UpdateForm({ isUpdating = false }) {
 			<Button
 				type="submit"
 				className={isUpdating ? styles.updateSubmitBtn : ''}
-				disabled={(!updating && (board === 'Pick a board' || board === 'Board')) || columnId === 'update a column'}
+				disabled={
+					(!updating && (board === 'Pick a board' || board === 'Board')) || columnId === 'update a column'
+				}
 			>
 				{!isUpdating ? 'Submit' : 'Update'}
 			</Button>

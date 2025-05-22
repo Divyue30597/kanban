@@ -51,7 +51,10 @@ function Calendar() {
 									<SVG.chevronLeftDouble />
 								</IconBtn>
 							)}
-							<IconBtn onClick={calendarMode.id === 'month' ? prevMonth : prevWeek} title="Previous Month">
+							<IconBtn
+								onClick={calendarMode.id === 'month' ? prevMonth : prevWeek}
+								title="Previous Month"
+							>
 								<SVG.chevronLeft />
 							</IconBtn>
 						</div>
@@ -117,10 +120,13 @@ function ActiveMonth({ weeks }: { weeks: CalendarDay[][] }) {
 							const isCurrentMonth = !dayObject.isCurrentMonth ? styles.emptyDay : '';
 
 							return (
-								<div className={styles.day + ' ' + isCurrentMonth} key={dayObject.fullDate.toISOString()}>
+								<div
+									className={styles.day + ' ' + isCurrentMonth}
+									key={dayObject.fullDate.toISOString()}
+								>
 									<p className={isToday}>{dayObject.day}</p>
 									<div className={styles.dayContent}>
-										<CalendarCard />
+										<CalendarCard.Month />
 									</div>
 								</div>
 							);

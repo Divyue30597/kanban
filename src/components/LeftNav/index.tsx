@@ -3,39 +3,24 @@ import { SVG } from '../../SVG';
 import { useCallback, useState } from 'react';
 import ListItem from '../ListItem';
 import { useEffect } from 'react';
+import { useTheme } from '../../hooks/useTheme';
+import { bottomItems, menuItems } from './constants';
 
 function LeftNav() {
 	const [expanded, setExpanded] = useState<boolean>(false);
+	const { theme, toggleTheme } = useTheme();
 
 	const toggleExpand = useCallback(() => {
 		setExpanded(!expanded);
 	}, [expanded]);
 
-	const menuItems = [
-		{ title: 'Home', icon: <SVG.home />, path: '/' },
-		{ title: 'Notes', icon: <SVG.notes />, path: '/notes' },
-		{ title: 'Pomodoro', icon: <SVG.pomodoro />, path: '/pomodoro' },
-		{ title: 'Calendar', icon: <SVG.calendar />, path: '/calendar' },
-		{
-			title: 'Subscriptions',
-			icon: <SVG.subscriptions />,
-			path: '/subscriptions',
-		},
-		{ title: 'Timeline', icon: <SVG.timeline />, path: '/timeline' },
-		{ title: 'Backlog', icon: <SVG.backlog />, path: '/backlog' },
-	];
-
-	const bottomItems = [
-		{ title: 'Settings', icon: <SVG.settings />, path: '/settings' },
-		{ title: 'Help', icon: <SVG.help />, path: '/help' },
-		{ title: 'Logout', icon: <SVG.logout />, path: '/' },
-	];
-
 	const handleKeyDown = useCallback(
 		(event: KeyboardEvent) => {
 			if (
 				event.target instanceof HTMLElement &&
-				(event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.isContentEditable)
+				(event.target.tagName === 'INPUT' ||
+					event.target.tagName === 'TEXTAREA' ||
+					event.target.isContentEditable)
 			) {
 				return;
 			}
@@ -57,23 +42,32 @@ function LeftNav() {
 
 	return (
 		<nav className={styles.leftNav + (expanded ? ` ${styles.expanded}` : ` ${styles.collapse}`)}>
-			<button type="button" className={styles.toggle_button} onClick={toggleExpand}>
-				<SVG.chevronRight className={expanded ? styles.chevronLeft : styles.chevronRight} />
-			</button>
-			<div className={styles.logo}>
-				<span>KN</span>
-				<span>BN</span>
-			</div>
 			<div className={styles.leftNavList}>
-				<div>
-					<ul className={styles.leftNavListGroup}>
-						{menuItems.map((item, index) => (
-							<ListItem key={index} item={item} expanded={expanded} />
-						))}
-					</ul>
-				</div>
+				<ul className={styles.leftNavListGroup}>
+					<ListItem
+						item={{
+							title: 'Toggle',
+							icon: <SVG.layout />,
+							onClick: toggleExpand,
+							type: 'dropdown',
+						}}
+						expanded={expanded}
+					/>
+					{menuItems.map((item, index) => (
+						<ListItem key={index} item={item} expanded={expanded} />
+					))}
+				</ul>
 				<ul className={styles.leftNavListGroup}>
 					{bottomItems?.map((item, index) => <ListItem key={index} item={item} expanded={expanded} />)}
+					<ListItem
+						item={{
+							title: theme === 'light' ? 'Dark' : 'Light',
+							icon: theme === 'light' ? <SVG.moon /> : <SVG.sun />,
+							onClick: toggleTheme,
+							type: 'button',
+						}}
+						expanded={expanded}
+					/>
 				</ul>
 			</div>
 		</nav>

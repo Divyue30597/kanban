@@ -61,7 +61,10 @@ export function useDragAndDrop({
 	// Add a ref to store the last highlight update timestamp for debouncing
 	const lastHighlightUpdateRef = useRef(0);
 	// Cache column data to prevent excessive DOM queries
-	const columnCacheRef = useRef<{ boardId: string | null; columns: { id: string; rect: DOMRect }[] }>({
+	const columnCacheRef = useRef<{
+		boardId: string | null;
+		columns: { id: string; rect: DOMRect }[];
+	}>({
 		boardId: null,
 		columns: [],
 	});
@@ -101,7 +104,9 @@ export function useDragAndDrop({
 						boardId,
 						columns: columnIds.map((id) => ({
 							id,
-							rect: document.querySelector(`[data-column-id="${id}"]`)?.getBoundingClientRect() || new DOMRect(),
+							rect:
+								document.querySelector(`[data-column-id="${id}"]`)?.getBoundingClientRect() ||
+								new DOMRect(),
 						})),
 					};
 				} else {
@@ -172,7 +177,9 @@ export function useDragAndDrop({
 
 				// Only check visible columns within the same board
 				const boardId = boardContextId.current;
-				const columnContents = document.querySelectorAll(`${columnContentSelector}[data-board-id="${boardId}"]`);
+				const columnContents = document.querySelectorAll(
+					`${columnContentSelector}[data-board-id="${boardId}"]`
+				);
 
 				// Check all column contents first with a slightly expanded hit area
 				for (let i = 0; i < columnContents.length; i++) {
@@ -298,7 +305,13 @@ export function useDragAndDrop({
 				console.error('Error updating column highlights:', e);
 			}
 		},
-		[dropTargetClassName, invalidDropTargetClassName, isValidDropTarget, dragState.draggingCard, columnContentSelector]
+		[
+			dropTargetClassName,
+			invalidDropTargetClassName,
+			isValidDropTarget,
+			dragState.draggingCard,
+			columnContentSelector,
+		]
 	);
 
 	/**
@@ -444,9 +457,13 @@ export function useDragAndDrop({
 				const cardElement = e.currentTarget as HTMLDivElement;
 				const rect = cardElement.getBoundingClientRect();
 
-				const clientX = isTouch.current ? (e as React.TouchEvent).touches[0].clientX : (e as React.MouseEvent).clientX;
+				const clientX = isTouch.current
+					? (e as React.TouchEvent).touches[0].clientX
+					: (e as React.MouseEvent).clientX;
 
-				const clientY = isTouch.current ? (e as React.TouchEvent).touches[0].clientY : (e as React.MouseEvent).clientY;
+				const clientY = isTouch.current
+					? (e as React.TouchEvent).touches[0].clientY
+					: (e as React.MouseEvent).clientY;
 
 				pointerPositionRef.current = { x: clientX, y: clientY };
 				dragStartedRef.current = false;
