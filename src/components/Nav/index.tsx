@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router';
 import styles from './nav.module.scss';
 import { useAppSelector } from '../../store/hooks';
@@ -15,7 +16,7 @@ function Nav() {
 	const { theme, toggleTheme } = useTheme();
 
 	return (
-		<nav className={styles.nav}>
+		<nav className={`${styles.nav} ${expanded ? styles.expanded : ''}`}>
 			<ul className={styles.topMenu}>
 				<ToggleBtn item={{ icon: <SVG.layout />, toggleExpand }} expanded={expanded} />
 				{menuItems.map((item) => (
@@ -28,7 +29,7 @@ function Nav() {
 				))}
 				<button className={styles.btn} onClick={toggleTheme}>
 					{theme === 'light' ? <SVG.moon /> : <SVG.sun />}
-					{expanded && (theme === 'light' ? 'Dark' : 'Light')}
+					{expanded && <span className={styles.title}>{theme === 'light' ? 'Dark' : 'Light'}</span>}
 				</button>
 			</ul>
 		</nav>
@@ -61,6 +62,7 @@ function NavItem(props: NavLinkItemProps) {
 }
 
 function ToggleBtn(props: NavItemProps) {
+	const [isActive, setIsActive] = useState(false);
 	const { item, expanded, ...rest } = props;
 	const { icon, toggleExpand } = item;
 
@@ -73,27 +75,49 @@ function ToggleBtn(props: NavItemProps) {
 
 	const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
+		setIsActive(!isActive);
 	};
 
 	return (
 		<li
-			className={styles.navItem}
-			onClick={toggleExpand}
+			className={`${styles.navItem} ${isActive ? styles.visible : ''}`}
 			onMouseOver={handleMouseOver}
 			onMouseLeave={handleMouseLeave}
 			{...rest}
 		>
-			<div className={styles.btn}>
+			<div onClick={toggleExpand} className={styles.btn}>
 				{icon}
-				{expanded && <span className={styles.title}>{title || 'Board'}</span>}
 				{expanded && (
-					<IconBtn className={styles.iconBtn} onClick={handleOnClick}>
-						<SVG.chevronDown />
-					</IconBtn>
+					<div className={styles.titleContainer}>
+						<span className={styles.title}>{title || 'Board'}</span>
+						<IconBtn className={styles.iconBtn} onClick={handleOnClick}>
+							<SVG.chevronDown />
+						</IconBtn>
+					</div>
 				)}
 			</div>
 			{onMouseOver && !expanded && <span className={styles.tooltip}>{title}</span>}
+			{expanded && isActive && (
+				<div className={styles.dropdownContainer}>
+					<DropdownItem boards={boards} />
+				</div>
+			)}
 		</li>
+	);
+}
+
+function DropdownItem(props) {
+	const { boards } = props;
+	return (
+		<ul className={styles.dropdown}>
+			{boards.map((board) => (
+				<li key={board.id} className={styles.dropdownItem}>
+					<NavLink to={`/board/${board.id}`} className={({ isActive }) => (isActive ? styles.active : '')}>
+						{board.title}
+					</NavLink>
+				</li>
+			))}
+		</ul>
 	);
 }
 

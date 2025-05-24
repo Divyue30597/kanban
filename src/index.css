@@ -100,7 +100,7 @@ html[data-theme='light'] {
 }
 
 html[data-theme='dark'] {
-	--background: #121212;
+	--background: #000000;
 	--secondary-background: #1a1a1a;
 	--tertiary-background: #333333;
 

@@ -4,10 +4,12 @@
     justify-content: space-between;
 
     height: 100dvh;
+    width: 6rem;
     padding: 0.6rem;
     border-right: 0.1rem solid var(--border-color) !important;
 }
 
+.dropdown,
 .topMenu,
 .bottomMenu {
     list-style: none;
@@ -16,11 +18,9 @@
 .navItem {
     display: flex;
     align-items: center;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.8rem;
 
     position: relative;
-
-    cursor: pointer;
 }
 
 .btn {
@@ -45,6 +45,7 @@
     }
 
     & > svg {
+        flex-shrink: 0;
         width: 2rem;
         height: 2rem;
     }
@@ -57,16 +58,28 @@
 
 .title {
     margin-left: 1.2rem;
+    font-weight: 400;
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .active {
     background-color: var(--tertiary-background);
     color: var(--primary-text-color);
+
+    .title {
+        font-weight: 600 !important;
+    }
 }
 
 .tooltip {
     position: absolute;
-    left: 5.6rem;
+    left: 5.8rem;
     top: 0.6rem;
     width: max-content;
     background-color: var(--tertiary-background);
@@ -75,4 +88,20 @@
     font-size: 1.2rem;
     border-radius: var(--border-radius);
     z-index: 99999;
+}
+
+.expanded {
+    width: 24rem;
+}
+
+.visible {
+    flex-direction: column;
+}
+
+.dropdownContainer {
+    margin-top: 0.8rem;
+    font-size: 1.4rem;
+    width: 100%;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--secondary-background);
 }
