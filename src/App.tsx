@@ -1,6 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router';
 import styles from './app.module.scss';
-import LeftNav from './components/LeftNav';
 import Home from './modules/Home';
 import Settings from './modules/Settings';
 import Profile from './modules/Profile';
@@ -16,6 +15,7 @@ import CalendarSettings from './modules/Settings/Calendar';
 import SubscriptionsSettings from './modules/Settings/Subscriptions';
 import PomodoroSettings from './modules/Settings/Pomodoro';
 import { useAppSelector } from './store/hooks';
+import Nav from './components/Nav';
 
 function App() {
 	const navigate = useNavigate();
@@ -86,7 +86,8 @@ function App() {
 
 	return (
 		<div className={styles.app}>
-			<LeftNav />
+			{/* <LeftNav /> */}
+			<Nav />
 			<main className={styles.mainContent}>
 				<Routes>
 					<Route index path="/" element={<Home />} />

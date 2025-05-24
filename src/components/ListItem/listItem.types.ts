@@ -1,12 +1,19 @@
-export interface IItem {
-	type: 'link' | 'button' | 'dropdown';
-	path?: string;
-	title: string;
+export interface NavItem {
 	icon: React.ReactNode;
-	onClick?: () => void;
+	toggleExpand?: () => void;
 }
 
-export interface ListItemProps extends React.HTMLProps<HTMLLIElement> {
-	item: IItem;
+export interface NavLinkItem extends NavItem {
+	title: string;
+	path: string;
+}
+
+export interface NavLinkItemProps extends React.HTMLProps<HTMLLIElement> {
+	item: NavLinkItem;
+	expanded: boolean;
+}
+
+export interface NavItemProps extends React.HTMLProps<HTMLLIElement> {
+	item: NavItem;
 	expanded: boolean;
 }

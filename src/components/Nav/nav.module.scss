@@ -1,0 +1,78 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100dvh;
+    padding: 0.6rem;
+    border-right: 0.1rem solid var(--border-color) !important;
+}
+
+.topMenu,
+.bottomMenu {
+    list-style: none;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+
+    position: relative;
+
+    cursor: pointer;
+}
+
+.btn {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-text-color);
+    width: 100%;
+    padding: 0.6rem 1.2rem;
+    background-color: transparent;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    border-radius: 0.4rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--tertiary-background);
+    }
+
+    & > svg {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+.iconBtn {
+    width: 2rem;
+    height: 2rem;
+}
+
+.title {
+    margin-left: 1.2rem;
+}
+
+.active {
+    background-color: var(--tertiary-background);
+    color: var(--primary-text-color);
+}
+
+.tooltip {
+    position: absolute;
+    left: 5.6rem;
+    top: 0.6rem;
+    width: max-content;
+    background-color: var(--tertiary-background);
+    color: var(--primary-text-color);
+    padding: 0.4rem;
+    font-size: 1.2rem;
+    border-radius: var(--border-radius);
+    z-index: 99999;
+}
