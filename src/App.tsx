@@ -1,7 +1,6 @@
 import { Route, Routes, useNavigate } from 'react-router';
 import styles from './app.module.scss';
 import LeftNav from './components/LeftNav';
-import TopNav from './components/TopNav';
 import Home from './modules/Home';
 import Settings from './modules/Settings';
 import Profile from './modules/Profile';
@@ -89,7 +88,6 @@ function App() {
 		<div className={styles.app}>
 			<LeftNav />
 			<main className={styles.mainContent}>
-				<TopNav />
 				<Routes>
 					<Route index path="/" element={<Home />} />
 					<Route path="/notes" element={<Notes />} />

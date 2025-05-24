@@ -55,7 +55,7 @@ function ListItem(props: ListItemProps) {
 	return (
 		<li title={item.title} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} {...rest}>
 			{item.type === 'dropdown' && (
-				<button className={styles.btn} type="button" title={item.title + ' board'} onClick={item.onClick}>
+				<div className={styles.btn} aria-label="button" title={item.title + ' board'} onClick={item.onClick}>
 					{item.icon}
 					{shouldRender && (
 						<div className={`${styles.titleContainer} ${shouldShow ? styles.expanded : styles.collapsed}`}>
@@ -67,7 +67,7 @@ function ListItem(props: ListItemProps) {
 							</button>
 						</div>
 					)}
-				</button>
+				</div>
 			)}
 
 			{isActive && <DropdownChildren boards={boards} />}
