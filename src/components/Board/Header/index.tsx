@@ -1,27 +1,26 @@
 import { NavLink } from 'react-router';
 import { SVG } from '../../../SVG';
 
-const DateViewTypes = [
+const DataViewTypes = [
 	{
 		id: 'board-go',
 		title: 'Board',
-		location: '/board/board-go',
-        svg: <SVG.board />
+		svg: <SVG.board />,
 	},
 	{
 		id: 'table',
 		title: 'Table',
-		location: '/board/board-go/table',
+		svg: <SVG.table />,
 	},
 	{
 		id: 'calendar',
 		title: 'Calendar',
-		location: '/board/board-go/calendar',
+		svg: <SVG.calendar />,
 	},
 	{
 		id: 'timeline',
 		title: 'Timeline',
-		location: '/board/board-go/timeline',
+		svg: <SVG.timeline />,
 	},
 ];
 
@@ -31,20 +30,35 @@ function BoardHeader() {
 			<h1>Board Header</h1>
 			<p>This is the board header section.</p>
 			<ul>
-				<li>Board 1</li>
-				<li></li>
-				<li></li>
+				<BoardHeaderNav />
 			</ul>
 		</div>
 	);
 }
 
-function BoardHeaderNav({}) {
-	return (
-		<li>
-			<NavLink to="/board/board-go" className={({ isActive }) => (isActive ? 'active' : '')}>
-				<span></span> <span>Board</span>
+function BoardHeaderNav() {
+	return DataViewTypes.map((item) => (
+		<li key={item.id}>
+			<NavLink to={getLocation(item.id)} className={({ isActive }) => (isActive ? 'active' : '')}>
+				<span>{item.svg}</span> <span>{item.title}</span>
 			</NavLink>
 		</li>
-	);
+	));
 }
+
+function getLocation(id: string) {
+	switch (id) {
+		case 'board-go':
+			return '/board/:boardId';
+		case 'table':
+			return '/table/:boardId/table';
+		case 'calendar':
+			return '/calendar/:boardId/calendar';
+		case 'timeline':
+			return '/timeline/:boardId/timeline';
+		default:
+			return '/board/:boardId';
+	}
+}
+
+export default BoardHeader;
