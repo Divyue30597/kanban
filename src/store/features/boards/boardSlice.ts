@@ -1,17 +1,17 @@
 import { data } from '../../../data/sample';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { Board } from '../../types';
+import { IBoard } from '../../types';
 
 interface BoardState {
-	boards: Board[];
+	boards: IBoard[];
 	activeBoard: string | null;
 	loading: boolean;
 	error: string | null;
 }
 
 const initialState: BoardState = {
-	boards: data.boards as Board[],
+	boards: data.boards as IBoard[],
 	activeBoard: data?.boards?.[0]?.id || null,
 	loading: false,
 	error: null,
@@ -21,19 +21,19 @@ const boardSlice = createSlice({
 	name: 'boards',
 	initialState,
 	reducers: {
-		createBoard: (state, action: PayloadAction<Omit<Board, 'id' | 'columnIds'>>) => {
-			const newBoard: Board = {
+		createBoard: (state, action: PayloadAction<Omit<IBoard, 'id' | 'columnIds'>>) => {
+			const newBoard: IBoard = {
 				id: uuidv4(),
 				...action.payload,
-				createdAt: new Date().toISOString(),
-				updatedAt: new Date().toISOString(),
+				createdTimeStamp: new Date().toISOString(),
+				updatedTimeStamp: new Date().toISOString(),
 				columnIds: [],
 			};
 
 			state?.boards?.push(newBoard);
 		},
 
-		updateBoard: (state, action: PayloadAction<Partial<Board> & { id: string }>) => {
+		updateBoard: (state, action: PayloadAction<Partial<IBoard> & { id: string }>) => {
 			const { id, ...changes } = action.payload;
 			const board = state.boards.find((board) => board.id === id);
 

@@ -90,7 +90,7 @@ function App() {
 			<Nav />
 			<main className={styles.mainContent}>
 				<Routes>
-					<Route index path="/" element={<Home />} />
+					<Route index path="/board/:boardId" element={<Home />} />
 					<Route path="/notes" element={<Notes />} />
 					<Route path="/pomodoro" element={<Pomodoro />} />
 					<Route path="/calendar" element={<Calendar />} />

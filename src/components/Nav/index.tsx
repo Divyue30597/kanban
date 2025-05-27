@@ -10,6 +10,7 @@ import { menuItems } from '../LeftNav/constants';
 import { bottomItems } from '../LeftNav/constants';
 import { NavItemProps, NavLinkItemProps } from '../ListItem/listItem.types';
 import { SVG } from '../../SVG';
+import { setActiveBoard } from '../../store/features/boards/boardSlice';
 
 function Nav() {
 	const { expanded, toggleExpand } = useNavExpand();
@@ -20,12 +21,12 @@ function Nav() {
 			<ul className={styles.topMenu}>
 				<ToggleBtn item={{ icon: <SVG.layout />, toggleExpand }} expanded={expanded} />
 				{menuItems.map((item) => (
-					<NavItem item={item} expanded={expanded} />
+					<NavItem key={item.title} item={item} expanded={expanded} />
 				))}
 			</ul>
 			<ul className={styles.bottomMenu}>
 				{bottomItems.map((item) => (
-					<NavItem item={item} expanded={expanded} />
+					<NavItem key={item.title} item={item} expanded={expanded} />
 				))}
 				<button className={styles.btn} onClick={toggleTheme}>
 					{theme === 'light' ? <SVG.moon /> : <SVG.sun />}
@@ -99,21 +100,29 @@ function ToggleBtn(props: NavItemProps) {
 			{onMouseOver && !expanded && <span className={styles.tooltip}>{title}</span>}
 			{expanded && isActive && (
 				<div className={styles.dropdownContainer}>
-					<DropdownItem boards={boards} />
+					<DropdownItem />
 				</div>
 			)}
 		</li>
 	);
 }
 
-function DropdownItem(props) {
-	const { boards } = props;
+function DropdownItem() {
+	const boards = useAppSelector((state) => state.boards.boards);
+
 	return (
 		<ul className={styles.dropdown}>
 			{boards.map((board) => (
 				<li key={board.id} className={styles.dropdownItem}>
-					<NavLink to={`/board/${board.id}`} className={({ isActive }) => (isActive ? styles.active : '')}>
-						{board.title}
+					<NavLink
+						to={`/board/${board.id}`}
+						onClick={() => setActiveBoard(board.id)}
+						className={({ isActive }) => (isActive ? styles.active : '') + ' ' + styles.link}
+					>
+						<span className={styles.checkbox}>
+							<SVG.checkBox />
+						</span>
+						<span>{board.title}</span>
 					</NavLink>
 				</li>
 			))}

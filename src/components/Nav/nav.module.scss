@@ -7,6 +7,7 @@
     width: 6rem;
     padding: 0.6rem;
     border-right: 0.1rem solid var(--border-color) !important;
+    background-color: var(--background);
 }
 
 .dropdown,
@@ -68,12 +69,33 @@
     width: 100%;
 }
 
+.link {
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.checkbox {
+    font-size: 0;
+    color: transparent;
+    svg {
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
 .active {
-    background-color: var(--tertiary-background);
     color: var(--primary-text-color);
 
     .title {
         font-weight: 600 !important;
+    }
+
+    .checkbox {
+        color: var(--secondary-color);
     }
 }
 
