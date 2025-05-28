@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router';
 import styles from './nav.module.scss';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import usePopOver from '../../hooks/usePopOver';
 import useNavExpand from '../../hooks/useNavExpand';
 import { useTheme } from '../../hooks/useTheme';
@@ -72,7 +72,6 @@ function ToggleBtn(props: NavItemProps) {
 	const boards = useAppSelector((state) => state.boards.boards);
 	const activeBoard = useAppSelector((state) => state.boards.activeBoard);
 	const activeBoardData = boards?.find((board) => board.id === activeBoard);
-	const { title } = activeBoardData;
 
 	const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
@@ -90,14 +89,14 @@ function ToggleBtn(props: NavItemProps) {
 				{icon}
 				{expanded && (
 					<div className={styles.titleContainer}>
-						<span className={styles.title}>{title || 'Board'}</span>
+						<span className={styles.title}>{activeBoardData?.title || 'Board'}</span>
 						<IconBtn className={styles.iconBtn} onClick={handleOnClick}>
 							<SVG.chevronDown />
 						</IconBtn>
 					</div>
 				)}
 			</div>
-			{onMouseOver && !expanded && <span className={styles.tooltip}>{title}</span>}
+			{onMouseOver && !expanded && <span className={styles.tooltip}>{activeBoardData?.title}</span>}
 			{expanded && isActive && (
 				<div className={styles.dropdownContainer}>
 					<DropdownItem />
@@ -109,6 +108,7 @@ function ToggleBtn(props: NavItemProps) {
 
 function DropdownItem() {
 	const boards = useAppSelector((state) => state.boards.boards);
+	const dispatch = useAppDispatch();
 
 	return (
 		<ul className={styles.dropdown}>
@@ -116,8 +116,8 @@ function DropdownItem() {
 				<li key={board.id} className={styles.dropdownItem}>
 					<NavLink
 						to={`/board/${board.id}`}
-						onClick={() => setActiveBoard(board.id)}
 						className={({ isActive }) => (isActive ? styles.active : '') + ' ' + styles.link}
+						onClick={() => dispatch(setActiveBoard(board.id))}
 					>
 						<span className={styles.checkbox}>
 							<SVG.checkBox />

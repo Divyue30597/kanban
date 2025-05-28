@@ -86,7 +86,6 @@ function App() {
 
 	return (
 		<div className={styles.app}>
-			{/* <LeftNav /> */}
 			<Nav />
 			<main className={styles.mainContent}>
 				<Routes>

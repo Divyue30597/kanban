@@ -8,21 +8,14 @@ import Section from '../Section';
 import Accordion from '../Accordion';
 import BoardContent from './BoardContent';
 import { IColumn } from '../../store/types';
-import { useLocation } from 'react-router';
 
 function Board(props: HTMLProps<HTMLDivElement>) {
 	const { ...rest } = props;
-
-	const pathname = useLocation().pathname;
-
-	console.log(pathname, 'pathname');
 
 	const dispatch = useAppDispatch();
 	const activeBoard = useAppSelector(selectActiveBoard);
 	const columns = useAppSelector(selectBoardColumns);
 	const boards = useAppSelector((state) => state.boards.boards);
-
-	console.log(activeBoard, 'activeBoard');
 
 	useEffect(() => {
 		if (!activeBoard && boards.length > 0) {
