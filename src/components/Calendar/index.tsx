@@ -124,7 +124,9 @@ function ActiveMonth({ weeks }: { weeks: CalendarDay[][] }) {
 									className={styles.day + ' ' + isCurrentMonth}
 									key={dayObject.fullDate.toISOString()}
 								>
-									<p className={isToday}>{dayObject.day}</p>
+									<p className={isToday}>
+										{dayObject.day < 10 ? <span>0{dayObject.day}</span> : dayObject.day}
+									</p>
 									<div className={styles.dayContent}>
 										<CalendarCard.Month />
 									</div>

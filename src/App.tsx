@@ -16,6 +16,7 @@ import SubscriptionsSettings from './modules/Settings/Subscriptions';
 import PomodoroSettings from './modules/Settings/Pomodoro';
 import { useAppSelector } from './store/hooks';
 import Nav from './components/Nav';
+import Board from './components/Board';
 
 function App() {
 	const navigate = useNavigate();
@@ -87,12 +88,17 @@ function App() {
 	return (
 		<div className={styles.app}>
 			<Nav />
-			<main className={styles.mainContent}>
+			<main className={styles.main}>
 				<Routes>
-					<Route index path="/board/:boardId" element={<Home />} />
+					<Route path="/board" element={<Home />}>
+						<Route path="/board/:boardId" element={<Board />} />
+						<Route path="/board/:boardId/calendar" element={<Calendar />} />
+					</Route>
+					{/* <Route path="/board/:boardId/table" element={<Home />} />
+					<Route path="/board/:boardId/timeline" element={<Home />} /> */}
+
 					<Route path="/notes" element={<Notes />} />
 					<Route path="/pomodoro" element={<Pomodoro />} />
-					<Route path="/calendar" element={<Calendar />} />
 					<Route path="/subscriptions" element={<Subscriptions />} />
 					<Route path="/settings" element={<Settings />}>
 						<Route path="/settings/kanban" element={<KanbanSettings />} />

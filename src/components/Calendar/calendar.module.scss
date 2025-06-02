@@ -1,14 +1,7 @@
 .calendar {
-	box-shadow: var(--box-shadow);
+	border: 0.2rem solid var(--border-color);
 	border-radius: var(--border-radius);
-	height: calc(100dvh - 11.8rem);
-
-	overflow-y: scroll;
-}
-
-.calendarHeader {
-	position: sticky;
-	top: 0;
+	height: 100%;
 }
 
 .calendarHeaderBody {
@@ -18,6 +11,9 @@
 	align-items: center;
 	gap: 2rem;
 	background-color: var(--secondary-background);
+
+	border-top-right-radius: var(--border-radius);
+	border-top-left-radius: var(--border-radius);
 }
 
 .calendarTitleContainer {
@@ -61,10 +57,20 @@
 .weekRow {
 	display: flex;
 	justify-content: space-between;
-	height: calc((100dvh - 21.5rem) / 5);
+	height: calc(100dvh / 5);
 
 	&:not(:last-child) {
 		border-bottom: 0.1rem solid var(--border-color);
+	}
+
+	&:last-child {
+		& > :first-of-type {
+			border-bottom-left-radius: var(--border-radius);
+		}
+
+		& > :last-of-type {
+			border-bottom-right-radius: var(--border-radius);
+		}
 	}
 }
 
@@ -118,7 +124,7 @@
 
 .activeWeek {
 	width: 100%;
-	height: 100%;
+	height: 100dvh;
 	padding: 0.8rem;
 
 	&:not(:last-child) {

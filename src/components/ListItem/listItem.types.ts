@@ -16,4 +16,5 @@ export interface NavLinkItemProps extends React.HTMLProps<HTMLLIElement> {
 export interface NavItemProps extends React.HTMLProps<HTMLLIElement> {
 	item: NavItem;
 	expanded: boolean;
+	toggleExpand?: () => void;
 }

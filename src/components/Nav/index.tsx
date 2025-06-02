@@ -19,7 +19,7 @@ function Nav() {
 	return (
 		<nav className={`${styles.nav} ${expanded ? styles.expanded : ''}`}>
 			<ul className={styles.topMenu}>
-				<ToggleBtn item={{ icon: <SVG.layout />, toggleExpand }} expanded={expanded} />
+				<ToggleBtn item={{ icon: <SVG.layout /> }} expanded={expanded} toggleExpand={toggleExpand} />
 				{menuItems.map((item) => (
 					<NavItem key={item.title} item={item} expanded={expanded} />
 				))}
@@ -64,8 +64,8 @@ function NavItem(props: NavLinkItemProps) {
 
 function ToggleBtn(props: NavItemProps) {
 	const [isActive, setIsActive] = useState(false);
-	const { item, expanded, ...rest } = props;
-	const { icon, toggleExpand } = item;
+	const { item, expanded, toggleExpand, ...rest } = props;
+	const { icon } = item;
 
 	const { onMouseOver, handleMouseOver, handleMouseLeave } = usePopOver();
 

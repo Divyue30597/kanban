@@ -1,7 +1,13 @@
-import Board from '../../components/Board';
+import { Outlet } from 'react-router';
+import BoardHeader from './Header';
 
 function Home() {
-	return <Board />;
+	return (
+		<>
+			<BoardHeader />
+			<Outlet />
+		</>
+	);
 }
 
 export default Home;

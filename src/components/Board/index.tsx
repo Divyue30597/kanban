@@ -1,13 +1,11 @@
 import { HTMLProps, useEffect } from 'react';
 import styles from './board.module.scss';
-import AddTaskModal from '../Modal/addTaskModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectActiveBoard, selectBoardColumns } from '../../store/selectors';
 import { setActiveBoard } from '../../store/features/boards/boardSlice';
 import Section from '../Section';
 import Accordion from '../Accordion';
 import BoardContent from './BoardContent';
-import { IColumn } from '../../store/types';
 
 function Board(props: HTMLProps<HTMLDivElement>) {
 	const { ...rest } = props;
@@ -46,27 +44,16 @@ function Board(props: HTMLProps<HTMLDivElement>) {
 
 	return (
 		<Section {...rest}>
-			<div className={styles.boardHeader}>
-				<div className={styles.boardHeaderContent}>
-					<h1>{activeBoard?.title}</h1>
-					<p>{activeBoard.description}</p>
-				</div>
-				<div className={styles.boardHeaderActions}>
-					<AddTaskModal />
-				</div>
-			</div>
 			{columns &&
 				columns?.map(
-					(column: IColumn) =>
+					(column) =>
 						column && (
-							<div key={column?.id} className={styles.columnContainer}>
-								<Accordion>
-									<Accordion.Header headingText={column?.title} />
-									<Accordion.Body>
-										<BoardContent column={column} />
-									</Accordion.Body>
-								</Accordion>
-							</div>
+							<Accordion key={column?.id}>
+								<Accordion.Header headingText={column?.title} />
+								<Accordion.Body>
+									<BoardContent column={column} />
+								</Accordion.Body>
+							</Accordion>
 						)
 				)}
 		</Section>

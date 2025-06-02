@@ -8,6 +8,13 @@
     padding: 0.6rem;
     border-right: 0.1rem solid var(--border-color) !important;
     background-color: var(--background);
+
+    transition: width 0.3s ease;
+
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    overflow: hidden;
 }
 
 .dropdown,
@@ -17,15 +24,12 @@
 }
 
 .navItem {
-    display: flex;
-    align-items: center;
     margin-bottom: 0.8rem;
-
     position: relative;
 }
 
 .expanded {
-    width: 24rem;
+    width: 18rem;
 
     .title {
         // add ellipsis to text
@@ -41,6 +45,7 @@
 
 .btn {
     text-decoration: none;
+    text-align: left;
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--primary-text-color);
@@ -77,7 +82,7 @@
 .title {
     margin-left: 1.2rem;
     font-weight: 400;
-    width: 12rem;
+    width: 8rem;
 }
 
 .titleContainer {
@@ -107,11 +112,8 @@
 
 .active {
     color: var(--primary-text-color);
-    border: 0.15rem solid var(--border-color);
+    background-color: var(--tertiary-background);
     border-radius: 0.4rem;
-    .title {
-        font-weight: 600 !important;
-    }
 
     .checkbox {
         color: var(--secondary-color);
@@ -139,8 +141,9 @@
     margin-top: 0.8rem;
     font-size: 1.4rem;
     width: 100%;
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem;
     background-color: var(--secondary-background);
+    border-radius: 0.4rem;
 }
 
 .dropdownItem {

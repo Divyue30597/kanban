@@ -1,0 +1,68 @@
+.boardHeader {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    padding: 1.6rem;
+    background-color: var(--background-color);
+}
+
+.boardHeaderAction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid var(--border-color);
+}
+
+.boardHeaderNavItem {
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.8rem;
+}
+
+.navLink,
+.button {
+    text-decoration: none;
+    color: var(--secondary-text-color);
+    font-size: 1.4rem;
+    padding-block: 0.8rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    transition: all 0.3s ease;
+
+    &:hover {
+        color: var(--hover-color);
+        cursor: pointer;
+    }
+}
+
+.button {
+    background-color: transparent;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.listItem {
+    &:not(:last-child) {
+        margin-right: 1.2rem;
+    }
+}
+
+.svg {
+    font-size: 0;
+    & > svg {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+}
+
+.active {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-bottom: 0.1rem solid var(--primary-color);
+}
