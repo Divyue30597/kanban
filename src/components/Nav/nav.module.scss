@@ -32,10 +32,19 @@
     width: 18rem;
 
     .title {
-        // add ellipsis to text
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .toggleBtnContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        & > .btn {
+            width: 70%;
+        }
     }
 }
 
@@ -50,7 +59,6 @@
     font-weight: 600;
     color: var(--primary-text-color);
     width: 100%;
-    max-width: 22rem;
     padding: 0.6rem 1.2rem;
     background-color: transparent;
     transition:
@@ -77,12 +85,13 @@
 .iconBtn {
     width: 2rem;
     height: 2rem;
+    padding: 0rem;
 }
 
 .title {
     margin-left: 1.2rem;
     font-weight: 400;
-    width: 8rem;
+    // width: 4.75rem;
 }
 
 .titleContainer {

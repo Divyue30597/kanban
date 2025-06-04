@@ -85,15 +85,15 @@ function ToggleBtn(props: NavItemProps) {
 			onMouseLeave={handleMouseLeave}
 			{...rest}
 		>
-			<div onClick={toggleExpand} className={styles.btn}>
-				{icon}
+			<div className={styles.toggleBtnContainer}>
+				<button onClick={toggleExpand} className={styles.btn}>
+					{icon}
+					{expanded && <span className={styles.title}>{activeBoardData?.title || 'Board'}</span>}
+				</button>
 				{expanded && (
-					<div className={styles.titleContainer}>
-						<span className={styles.title}>{activeBoardData?.title || 'Board'}</span>
-						<IconBtn className={styles.iconBtn} onClick={handleOnClick}>
-							<SVG.chevronDown />
-						</IconBtn>
-					</div>
+					<IconBtn className={`${styles.iconBtn} ${styles.btn}`} onClick={handleOnClick}>
+						<SVG.chevronDown />
+					</IconBtn>
 				)}
 			</div>
 			{onMouseOver && !expanded && <span className={styles.tooltip}>{activeBoardData?.title}</span>}
